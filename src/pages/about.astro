@@ -1,0 +1,279 @@
+---
+export const prerender = true;
+
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/global/Breadcrumbs.astro";
+import SectionEyebrow from "../components/ui/SectionEyebrow.astro";
+import Button from "../components/ui/Button.astro";
+import FinalCTA from "../components/sections/FinalCTA.astro";
+import { brand } from "../data/brand";
+import { seoData } from "../data/seo";
+
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: "About" }
+];
+
+const principles = [
+  {
+    title: "Map before automating",
+    desc: "Automation built on an unclear process usually reproduces the confusion faster."
+  },
+  {
+    title: "Use the simplest reliable path",
+    desc: "A supported native integration may be better than custom code. A clear rule may be better than AI."
+  },
+  {
+    title: "Keep the rules visible",
+    desc: "A team should be able to understand why a workflow routes, waits, updates or stops."
+  },
+  {
+    title: "Design for handover",
+    desc: "Implementation should be testable, documented and understandable after launch."
+  }
+];
+---
+
+<BaseLayout
+  title={seoData.about.title}
+  description={seoData.about.description}
+  canonicalPath={seoData.about.canonicalPath}
+>
+  <!-- About Hero -->
+  <section class="about-hero section-py">
+    <div class="container-default">
+      <Breadcrumbs items={breadcrumbs} />
+
+      <div class="about-hero-content">
+        <SectionEyebrow>ABOUT OUR PRACTICE</SectionEyebrow>
+        <h1 class="interior-title about-h1">Practical automation built around real operations.</h1>
+        <div class="about-intro-copy body-large">
+          <p>
+            {brand.companyName} focuses on CRM systems, workflow automation, integrations, AI-assisted processes and operational visibility. The work starts with the process: where information enters, who needs it, what rules apply, which systems are involved and what should happen next.
+          </p>
+          <p>
+            From there, the objective is to design the simplest reliable workflow that removes avoidable manual handling while keeping important business decisions understandable and controlled.
+          </p>
+        </div>
+
+        <div class="about-cta-row">
+          <Button href="/contact" variant="primary">
+            Talk through a process
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Operating Principles -->
+  <section class="principles-section section-py">
+    <div class="container-default">
+      <div class="principles-header">
+        <SectionEyebrow>FOUNDATIONAL VALUES</SectionEyebrow>
+        <h2 class="section-title">How we evaluate business systems</h2>
+      </div>
+
+      <div class="principles-grid">
+        {principles.map((p, idx) => (
+          <div class="principle-card">
+            <span class="principle-num">0{idx + 1}</span>
+            <h3 class="principle-title">{p.title}</h3>
+            <p class="principle-desc">{p.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Evidence Standard Section - Section 57 -->
+  <section class="about-evidence-section section-py">
+    <div class="container-default">
+      <div class="evidence-box">
+        <SectionEyebrow>TRANSPARENCY &amp; INTEGRITY</SectionEyebrow>
+        <h2 class="section-title">Show what can be supported. Do not manufacture proof.</h2>
+        <p class="body-large evidence-copy">
+          Implementation architecture, configured systems and documented workflow logic can demonstrate capability. Performance results should be presented only when approved production evidence supports them.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Optional Verified Founder / Team Block (Section 57: Only rendered if real details exist) -->
+  {brand.founderTeamContent && brand.founderTeamContent.length > 0 && (
+    <section class="team-section section-py">
+      <div class="container-default">
+        <div class="team-header">
+          <SectionEyebrow>LEADERSHIP</SectionEyebrow>
+          <h2 class="section-title">Team &amp; Background</h2>
+        </div>
+
+        <div class="team-grid">
+          {brand.founderTeamContent.map((member) => (
+            <div class="team-card">
+              {member.headshotUrl && (
+                <img src={member.headshotUrl} alt={member.name} class="team-photo" width="120" height="120" />
+              )}
+              <h3 class="team-name">{member.name}</h3>
+              <span class="team-role">{member.role}</span>
+              <p class="team-bio">{member.biography}</p>
+              
+              {member.verifiedLinks && member.verifiedLinks.length > 0 && (
+                <div class="team-links">
+                  {member.verifiedLinks.map((vl) => (
+                    <a href={vl.url} target="_blank" rel="noopener noreferrer" class="team-link">
+                      {vl.label}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <FinalCTA />
+</BaseLayout>
+
+<style>
+  .about-hero {
+    background-color: var(--canvas-alt);
+    border-bottom: 1px solid var(--slate-200);
+  }
+
+  .about-hero-content {
+    max-width: 800px;
+  }
+
+  .about-h1 {
+    margin-bottom: var(--space-6);
+  }
+
+  .about-intro-copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
+  }
+
+  .principles-section {
+    background-color: var(--canvas);
+  }
+
+  .principles-header {
+    max-width: 720px;
+    margin-bottom: var(--space-12);
+  }
+
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+  }
+
+  @media (max-width: 768px) {
+    .principles-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .principle-card {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-panel);
+    padding: var(--space-8);
+  }
+
+  .principle-num {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: var(--signal-blue);
+    display: block;
+    margin-bottom: var(--space-2);
+  }
+
+  .principle-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--ink-950);
+    margin-bottom: var(--space-2);
+  }
+
+  .principle-desc {
+    font-size: 0.9375rem;
+    color: var(--slate-600);
+    line-height: 1.6;
+  }
+
+  .about-evidence-section {
+    background-color: var(--canvas-alt);
+    border-top: 1px solid var(--slate-200);
+    border-bottom: 1px solid var(--slate-200);
+  }
+
+  .evidence-box {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-panel);
+    padding: var(--space-12);
+    max-width: 860px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .evidence-copy {
+    margin-top: var(--space-4);
+  }
+
+  /* Team */
+  .team-section {
+    background-color: var(--canvas);
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+  }
+
+  .team-card {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-card);
+    padding: var(--space-8);
+  }
+
+  .team-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--ink-950);
+  }
+
+  .team-role {
+    font-size: 0.875rem;
+    color: var(--signal-blue);
+    font-weight: 600;
+    display: block;
+    margin-bottom: var(--space-3);
+  }
+
+  .team-bio {
+    font-size: 0.9375rem;
+    color: var(--slate-600);
+    line-height: 1.6;
+    margin-bottom: var(--space-4);
+  }
+
+  .team-links {
+    display: flex;
+    gap: var(--space-3);
+  }
+
+  .team-link {
+    font-size: 0.8125rem;
+    color: var(--signal-blue);
+    text-decoration: underline;
+  }
+</style>

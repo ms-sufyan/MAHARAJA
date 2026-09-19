@@ -1,0 +1,101 @@
+---
+import { proofStripPlatforms } from "../../data/platforms";
+import TextLink from "../ui/TextLink.astro";
+---
+
+<section class="proof-strip-section" aria-label="Implementation Experience Platforms">
+  <div class="container-default">
+    <div class="proof-strip-inner">
+      <div class="proof-strip-header">
+        <span class="proof-eyebrow">IMPLEMENTATION EXPERIENCE</span>
+        <p class="proof-sub">
+          Workflow work represented across CRM, automation, communication, document, finance and productivity systems.
+        </p>
+      </div>
+
+      <!-- Typographic Platform Chips -->
+      <div class="proof-tags-row">
+        {proofStripPlatforms.map((item) => (
+          <span class="proof-tag-chip">
+            {item.name}
+          </span>
+        ))}
+      </div>
+
+      <div class="proof-strip-footer">
+        <TextLink href="/capabilities" class="capabilities-link">
+          View capabilities
+        </TextLink>
+        <span class="proof-disclaimer">
+          Platform names indicate implementation experience, not vendor partnership.
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .proof-strip-section {
+    background-color: var(--surface);
+    border-bottom: 1px solid var(--slate-200);
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-8);
+  }
+
+  .proof-strip-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .proof-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--slate-500);
+    display: block;
+    margin-bottom: var(--space-1);
+  }
+
+  .proof-sub {
+    font-size: 0.9375rem;
+    color: var(--slate-600);
+    max-width: 720px;
+  }
+
+  .proof-tags-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: center;
+  }
+
+  .proof-tag-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-2) var(--space-4);
+    background-color: var(--canvas-alt);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--ink-950);
+    font-family: var(--font-sans);
+  }
+
+  .proof-strip-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding-top: var(--space-2);
+  }
+
+  .proof-disclaimer {
+    font-size: 0.8125rem;
+    color: var(--slate-500);
+    font-style: italic;
+  }
+</style>

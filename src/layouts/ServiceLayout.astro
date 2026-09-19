@@ -1,0 +1,135 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Breadcrumbs from "../components/global/Breadcrumbs.astro";
+import Button from "../components/ui/Button.astro";
+import SectionEyebrow from "../components/ui/SectionEyebrow.astro";
+import { brand } from "../data/brand";
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath: string;
+  eyebrow: string;
+  h1: string;
+  subheadline: string;
+  ctaLabel: string;
+  ctaHref: string;
+  secondaryCtaLabel?: string;
+  secondaryCtaHref?: string;
+}
+
+const {
+  title,
+  description,
+  canonicalPath,
+  eyebrow,
+  h1,
+  subheadline,
+  ctaLabel,
+  ctaHref,
+  secondaryCtaLabel,
+  secondaryCtaHref
+} = Astro.props;
+
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: "Services", href: "/services" },
+  { label: h1 }
+];
+
+// Factual Service Schema (Section 123)
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": h1,
+  "description": subheadline,
+  "provider": {
+    "@type": "Organization",
+    "name": brand.companyName,
+    "url": brand.canonicalOrigin
+  },
+  "serviceType": eyebrow
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath={canonicalPath}
+  structuredData={serviceSchema}
+>
+  <!-- Service Hero Section -->
+  <section class="service-hero section-py">
+    <div class="container-default">
+      <Breadcrumbs items={breadcrumbs} />
+
+      <div class="service-hero-grid">
+        <div class="service-hero-content">
+          <SectionEyebrow>{eyebrow}</SectionEyebrow>
+          <h1 class="interior-title service-hero-h1">{h1}</h1>
+          <p class="body-large service-hero-sub">{subheadline}</p>
+
+          <div class="service-hero-ctas">
+            <Button href={ctaHref} variant="primary">
+              {ctaLabel}
+            </Button>
+            {secondaryCtaLabel && secondaryCtaHref && (
+              <Button href={secondaryCtaHref} variant="secondary">
+                {secondaryCtaLabel}
+              </Button>
+            )}
+          </div>
+        </div>
+
+        <div class="service-hero-visual">
+          <slot name="hero-visual" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Service Content Slots -->
+  <div class="service-body">
+    <slot />
+  </div>
+</BaseLayout>
+
+<style>
+  .service-hero {
+    background-color: var(--canvas-alt);
+    border-bottom: 1px solid var(--slate-200);
+  }
+
+  .service-hero-grid {
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    gap: var(--space-12);
+    align-items: center;
+  }
+
+  @media (max-width: 1024px) {
+    .service-hero-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+  }
+
+  .service-hero-h1 {
+    margin-bottom: var(--space-4);
+  }
+
+  .service-hero-sub {
+    margin-bottom: var(--space-8);
+  }
+
+  .service-hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  .service-hero-visual {
+    display: flex;
+    justify-content: center;
+  }
+</style>

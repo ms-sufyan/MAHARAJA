@@ -1,0 +1,392 @@
+---
+import { brand } from "../../data/brand";
+import Button from "../ui/Button.astro";
+import Icons from "../visual/Icons.astro";
+import MobileMenu from "./MobileMenu.astro";
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = "/" } = Astro.props;
+
+const servicesLinks = [
+  { href: "/services/crm", label: "CRM Systems & Optimization" },
+  { href: "/services/workflow-automation", label: "Workflow Automation" },
+  { href: "/services/integrations", label: "Integrations & Data Sync" },
+  { href: "/services/ai-assisted-automation", label: "AI-Assisted Operations" },
+  { href: "/services/reporting-visibility", label: "Reporting & Visibility" }
+];
+---
+
+<header id="site-header" class="site-header">
+  <div class="container-default header-inner">
+    <!-- Brand Mark / Logo -->
+    <a href="/" class="brand-link" aria-label={`${brand.companyName} Home`}>
+      <span class="brand-wordmark">{brand.companyName}</span>
+      <span class="brand-dot" aria-hidden="true"></span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav" aria-label="Main Navigation">
+      <ul class="nav-list">
+        <!-- Services with accessible dropdown -->
+        <li class="nav-item has-dropdown">
+          <button
+            type="button"
+            id="services-menu-button"
+            class="nav-link dropdown-trigger"
+            aria-expanded="false"
+            aria-haspopup="true"
+            aria-controls="services-dropdown"
+          >
+            <span>Services</span>
+            <span class="dropdown-chevron" aria-hidden="true">▾</span>
+          </button>
+          
+          <div id="services-dropdown" class="dropdown-panel" role="region" aria-labelledby="services-menu-button" hidden>
+            <ul class="dropdown-list">
+              {servicesLinks.map((item) => (
+                <li>
+                  <a href={item.href} class={`dropdown-item ${currentPath === item.href ? "is-active" : ""}`}>
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+              <li class="dropdown-divider"></li>
+              <li>
+                <a href="/services" class="dropdown-item dropdown-item-all">
+                  <span>View all services</span>
+                  <span aria-hidden="true">→</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a href="/use-cases" class={`nav-link ${currentPath === "/use-cases" ? "is-active" : ""}`}>
+            Use Cases
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="/how-we-work" class={`nav-link ${currentPath === "/how-we-work" ? "is-active" : ""}`}>
+            How We Work
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="/capabilities" class={`nav-link ${currentPath === "/capabilities" ? "is-active" : ""}`}>
+            Capabilities
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="/about" class={`nav-link ${currentPath === "/about" ? "is-active" : ""}`}>
+            About
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Header Right Actions -->
+    <div class="header-actions">
+      <a href="/contact" class="contact-text-link">
+        Contact
+      </a>
+      <Button href="/contact" variant="primary" class="header-cta-btn">
+        Discuss your workflow
+      </Button>
+
+      <!-- Mobile Menu Trigger -->
+      <button
+        type="button"
+        id="mobile-menu-trigger"
+        class="mobile-menu-btn"
+        aria-expanded="false"
+        aria-controls="mobile-nav-dialog"
+        aria-label="Open navigation menu"
+      >
+        <Icons name="menu" size={22} />
+        <span class="menu-label">Menu</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Drawer Menu -->
+  <MobileMenu currentPath={currentPath} servicesLinks={servicesLinks} />
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: var(--header-height-desktop);
+    background-color: transparent;
+    transition: background-color var(--motion-base) var(--ease-standard),
+                border-color var(--motion-base) var(--ease-standard),
+                box-shadow var(--motion-base) var(--ease-standard);
+  }
+
+  .site-header.is-scrolled {
+    background-color: #FAFAF8;
+    background-color: rgba(250, 250, 248, 0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--slate-200);
+  }
+
+  .header-inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .brand-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 1.35rem;
+    font-weight: 750;
+    letter-spacing: -0.04em;
+    color: var(--ink-950);
+    text-decoration: none;
+  }
+
+  .brand-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--signal-blue);
+    border-radius: 50%;
+  }
+
+  .desktop-nav {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .desktop-nav {
+      display: block;
+    }
+  }
+
+  .nav-list {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+  }
+
+  .nav-item {
+    position: relative;
+  }
+
+  .nav-link {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--slate-700);
+    text-decoration: none;
+    padding: var(--space-2) 0;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    transition: color var(--motion-fast) var(--ease-standard);
+  }
+
+  .nav-link:hover, .nav-link.is-active {
+    color: var(--ink-950);
+  }
+
+  .dropdown-trigger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .dropdown-chevron {
+    font-size: 0.75rem;
+    transition: transform var(--motion-fast) var(--ease-standard);
+  }
+
+  .has-dropdown[data-open="true"] .dropdown-chevron {
+    transform: rotate(180deg);
+  }
+
+  .dropdown-panel {
+    position: absolute;
+    top: calc(100% + var(--space-3));
+    left: -16px;
+    width: 270px;
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    padding: var(--space-2);
+    z-index: 100;
+  }
+
+  .dropdown-panel[hidden] {
+    display: none;
+  }
+
+  .dropdown-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-3) var(--space-4);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--slate-700);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    min-height: 44px;
+    transition: background-color var(--motion-fast) var(--ease-standard),
+                color var(--motion-fast) var(--ease-standard);
+  }
+
+  .dropdown-item:hover, .dropdown-item.is-active {
+    background-color: var(--slate-100);
+    color: var(--ink-950);
+  }
+
+  .dropdown-divider {
+    height: 1px;
+    background-color: var(--slate-200);
+    margin: var(--space-1) 0;
+  }
+
+  .dropdown-item-all {
+    color: var(--signal-blue);
+    font-weight: 600;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+  }
+
+  .contact-text-link {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--slate-700);
+    text-decoration: none;
+    display: none;
+    transition: color var(--motion-fast) var(--ease-standard);
+  }
+
+  .contact-text-link:hover {
+    color: var(--ink-950);
+  }
+
+  .header-cta-btn {
+    display: none;
+  }
+
+  @media (min-width: 640px) {
+    .contact-text-link {
+      display: inline-block;
+    }
+    .header-cta-btn {
+      display: inline-flex;
+    }
+  }
+
+  .mobile-menu-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 44px;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--slate-300);
+    background-color: var(--surface);
+    color: var(--ink-950);
+    font-weight: 600;
+    font-size: 0.9375rem;
+  }
+
+  @media (min-width: 1024px) {
+    .mobile-menu-btn {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .site-header {
+      height: var(--header-height-mobile);
+    }
+  }
+</style>
+
+<script>
+  // Accessible Header Scroll & Dropdown Script
+  document.addEventListener("DOMContentLoaded", () => {
+    const header = document.getElementById("site-header");
+    const dropdownTrigger = document.getElementById("services-menu-button");
+    const dropdownPanel = document.getElementById("services-dropdown");
+    const dropdownContainer = dropdownTrigger?.closest(".has-dropdown");
+
+    // Scroll state management
+    const updateHeaderScroll = () => {
+      if (window.scrollY > 15) {
+        header?.classList.add("is-scrolled");
+      } else {
+        header?.classList.remove("is-scrolled");
+      }
+    };
+    window.addEventListener("scroll", updateHeaderScroll, { passive: true });
+    updateHeaderScroll();
+
+    // Dropdown toggling
+    if (dropdownTrigger && dropdownPanel && dropdownContainer) {
+      const openDropdown = () => {
+        dropdownTrigger.setAttribute("aria-expanded", "true");
+        dropdownPanel.removeAttribute("hidden");
+        dropdownContainer.setAttribute("data-open", "true");
+      };
+
+      const closeDropdown = () => {
+        dropdownTrigger.setAttribute("aria-expanded", "false");
+        dropdownPanel.setAttribute("hidden", "");
+        dropdownContainer.removeAttribute("data-open");
+      };
+
+      dropdownTrigger.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const isOpen = dropdownTrigger.getAttribute("aria-expanded") === "true";
+        if (isOpen) {
+          closeDropdown();
+        } else {
+          openDropdown();
+        }
+      });
+
+      // Close on Escape
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && dropdownTrigger.getAttribute("aria-expanded") === "true") {
+          closeDropdown();
+          dropdownTrigger.focus();
+        }
+      });
+
+      // Close on click outside
+      document.addEventListener("click", (e) => {
+        if (!dropdownContainer.contains(e.target as Node)) {
+          closeDropdown();
+        }
+      });
+    }
+  });
+</script>

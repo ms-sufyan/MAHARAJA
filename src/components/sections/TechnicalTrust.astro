@@ -1,0 +1,158 @@
+---
+import SectionEyebrow from "../ui/SectionEyebrow.astro";
+import Details from "../ui/Details.astro";
+
+const principles = [
+  {
+    title: "Clear rules",
+    desc: "Triggers, conditions and ownership should be explicit enough to explain."
+  },
+  {
+    title: "Visible exceptions",
+    desc: "Missing data, failed actions and ambiguous records need a defined path instead of disappearing silently."
+  },
+  {
+    title: "Controlled automation",
+    desc: "Approval or judgment-heavy steps can remain human-reviewed."
+  },
+  {
+    title: "Tested handoffs",
+    desc: "Normal paths, alternate routes and likely failure states should be tested before handover."
+  }
+];
+---
+
+<section class="technical-trust-section section-py-lg section-radial-dark" aria-labelledby="trust-heading">
+  <div class="container-default">
+    <div class="trust-header">
+      <SectionEyebrow variant="dark">DESIGNED FOR OPERATIONS, NOT DEMOS</SectionEyebrow>
+      <h2 id="trust-heading" class="section-title text-white">
+        The workflow needs to make sense when something goes wrong, too.
+      </h2>
+    </div>
+
+    <!-- 4 Operational Trust Cards -->
+    <div class="trust-grid">
+      {principles.map((p) => (
+        <div class="trust-card">
+          <h3 class="trust-card-title">{p.title}</h3>
+          <p class="trust-card-desc">{p.desc}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Technical Implementation Principles Disclosure - Section 25 -->
+    <div class="trust-disclosure-wrap">
+      <Details summary="Technical implementation principles" variant="dark" id="technical-principles-details">
+        <div class="technical-disclosure-content readable-prose">
+          <p>
+            Enterprise workflow reliability requires treating systems integration as software engineering rather than ad-hoc glue scripts. In our implementations, technical considerations include:
+          </p>
+          <ul>
+            <li>
+              <strong>Source-of-truth decisions:</strong> Defining clear system-of-record boundaries per entity and field so records never compete or trigger circular synchronizations.
+            </li>
+            <li>
+              <strong>Deterministic record matching:</strong> Utilizing durable unique identifiers (UUIDs, normalized email hashes, external ledger IDs) rather than ambiguous fuzzy text matching.
+            </li>
+            <li>
+              <strong>Idempotency &amp; deduplication:</strong> Implementing idempotency keys and state checks to ensure duplicate webhook triggers do not generate multiple transactions or duplicate records.
+            </li>
+            <li>
+              <strong>Rate limits &amp; graceful retries:</strong> Implementing exponential backoff retries for transient 429/5xx responses and respecting downstream API throttling limits.
+            </li>
+            <li>
+              <strong>Least-privilege security boundaries:</strong> Issuing scoped API keys and OAuth tokens restricted strictly to required endpoints rather than blanket administrative credentials.
+            </li>
+            <li>
+              <strong>Failure logging &amp; observable exception queues:</strong> Capturing execution timestamps and error payloads so discrepancies route directly to human remediation teams.
+            </li>
+          </ul>
+        </div>
+      </Details>
+    </div>
+  </div>
+</section>
+
+<style>
+  .technical-trust-section {
+    background-color: var(--ink-950);
+    color: var(--surface);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .text-white {
+    color: #FFFFFF !important;
+  }
+
+  .trust-header {
+    max-width: 760px;
+    margin-bottom: var(--space-16);
+  }
+
+  .trust-header h2 {
+    margin-top: var(--space-2);
+  }
+
+  .trust-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
+    margin-bottom: var(--space-12);
+  }
+
+  @media (max-width: 1024px) {
+    .trust-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .trust-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .trust-card {
+    background-color: var(--ink-900);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-card);
+    padding: var(--space-8);
+  }
+
+  .trust-card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: var(--space-3);
+  }
+
+  .trust-card-desc {
+    font-size: 0.9375rem;
+    color: var(--dark-muted);
+    line-height: 1.6;
+  }
+
+  .trust-disclosure-wrap {
+    max-width: 880px;
+    margin-top: var(--space-8);
+  }
+
+  .technical-disclosure-content {
+    color: var(--dark-muted);
+    font-size: 0.9375rem;
+  }
+
+  .technical-disclosure-content ul {
+    list-style: disc;
+    padding-left: var(--space-6);
+    margin-top: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .technical-disclosure-content strong {
+    color: #FFFFFF;
+  }
+</style>

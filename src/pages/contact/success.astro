@@ -1,0 +1,139 @@
+---
+export const prerender = true;
+
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../../components/ui/Button.astro";
+import SectionEyebrow from "../../components/ui/SectionEyebrow.astro";
+import { brand } from "../../data/brand";
+import { seoData } from "../../data/seo";
+---
+
+<BaseLayout
+  title={seoData.contactSuccess.title}
+  description={seoData.contactSuccess.description}
+  canonicalPath={seoData.contactSuccess.canonicalPath}
+  noindex={true}
+>
+  <section class="success-page-section section-py-lg">
+    <div class="container-default">
+      <div class="success-card">
+        <div class="success-icon-badge" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+        </div>
+
+        <SectionEyebrow>INQUIRY RECEIVED</SectionEyebrow>
+        <h1 class="interior-title success-h1">Thanks — your request has been received.</h1>
+        <p class="body-large success-lead">
+          We’ll review the process and systems you described before the next step.
+        </p>
+
+        <!-- Conditional Booking Action (Section 63 & 65) -->
+        {brand.bookingUrl ? (
+          <div class="booking-next-step">
+            <p class="booking-question">Prefer to choose a time now?</p>
+            <Button href={brand.bookingUrl} variant="primary" class="booking-btn">
+              Book a discovery call
+            </Button>
+            <div class="back-home-link">
+              <a href="/" class="secondary-home-link">Back to home</a>
+            </div>
+          </div>
+        ) : (
+          <div class="success-actions">
+            <Button href="/" variant="secondary">
+              Back to home
+            </Button>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .success-page-section {
+    background-color: var(--canvas);
+    min-height: 75vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .success-card {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-panel);
+    padding: var(--space-12);
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  @media (max-width: 640px) {
+    .success-card {
+      padding: var(--space-8);
+    }
+  }
+
+  .success-icon-badge {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: var(--signal-teal-soft);
+    color: var(--signal-teal-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-4);
+  }
+
+  .success-h1 {
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .success-lead {
+    margin-bottom: var(--space-8);
+  }
+
+  .booking-next-step {
+    border-top: 1px solid var(--slate-100);
+    padding-top: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+    width: 100%;
+  }
+
+  .booking-question {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ink-950);
+  }
+
+  .back-home-link {
+    margin-top: var(--space-2);
+  }
+
+  .secondary-home-link {
+    font-size: 0.875rem;
+    color: var(--slate-500);
+    text-decoration: underline;
+  }
+
+  .secondary-home-link:hover {
+    color: var(--ink-950);
+  }
+
+  .success-actions {
+    margin-top: var(--space-4);
+  }
+</style>

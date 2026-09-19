@@ -1,0 +1,298 @@
+---
+// Signature Animated Hero Workflow Map - Sections 14 & 15
+---
+<div class="hero-map-wrapper" id="hero-map-container">
+  <div class="hero-map-header">
+    <span class="system-status-indicator">
+      <span class="pulse-dot" aria-hidden="true"></span>
+      <span class="status-label">Operational Workflow Signal</span>
+    </span>
+    <button
+      type="button"
+      id="replay-hero-animation"
+      class="replay-btn"
+      aria-label="Replay workflow diagram animation"
+      title="Replay animation"
+    >
+      <span class="replay-icon" aria-hidden="true">↻</span>
+      <span class="replay-label">Replay</span>
+    </button>
+  </div>
+
+  <svg
+    viewBox="0 0 520 420"
+    class="hero-workflow-svg"
+    role="img"
+    aria-label="Abstract diagram showing information moving from input sources through validation and rules into CRM, documents, and reporting systems"
+  >
+    <defs>
+      <!-- Gradients -->
+      <linearGradient id="activeSignalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#3B5BFF" />
+        <stop offset="100%" stop-color="#0FAF9A" />
+      </linearGradient>
+
+      <!-- Glow filter for signal -->
+      <filter id="nodeGlow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="3" result="blur" />
+        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+      </filter>
+    </defs>
+
+    <!-- Background Subtle Connecting Grid Lines -->
+    <g class="diagram-connections" stroke="#DDE2EA" stroke-width="1.5">
+      <!-- Inputs to Normalize -->
+      <path id="path-input-form" d="M 90 60 L 260 110" />
+      <path id="path-input-inbox" d="M 260 60 L 260 110" />
+      <path id="path-input-calendar" d="M 430 60 L 260 110" />
+
+      <!-- Normalize to Rules -->
+      <path id="path-normalize-rules" d="M 260 135 L 260 175" />
+
+      <!-- Rules to Systems -->
+      <path id="path-rules-crm" d="M 260 205 L 120 260" />
+      <path id="path-rules-docs" d="M 260 205 L 260 260" />
+      <path id="path-rules-billing" d="M 260 205 L 400 260" />
+
+      <!-- Systems to Handoff -->
+      <path id="path-crm-handoff" d="M 120 285 L 260 335" />
+      <path id="path-docs-handoff" d="M 260 285 L 260 335" />
+      <path id="path-billing-handoff" d="M 400 285 L 260 335" />
+
+      <!-- Handoff to Reporting -->
+      <path id="path-handoff-report" d="M 260 355 L 260 385" />
+    </g>
+
+    <!-- Active Animated Highlight Path -->
+    <path
+      id="active-signal-path"
+      d="M 90 60 L 260 110 L 260 175 L 260 205 L 120 260 L 260 335 L 260 385"
+      fill="none"
+      stroke="url(#activeSignalGrad)"
+      stroke-width="2.5"
+      stroke-dasharray="800"
+      stroke-dashoffset="0"
+      class="animated-path"
+    />
+
+    <!-- Moving Signal Dot -->
+    <circle id="signal-dot" r="5" fill="#3B5BFF" filter="url(#nodeGlow)" class="moving-dot" cx="90" cy="60" />
+
+    <!-- Diagram Nodes -->
+    <!-- Inputs Row -->
+    <g class="node-group" id="node-form" transform="translate(90, 60)">
+      <circle r="22" fill="#FFFFFF" stroke="#C4CBD6" stroke-width="1.5" />
+      <text y="4" text-anchor="middle" font-size="10" font-weight="600" fill="#111827">Form</text>
+    </g>
+
+    <g class="node-group" id="node-inbox" transform="translate(260, 60)">
+      <circle r="22" fill="#FFFFFF" stroke="#C4CBD6" stroke-width="1.5" />
+      <text y="4" text-anchor="middle" font-size="10" font-weight="600" fill="#111827">Inbox</text>
+    </g>
+
+    <g class="node-group" id="node-calendar" transform="translate(430, 60)">
+      <circle r="22" fill="#FFFFFF" stroke="#C4CBD6" stroke-width="1.5" />
+      <text y="4" text-anchor="middle" font-size="10" font-weight="600" fill="#111827">Calendar</text>
+    </g>
+
+    <!-- Normalize Layer -->
+    <g class="node-group" id="node-normalize" transform="translate(260, 122)">
+      <rect x="-55" y="-14" width="110" height="28" rx="14" fill="#E8ECFF" stroke="#3B5BFF" stroke-width="1.5" />
+      <text y="4" text-anchor="middle" font-size="11" font-weight="600" fill="#3B5BFF">Validate &amp; Map</text>
+    </g>
+
+    <!-- Rules Core -->
+    <g class="node-group" id="node-rules" transform="translate(260, 190)">
+      <rect x="-65" y="-16" width="130" height="32" rx="8" fill="#111827" stroke="#3B5BFF" stroke-width="2" />
+      <text y="4" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">BUSINESS RULES</text>
+    </g>
+
+    <!-- Execution Systems Row -->
+    <g class="node-group node-downstream" id="node-crm" transform="translate(120, 272)">
+      <rect x="-42" y="-15" width="84" height="30" rx="8" fill="#FFFFFF" stroke="#0FAF9A" stroke-width="2" />
+      <text y="4" text-anchor="middle" font-size="11" font-weight="600" fill="#067B6C">Update CRM</text>
+    </g>
+
+    <g class="node-group node-downstream" id="node-docs" transform="translate(260, 272)">
+      <rect x="-42" y="-15" width="84" height="30" rx="8" fill="#FFFFFF" stroke="#C4CBD6" stroke-width="1.5" />
+      <text y="4" text-anchor="middle" font-size="11" font-weight="600" fill="#5B6474">Documents</text>
+    </g>
+
+    <g class="node-group node-downstream" id="node-billing" transform="translate(400, 272)">
+      <rect x="-42" y="-15" width="84" height="30" rx="8" fill="#FFFFFF" stroke="#C4CBD6" stroke-width="1.5" />
+      <text y="4" text-anchor="middle" font-size="11" font-weight="600" fill="#5B6474">Billing</text>
+    </g>
+
+    <!-- Human / Review Gate -->
+    <g class="node-group" id="node-review" transform="translate(260, 345)">
+      <rect x="-55" y="-13" width="110" height="26" rx="6" fill="#FFF3D6" stroke="#D97706" stroke-width="1.5" />
+      <text y="4" text-anchor="middle" font-size="10" font-weight="600" fill="#B45309">Human Checkpoint</text>
+    </g>
+
+    <!-- Final Reporting Node -->
+    <g class="node-group" id="node-report" transform="translate(260, 395)">
+      <circle r="16" fill="#0FAF9A" stroke="#067B6C" stroke-width="1.5" />
+      <polyline points="253,395 258,400 268,390" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" />
+    </g>
+  </svg>
+</div>
+
+<style>
+  .hero-map-wrapper {
+    width: 100%;
+    max-width: 520px;
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-panel);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-card);
+    position: relative;
+  }
+
+  .hero-map-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--slate-100);
+  }
+
+  .system-status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--signal-teal);
+    box-shadow: 0 0 0 2px var(--signal-teal-soft);
+  }
+
+  .status-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--slate-600);
+    font-family: var(--font-mono);
+  }
+
+  .replay-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--slate-500);
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--slate-200);
+    background-color: var(--slate-100);
+    transition: all var(--motion-fast) var(--ease-standard);
+  }
+
+  .replay-btn:hover {
+    color: var(--ink-950);
+    border-color: var(--slate-300);
+  }
+
+  .hero-workflow-svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  /* Motion Implementation - Section 15 */
+  .animated-path {
+    stroke-dasharray: 800;
+    stroke-dashoffset: 800;
+    animation: drawSignalPath 2.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+
+  .moving-dot {
+    animation: moveSignalDot 2.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+
+  @keyframes drawSignalPath {
+    0% {
+      stroke-dashoffset: 800;
+      opacity: 0.2;
+    }
+    15% {
+      opacity: 1;
+    }
+    100% {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+  }
+
+  @keyframes moveSignalDot {
+    0% {
+      cx: 90px;
+      cy: 60px;
+      opacity: 1;
+    }
+    25% {
+      cx: 260px;
+      cy: 110px;
+    }
+    50% {
+      cx: 260px;
+      cy: 190px;
+    }
+    75% {
+      cx: 120px;
+      cy: 272px;
+    }
+    90% {
+      cx: 260px;
+      cy: 345px;
+    }
+    100% {
+      cx: 260px;
+      cy: 395px;
+      opacity: 0;
+    }
+  }
+
+  /* Reduced Motion - Section 15 & 142 */
+  @media (prefers-reduced-motion: reduce) {
+    .animated-path {
+      stroke-dashoffset: 0 !important;
+      animation: none !important;
+    }
+    .moving-dot {
+      display: none !important;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const replayBtn = document.getElementById("replay-hero-animation");
+    const container = document.getElementById("hero-map-container");
+
+    if (replayBtn && container) {
+      replayBtn.addEventListener("click", () => {
+        const animatedPath = container.querySelector(".animated-path") as SVGPathElement | null;
+        const movingDot = container.querySelector(".moving-dot") as SVGCircleElement | null;
+
+        if (animatedPath && movingDot) {
+          animatedPath.style.animation = "none";
+          movingDot.style.animation = "none";
+
+          // Force reflow
+          void animatedPath.getBoundingClientRect();
+
+          animatedPath.style.animation = "";
+          movingDot.style.animation = "";
+        }
+      });
+    }
+  });
+</script>

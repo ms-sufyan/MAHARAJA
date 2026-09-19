@@ -1,0 +1,162 @@
+---
+export const prerender = true;
+
+import ContentLayout from "../layouts/ContentLayout.astro";
+import SectionEyebrow from "../components/ui/SectionEyebrow.astro";
+import { brand } from "../data/brand";
+import { seoData } from "../data/seo";
+
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: "Terms of Service" }
+];
+---
+
+<ContentLayout
+  title={seoData.terms.title}
+  description={seoData.terms.description}
+  canonicalPath={seoData.terms.canonicalPath}
+  breadcrumbs={breadcrumbs}
+>
+  <div class="legal-page-container">
+    <div class="legal-header">
+      <SectionEyebrow>WEBSITE TERMS</SectionEyebrow>
+      <h1 class="interior-title">Terms of Service</h1>
+      <p class="body-base legal-updated">
+        Effective Date: September 19, 2026 | Last Updated: September 19, 2026
+      </p>
+    </div>
+
+    <!-- Production Configuration Notice if Governing Law Pending -->
+    {!brand.governingLaw && (
+      <div class="legal-config-notice">
+        <strong>Notice for Production Deployment:</strong> Specific jurisdiction and governing law designations will be finalized in conjunction with commercial corporate registration prior to public commercial contracting.
+      </div>
+    )}
+
+    <div class="legal-body readable-prose">
+      <section class="legal-section">
+        <h2>1. Informational Purpose</h2>
+        <p>
+          This website is provided by <strong>{brand.legalEntity || brand.companyName}</strong> for informational purposes regarding our business systems, CRM optimization, and workflow automation consulting services. Viewing this website or submitting an inquiry form does not, by itself, establish a binding consulting contract or client-agency relationship.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>2. Technical Feasibility &amp; Project Scoping</h2>
+        <p>
+          Descriptions of workflow patterns, system integrations, and architectural capabilities on this website describe common technical patterns and implementation experiences. They do not constitute an unconditional guarantee that every requested automation or software pairing is technically feasible for your specific environment.
+        </p>
+        <p>
+          Feasibility, data structures, vendor API rate limits, authentication constraints, and licensing requirements must be evaluated against your specific software instances prior to executing a Statement of Work (SOW).
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>3. Third-Party Platforms and Trademarks</h2>
+        <p>
+          All product names, logos, brands, and registered trademarks mentioned on this website (such as monday.com, HubSpot, GoHighLevel, Zapier, Make, Google Workspace, QuickBooks, Stripe, and others) are the property of their respective trademark holders.
+        </p>
+        <p>
+          Their inclusion on this website is for nominative reference only to indicate implementation and integration experience. Mention of these platforms does not imply affiliation, sponsorship, official partnership, or endorsement by their respective owners.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>4. Intellectual Property</h2>
+        <p>
+          The original content, architectural diagrams, visual layout, code samples, and explanatory documentation on this website are protected by applicable copyright, trademark, and intellectual property laws. You may view and print pages for your internal business evaluation, but may not redistribute, republish, or commercialize our website content without prior written permission.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>5. Disclaimer of Warranties &amp; Limitation of Liability</h2>
+        <p>
+          This website and its content are provided on an "as-is" and "as-available" basis without representations or warranties of any kind, whether express or implied. To the fullest extent permitted by applicable law, we disclaim all warranties, including warranties of merchantability, fitness for a particular purpose, and non-infringement.
+        </p>
+        <p>
+          In no event shall {brand.legalEntity || brand.companyName} be liable for any indirect, incidental, special, consequential, or punitive damages arising from your access to, use of, or inability to use this website.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>6. Governing Law</h2>
+        <p>
+          These Terms of Service and any dispute arising from the use of this website shall be governed by and construed in accordance with the laws of <strong>{brand.governingLaw || "the jurisdiction of commercial registration upon final production deployment"}</strong>, without regard to its conflict of law principles.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>7. Contact Information</h2>
+        <p>
+          For legal notices or questions regarding these terms, please contact:
+        </p>
+        <p class="contact-details-box">
+          <strong>Legal Notices:</strong> {brand.companyName}<br />
+          <strong>Email:</strong> {brand.contactEmail || "legal@maharajasystems.com"}<br />
+          <strong>Website:</strong> <a href="/contact">Contact Form</a>
+        </p>
+      </section>
+    </div>
+  </div>
+</ContentLayout>
+
+<style>
+  .legal-page-container {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .legal-header {
+    margin-bottom: var(--space-8);
+    border-bottom: 1px solid var(--slate-200);
+    padding-bottom: var(--space-6);
+  }
+
+  .legal-updated {
+    font-size: 0.875rem;
+    color: var(--slate-500);
+    margin-top: var(--space-2);
+  }
+
+  .legal-config-notice {
+    background-color: var(--signal-amber-soft);
+    border: 1px solid rgba(217, 119, 6, 0.3);
+    border-radius: var(--radius-md);
+    padding: var(--space-4) var(--space-6);
+    margin-bottom: var(--space-8);
+    font-size: 0.875rem;
+    color: #92400E;
+  }
+
+  .legal-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .legal-section h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--ink-950);
+    margin-bottom: var(--space-3);
+  }
+
+  .legal-section p {
+    font-size: 1rem;
+    color: var(--slate-600);
+    line-height: 1.65;
+    margin-bottom: var(--space-3);
+  }
+
+  .contact-details-box {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--ink-950);
+  }
+</style>

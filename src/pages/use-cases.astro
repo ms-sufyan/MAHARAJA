@@ -1,0 +1,399 @@
+---
+export const prerender = true;
+
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/global/Breadcrumbs.astro";
+import SectionEyebrow from "../components/ui/SectionEyebrow.astro";
+import Button from "../components/ui/Button.astro";
+import FinalCTA from "../components/sections/FinalCTA.astro";
+import { useCases, useCaseCategories } from "../data/useCases";
+import { seoData } from "../data/seo";
+
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: "Use Cases" }
+];
+---
+
+<BaseLayout
+  title={seoData.useCases.title}
+  description={seoData.useCases.description}
+  canonicalPath={seoData.useCases.canonicalPath}
+>
+  <!-- Use Cases Hero -->
+  <section class="use-cases-hero section-py">
+    <div class="container-default">
+      <Breadcrumbs items={breadcrumbs} />
+
+      <div class="hero-content-block">
+        <SectionEyebrow>PROCESS CATALOG</SectionEyebrow>
+        <h1 class="interior-title">Start with the process that is still too manual.</h1>
+        <p class="body-large hero-sub">
+          Explore common workflow patterns by business problem rather than by software product.
+        </p>
+        <div class="hero-cta-row">
+          <Button href="/contact" variant="primary">
+            Describe your process
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filterable Use Cases Catalog -->
+  <section class="catalog-section section-py">
+    <div class="container-default">
+      <!-- Category Filter Buttons (Progressive Enhancement) -->
+      <div class="filter-controls-row" role="group" aria-label="Filter use cases by category">
+        {useCaseCategories.map((cat, idx) => (
+          <button
+            type="button"
+            class={`filter-btn ${idx === 0 ? "is-active" : ""}`}
+            data-category={cat.id}
+            aria-pressed={idx === 0 ? "true" : "false"}
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
+
+      <!-- Use Cases Grid (Server-Rendered Complete HTML) -->
+      <div class="use-cases-grid" id="use-cases-container">
+        {useCases.map((uc) => (
+          <article
+            class="use-case-card"
+            data-categories={uc.category.join(",")}
+            id={`use-case-${uc.slug}`}
+          >
+            <div class="card-header-bar">
+              <span class="card-eyebrow">WORKFLOW PATTERN</span>
+              <h2 class="use-case-title">{uc.title}</h2>
+            </div>
+
+            <!-- Problem & When this helps -->
+            <div class="case-section-box">
+              <span class="section-label text-error">Current Problem:</span>
+              <p class="section-copy">{uc.problem}</p>
+            </div>
+
+            <div class="case-section-box">
+              <span class="section-label text-blue">When This Helps:</span>
+              <p class="section-copy">{uc.whenHelpful}</p>
+            </div>
+
+            <!-- Typical Flow -->
+            <div class="case-flow-box">
+              <span class="section-label">Typical Flow:</span>
+              <ol class="flow-steps-list">
+                {uc.flow.map((step) => (
+                  <li>
+                    <span class="step-bullet" aria-hidden="true">→</span>
+                    <span>{step}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <!-- What stays human -->
+            <div class="case-human-box">
+              <span class="section-label text-amber">Human Control:</span>
+              <p class="section-copy text-amber-dark">{uc.humanControl}</p>
+            </div>
+
+            <!-- Systems Involved -->
+            <div class="case-systems-row">
+              <span class="systems-label">Systems:</span>
+              <div class="systems-tags">
+                {uc.systemsInvolved.map((sys) => (
+                  <span class="sys-tag">{sys}</span>
+                ))}
+              </div>
+            </div>
+
+            <!-- Card Footer: Related Services & Direct Contact Action -->
+            <div class="case-card-footer">
+              <div class="related-services-links">
+                <span class="related-label">Services:</span>
+                {uc.relatedServices.map((rs) => (
+                  <a href={rs.href} class="related-link">{rs.label}</a>
+                ))}
+              </div>
+
+              <div class="card-cta-button">
+                <Button href={`/contact?service=custom&context=${uc.ctaParam}`} variant="secondary" class="case-btn">
+                  {uc.ctaText}
+                </Button>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <FinalCTA />
+</BaseLayout>
+
+<style>
+  .use-cases-hero {
+    background-color: var(--canvas-alt);
+    border-bottom: 1px solid var(--slate-200);
+  }
+
+  .hero-content-block {
+    max-width: 780px;
+  }
+
+  .hero-sub {
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-8);
+  }
+
+  .catalog-section {
+    background-color: var(--canvas);
+  }
+
+  /* Filter Controls */
+  .filter-controls-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-12);
+  }
+
+  .filter-btn {
+    min-height: 44px;
+    padding: var(--space-2) var(--space-5);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--slate-300);
+    background-color: var(--surface);
+    color: var(--slate-700);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--motion-fast) var(--ease-standard);
+  }
+
+  .filter-btn:hover {
+    border-color: var(--signal-blue);
+    color: var(--ink-950);
+  }
+
+  .filter-btn.is-active {
+    background-color: var(--ink-950);
+    color: #FFFFFF;
+    border-color: var(--ink-950);
+  }
+
+  /* Grid */
+  .use-cases-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+  }
+
+  @media (max-width: 1024px) {
+    .use-cases-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .use-case-card {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-panel);
+    padding: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    transition: transform var(--motion-fast) var(--ease-standard),
+                border-color var(--motion-fast) var(--ease-standard);
+  }
+
+  .use-case-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--slate-300);
+  }
+
+  .use-case-card.is-hidden {
+    display: none;
+  }
+
+  .card-header-bar {
+    border-bottom: 1px solid var(--slate-100);
+    padding-bottom: var(--space-4);
+  }
+
+  .card-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--signal-blue);
+    font-family: var(--font-mono);
+    display: block;
+    margin-bottom: var(--space-2);
+  }
+
+  .use-case-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--ink-950);
+    line-height: 1.3;
+  }
+
+  .case-section-box {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--slate-500);
+  }
+
+  .text-error { color: var(--error); }
+  .text-blue { color: var(--signal-blue); }
+  .text-amber { color: var(--signal-amber); }
+  .text-amber-dark { color: #92400E; }
+
+  .section-copy {
+    font-size: 0.9375rem;
+    color: var(--slate-600);
+    line-height: 1.55;
+  }
+
+  /* Flow list */
+  .case-flow-box {
+    background-color: var(--canvas-alt);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-md);
+    padding: var(--space-4) var(--space-6);
+  }
+
+  .flow-steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+  }
+
+  .flow-steps-list li {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    font-size: 0.875rem;
+    color: var(--ink-950);
+    font-weight: 500;
+  }
+
+  .step-bullet {
+    color: var(--signal-blue);
+    font-weight: 700;
+  }
+
+  .case-human-box {
+    background-color: var(--signal-amber-soft);
+    border-left: 3px solid var(--signal-amber);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: var(--space-4) var(--space-6);
+  }
+
+  /* Systems */
+  .case-systems-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .systems-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--slate-500);
+  }
+
+  .systems-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+  }
+
+  .sys-tag {
+    background-color: var(--slate-100);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-sm);
+    padding: 1px var(--space-2);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--slate-700);
+  }
+
+  /* Footer */
+  .case-card-footer {
+    margin-top: auto;
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--slate-100);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .related-services-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 0.8125rem;
+  }
+
+  .related-label {
+    color: var(--slate-500);
+    font-weight: 600;
+  }
+
+  .related-link {
+    color: var(--signal-blue);
+    text-decoration: underline;
+  }
+
+  .case-btn {
+    width: 100%;
+  }
+</style>
+
+<script>
+  // Progressive Category Filter for Use Cases
+  document.addEventListener("DOMContentLoaded", () => {
+    const filterButtons = document.querySelectorAll<HTMLButtonElement>(".filter-btn");
+    const cards = document.querySelectorAll<HTMLElement>(".use-case-card");
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const category = btn.getAttribute("data-category");
+        if (!category) return;
+
+        // Update active buttons
+        filterButtons.forEach((b) => {
+          const isActive = b === btn;
+          b.classList.toggle("is-active", isActive);
+          b.setAttribute("aria-pressed", isActive ? "true" : "false");
+        });
+
+        // Filter cards
+        cards.forEach((card) => {
+          const cardCategories = (card.getAttribute("data-categories") || "").split(",");
+          if (category === "all" || cardCategories.includes(category)) {
+            card.classList.remove("is-hidden");
+          } else {
+            card.classList.add("is-hidden");
+          }
+        });
+      });
+    });
+  });
+</script>

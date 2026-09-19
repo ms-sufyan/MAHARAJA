@@ -1,0 +1,117 @@
+---
+import { implementationPatterns } from "../../data/implementationPatterns";
+import PatternDiagram from "../visual/PatternDiagram.astro";
+import TextLink from "../ui/TextLink.astro";
+
+const homePatterns = implementationPatterns.filter((p) => p.highlightOnHome);
+---
+
+<section class="implementation-patterns-section section-py" aria-labelledby="patterns-heading">
+  <div class="container-default">
+    <div class="patterns-header">
+      <span class="eyebrow">PRACTICAL ARCHITECTURE</span>
+      <h2 id="patterns-heading" class="section-title">
+        Implementation patterns represented in real workflow work
+      </h2>
+      <p class="body-large patterns-lead">
+        The examples below describe architecture and workflow logic—not unverified performance outcomes.
+      </p>
+    </div>
+
+    <!-- 4 Feature Panels -->
+    <div class="patterns-grid">
+      {homePatterns.map((pat) => (
+        <div class="pattern-feature-card">
+          <div class="pattern-card-info">
+            <span class="pattern-eyebrow">{pat.shortTitle}</span>
+            <h3 class="pattern-card-title">{pat.title}</h3>
+            <p class="pattern-card-situation">{pat.situation}</p>
+          </div>
+
+          <div class="pattern-card-visual">
+            <PatternDiagram patternSlug={pat.slug} steps={pat.flowSteps} />
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="patterns-footer">
+      <TextLink href="/capabilities">
+        View all capabilities
+      </TextLink>
+    </div>
+  </div>
+</section>
+
+<style>
+  .implementation-patterns-section {
+    background-color: var(--canvas);
+  }
+
+  .patterns-header {
+    max-width: 720px;
+    margin-bottom: var(--space-16);
+  }
+
+  .patterns-header h2 {
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .patterns-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+    margin-bottom: var(--space-12);
+  }
+
+  @media (max-width: 1024px) {
+    .patterns-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .pattern-feature-card {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-panel);
+    padding: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-6);
+  }
+
+  .pattern-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--signal-blue);
+    display: block;
+    margin-bottom: var(--space-2);
+  }
+
+  .pattern-card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--ink-950);
+    line-height: 1.35;
+    margin-bottom: var(--space-3);
+  }
+
+  .pattern-card-situation {
+    font-size: 0.9375rem;
+    color: var(--slate-600);
+    line-height: 1.6;
+  }
+
+  .pattern-card-visual {
+    margin-top: auto;
+  }
+
+  .patterns-footer {
+    display: flex;
+    justify-content: flex-start;
+  }
+</style>

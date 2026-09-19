@@ -1,0 +1,75 @@
+---
+export interface FormError {
+  field: string;
+  message: string;
+}
+
+interface Props {
+  errors?: FormError[];
+  id?: string;
+  class?: string;
+}
+
+const { errors = [], id = "error-summary", class: className = "" } = Astro.props;
+---
+
+<div
+  id={id}
+  class={`error-summary ${className}`}
+  role="alert"
+  aria-labelledby="error-summary-title"
+  tabindex="-1"
+  style={errors.length > 0 ? "display: block;" : "display: none;"}
+>
+  <h2 id="error-summary-title" class="error-summary-heading">
+    There is a problem with your submission
+  </h2>
+  <ul class="error-summary-list" id="error-summary-items">
+    {errors.map((err) => (
+      <li>
+        <a href={`#field-${err.field}`}>{err.message}</a>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .error-summary {
+    background-color: var(--error-soft);
+    border: 2px solid var(--error);
+    border-radius: var(--radius-md);
+    padding: var(--space-4) var(--space-6);
+    margin-bottom: var(--space-6);
+  }
+
+  .error-summary:focus {
+    outline: 3px solid var(--ink-950) !important;
+    outline-offset: 2px !important;
+  }
+
+  .error-summary-heading {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--error);
+    margin-bottom: var(--space-2);
+  }
+
+  .error-summary-list {
+    list-style: disc;
+    padding-left: var(--space-6);
+  }
+
+  .error-summary-list li {
+    margin-bottom: var(--space-1);
+  }
+
+  .error-summary-list a {
+    color: var(--error);
+    font-weight: 600;
+    text-decoration: underline;
+  }
+
+  .error-summary-list a:hover {
+    color: #8C1D13;
+  }
+</style>

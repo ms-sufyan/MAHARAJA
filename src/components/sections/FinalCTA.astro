@@ -1,0 +1,82 @@
+---
+import { brand } from "../../data/brand";
+import Button from "../ui/Button.astro";
+import SectionEyebrow from "../ui/SectionEyebrow.astro";
+---
+
+<section class="final-cta-section section-py-lg section-radial-dark" aria-labelledby="final-cta-heading">
+  <div class="container-default">
+    <div class="final-cta-content">
+      <SectionEyebrow variant="dark">GET STARTED</SectionEyebrow>
+      <h2 id="final-cta-heading" class="section-title text-white">
+        Tell us where the workflow is breaking.
+      </h2>
+      <p class="body-large cta-description text-muted">
+        Describe what happens today, the systems involved and the part your team is still handling manually.
+      </p>
+
+      <div class="final-cta-actions">
+        <Button href="/contact" variant="primary" class="cta-primary-btn">
+          Discuss your workflow
+        </Button>
+
+        {brand.bookingUrl && (
+          <Button href={brand.bookingUrl} variant="secondary" class="cta-secondary-btn">
+            Book a discovery call
+          </Button>
+        )}
+      </div>
+
+      <p class="cta-microcopy">
+        No need to design the solution before reaching out.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .final-cta-section {
+    background-color: var(--ink-950);
+    color: #FFFFFF;
+    text-align: center;
+  }
+
+  .text-white {
+    color: #FFFFFF !important;
+  }
+
+  .text-muted {
+    color: var(--dark-muted) !important;
+  }
+
+  .final-cta-content {
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .final-cta-content h2 {
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .cta-description {
+    margin-bottom: var(--space-8);
+  }
+
+  .final-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-3);
+  }
+
+  .cta-microcopy {
+    font-size: 0.875rem;
+    color: var(--slate-500);
+  }
+</style>

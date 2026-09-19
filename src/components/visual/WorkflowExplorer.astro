@@ -1,0 +1,535 @@
+---
+import Button from "../ui/Button.astro";
+
+interface WorkflowItem {
+  id: string;
+  name: string;
+  before: string;
+  steps: string[];
+  humanControl: string;
+  ctaText: string;
+  ctaUrl: string;
+}
+
+const workflows: WorkflowItem[] = [
+  {
+    id: "lead-intake",
+    name: "Lead intake",
+    before: "A lead arrives. Someone checks it, copies the details, creates a CRM record, assigns an owner and sends a follow-up.",
+    steps: [
+      "Lead source",
+      "Validate and format",
+      "Create/update CRM record",
+      "Apply routing rule",
+      "Assign owner",
+      "Trigger next action"
+    ],
+    humanControl: "Sales can still own qualification and the actual conversation.",
+    ctaText: "Discuss a lead workflow",
+    ctaUrl: "/contact?service=crm&context=lead-intake"
+  },
+  {
+    id: "follow-up",
+    name: "Follow-up",
+    before: "The team relies on inbox flags, personal reminders or calendar notes to remember the next action.",
+    steps: [
+      "Status/event",
+      "Check conditions",
+      "Wait until the right time",
+      "Create task or communication",
+      "Record outcome",
+      "Continue or stop"
+    ],
+    humanControl: "The workflow can stop when a real conversation, status change or exception occurs.",
+    ctaText: "Discuss follow-up automation",
+    ctaUrl: "/contact?service=workflow-automation&context=follow-up"
+  },
+  {
+    id: "appointments",
+    name: "Appointments",
+    before: "A booking is made, then several systems and people need to be updated manually.",
+    steps: [
+      "Booking event",
+      "Normalize contact information",
+      "Update CRM",
+      "Confirmation",
+      "Reminder",
+      "Reschedule/no-show path"
+    ],
+    humanControl: "Complex scheduling or customer exceptions can remain manual.",
+    ctaText: "Discuss appointment automation",
+    ctaUrl: "/contact?service=workflow-automation&context=appointments"
+  },
+  {
+    id: "documents",
+    name: "Documents",
+    before: "Information is copied from a CRM or spreadsheet into a document, then exported, stored and attached back to the originating record.",
+    steps: [
+      "Record event",
+      "Retrieve data",
+      "Validate required fields",
+      "Generate document",
+      "Store or route file",
+      "Return link/status"
+    ],
+    humanControl: "Review or approval can remain mandatory before a document is finalized or sent.",
+    ctaText: "Discuss document automation",
+    ctaUrl: "/contact?service=workflow-automation&context=documents"
+  },
+  {
+    id: "billing",
+    name: "Billing",
+    before: "Payment, invoice and CRM records are checked separately and statuses can fall out of sync.",
+    steps: [
+      "Billing event",
+      "Identify customer",
+      "Apply route",
+      "Create/update financial action",
+      "Update CRM status",
+      "Notify exception if needed"
+    ],
+    humanControl: "Financial approvals and exception handling can remain under authorized staff.",
+    ctaText: "Discuss a billing workflow",
+    ctaUrl: "/contact?service=integrations&context=billing"
+  },
+  {
+    id: "data-sync",
+    name: "Data sync",
+    before: "The same customer or operational information is typed into several systems and gradually becomes inconsistent.",
+    steps: [
+      "Source-system event",
+      "Identify record",
+      "Map fields",
+      "Validate values",
+      "Create/update destination",
+      "Record sync outcome"
+    ],
+    humanControl: "Conflicting data or ambiguous matches can be routed for review rather than overwritten automatically.",
+    ctaText: "Discuss data synchronization",
+    ctaUrl: "/contact?service=integrations&context=data-sync"
+  }
+];
+---
+
+<section id="workflow-explorer" class="workflow-explorer-section section-py" aria-labelledby="explorer-heading">
+  <div class="container-default">
+    <div class="explorer-header">
+      <span class="eyebrow">SIGNATURE FEATURE</span>
+      <h2 id="explorer-heading" class="section-title">Choose a process. See how the handoffs can change.</h2>
+      <p class="body-large">
+        Start with a familiar business process—not a technology name.
+      </p>
+    </div>
+
+    <!-- Progressive Enhancement: No-JS Fallback using native accessible <details> -->
+    <noscript>
+      <div class="no-js-explorer">
+        {workflows.map((wf) => (
+          <details class="custom-details custom-details-dark" open={wf.id === "lead-intake"}>
+            <summary>
+              <span>{wf.name}</span>
+            </summary>
+            <div class="details-body">
+              <div class="wf-fallback-group">
+                <h4>Before (Manual Friction)</h4>
+                <p>{wf.before}</p>
+              </div>
+              <div class="wf-fallback-group">
+                <h4>Structured Workflow</h4>
+                <ol class="wf-fallback-steps">
+                  {wf.steps.map((st) => <li>{st}</li>)}
+                </ol>
+              </div>
+              <div class="wf-fallback-group">
+                <h4>Human Control</h4>
+                <p>{wf.humanControl}</p>
+              </div>
+              <div class="wf-fallback-group">
+                <a href={wf.ctaUrl} class="btn btn-primary">{wf.ctaText}</a>
+              </div>
+            </div>
+          </details>
+        ))}
+      </div>
+    </noscript>
+
+    <!-- Enhanced Interactive Experience -->
+    <div class="interactive-explorer-container" id="interactive-explorer" data-enhanced="false">
+      <!-- Selector Tabs -->
+      <div class="explorer-tabs-bar" role="tablist" aria-label="Business process workflow selectors">
+        {workflows.map((wf, idx) => (
+          <button
+            type="button"
+            role="tab"
+            id={`tab-${wf.id}`}
+            class={`explorer-tab-btn ${idx === 0 ? "is-active" : ""}`}
+            aria-selected={idx === 0 ? "true" : "false"}
+            aria-controls={`panel-${wf.id}`}
+            data-target={wf.id}
+          >
+            {wf.name}
+          </button>
+        ))}
+      </div>
+
+      <!-- Technical Dark Panel -->
+      <div class="explorer-dark-panel">
+        {workflows.map((wf, idx) => (
+          <div
+            id={`panel-${wf.id}`}
+            role="tabpanel"
+            aria-labelledby={`tab-${wf.id}`}
+            class={`explorer-panel-content ${idx === 0 ? "is-visible" : ""}`}
+            hidden={idx !== 0}
+          >
+            <div class="panel-layout-grid">
+              <!-- Left Column: Explanation & Narrative -->
+              <div class="panel-narrative">
+                <div class="comparison-block before-block">
+                  <span class="block-tag before-tag">Before: Manual Handling</span>
+                  <p class="before-text">{wf.before}</p>
+                </div>
+
+                <div class="comparison-block human-control-block">
+                  <span class="block-tag amber-tag">Human Control Boundary</span>
+                  <p class="human-control-text">{wf.humanControl}</p>
+                </div>
+
+                <div class="panel-action-row">
+                  <Button href={wf.ctaUrl} variant="primary">
+                    {wf.ctaText}
+                  </Button>
+                </div>
+              </div>
+
+              <!-- Right Column: Visual Technical Node-and-Path Diagram -->
+              <div class="panel-diagram">
+                <div class="diagram-title-row">
+                  <span class="diagram-badge">STRUCTURED WORKFLOW FLOW</span>
+                  <span class="diagram-status">Deterministic Logic</span>
+                </div>
+
+                <div class="steps-flow-container">
+                  {wf.steps.map((step, sIdx) => {
+                    const isFirst = sIdx === 0;
+                    const isLast = sIdx === wf.steps.length - 1;
+                    return (
+                      <div class="flow-step-item">
+                        <div class="step-indicator">
+                          <span class={`step-node ${isFirst ? "node-source" : isLast ? "node-complete" : "node-logic"}`}>
+                            {sIdx + 1}
+                          </span>
+                          {!isLast && <span class="step-connector" aria-hidden="true"></span>}
+                        </div>
+                        <div class="step-info">
+                          <span class="step-label">{step}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .workflow-explorer-section {
+    background-color: var(--canvas);
+  }
+
+  .explorer-header {
+    text-align: center;
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: var(--space-12);
+  }
+
+  .explorer-header h2 {
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  /* Interactive Container */
+  .interactive-explorer-container {
+    width: 100%;
+  }
+
+  .explorer-tabs-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    justify-content: center;
+    margin-bottom: var(--space-6);
+  }
+
+  .explorer-tab-btn {
+    min-height: 44px;
+    padding: var(--space-2) var(--space-5);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--slate-300);
+    background-color: var(--surface);
+    color: var(--slate-700);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    transition: all var(--motion-fast) var(--ease-standard);
+  }
+
+  .explorer-tab-btn:hover {
+    border-color: var(--signal-blue);
+    color: var(--ink-950);
+  }
+
+  .explorer-tab-btn.is-active {
+    background-color: var(--ink-950);
+    color: #FFFFFF;
+    border-color: var(--ink-950);
+  }
+
+  /* Technical Dark Panel - Section 20 */
+  .explorer-dark-panel {
+    background-color: var(--ink-950);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-panel);
+    padding: var(--space-12);
+    box-shadow: var(--shadow-card);
+    min-height: 440px;
+  }
+
+  @media (max-width: 768px) {
+    .explorer-dark-panel {
+      padding: var(--space-6);
+    }
+  }
+
+  .explorer-panel-content {
+    opacity: 0;
+    transition: opacity 220ms var(--ease-standard);
+  }
+
+  .explorer-panel-content.is-visible {
+    opacity: 1;
+  }
+
+  .explorer-panel-content[hidden] {
+    display: none;
+  }
+
+  .panel-layout-grid {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: var(--space-12);
+    align-items: center;
+  }
+
+  @media (max-width: 1024px) {
+    .panel-layout-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+  }
+
+  /* Narrative Column */
+  .comparison-block {
+    padding: var(--space-6);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-6);
+  }
+
+  .before-block {
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .human-control-block {
+    background-color: rgba(217, 119, 6, 0.08);
+    border: 1px solid rgba(217, 119, 6, 0.25);
+  }
+
+  .block-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-2);
+  }
+
+  .before-tag {
+    color: var(--slate-300);
+  }
+
+  .amber-tag {
+    color: var(--signal-amber);
+  }
+
+  .before-text {
+    color: var(--dark-muted);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .human-control-text {
+    color: #FEEBC8;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  .panel-action-row {
+    margin-top: var(--space-6);
+  }
+
+  /* Diagram Column */
+  .panel-diagram {
+    background-color: var(--ink-900);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-card);
+    padding: var(--space-8);
+  }
+
+  .diagram-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: var(--space-3);
+    margin-bottom: var(--space-6);
+  }
+
+  .diagram-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--signal-blue);
+    font-family: var(--font-mono);
+  }
+
+  .diagram-status {
+    font-size: 0.75rem;
+    color: var(--signal-teal);
+    font-family: var(--font-mono);
+  }
+
+  .steps-flow-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .flow-step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    min-height: 48px;
+  }
+
+  .step-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 28px;
+  }
+
+  .step-node {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+  }
+
+  .node-source {
+    background-color: #FFFFFF;
+    color: var(--ink-950);
+  }
+
+  .node-logic {
+    background-color: var(--signal-blue);
+    color: #FFFFFF;
+  }
+
+  .node-complete {
+    background-color: var(--signal-teal);
+    color: var(--ink-950);
+  }
+
+  .step-connector {
+    width: 2px;
+    height: 24px;
+    background-color: rgba(255, 255, 255, 0.15);
+    margin: 2px 0;
+  }
+
+  .step-info {
+    padding-top: 3px;
+  }
+
+  .step-label {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #FFFFFF;
+  }
+
+  /* No-JS fallback styles */
+  .no-js-explorer {
+    margin-top: var(--space-8);
+  }
+  .wf-fallback-group {
+    margin-bottom: var(--space-4);
+  }
+  .wf-fallback-group h4 {
+    color: var(--signal-teal);
+    margin-bottom: var(--space-1);
+    font-size: 0.9375rem;
+  }
+  .wf-fallback-steps {
+    list-style: decimal;
+    padding-left: var(--space-6);
+  }
+</style>
+
+<script>
+  // Progressive Tab Switcher for Workflow Explorer
+  document.addEventListener("DOMContentLoaded", () => {
+    const tabs = document.querySelectorAll<HTMLButtonElement>(".explorer-tab-btn");
+    const panels = document.querySelectorAll<HTMLElement>(".explorer-panel-content");
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const targetId = tab.getAttribute("data-target");
+        if (!targetId) return;
+
+        // Update tabs state
+        tabs.forEach((t) => {
+          const isActive = t === tab;
+          t.classList.toggle("is-active", isActive);
+          t.setAttribute("aria-selected", isActive ? "true" : "false");
+        });
+
+        // Update panels
+        panels.forEach((p) => {
+          const isTarget = p.id === `panel-${targetId}`;
+          if (isTarget) {
+            p.removeAttribute("hidden");
+            // Allow display change to register before opacity transition
+            requestAnimationFrame(() => {
+              p.classList.add("is-visible");
+            });
+          } else {
+            p.classList.remove("is-visible");
+            p.setAttribute("hidden", "");
+          }
+        });
+      });
+    });
+  });
+</script>

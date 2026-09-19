@@ -1,0 +1,448 @@
+---
+export const prerender = true;
+
+import ServiceLayout from "../../layouts/ServiceLayout.astro";
+import SectionEyebrow from "../../components/ui/SectionEyebrow.astro";
+import Details from "../../components/ui/Details.astro";
+import Button from "../../components/ui/Button.astro";
+import { services } from "../../data/services";
+import { seoData } from "../../data/seo";
+
+const aiService = services.find((s) => s.slug === "ai-assisted-automation")!;
+
+const roles = [
+  {
+    role: "Extract",
+    desc: "Turn unstructured text inside documents, customer emails, or PDFs into validated, typed CRM properties."
+  },
+  {
+    role: "Classify",
+    desc: "Assign an exact taxonomy category or routing tag to incoming inquiries based on explicit business criteria."
+  },
+  {
+    role: "Enrich",
+    desc: "Supplement existing lead or account records with synthesized context and pre-defined industry classifications."
+  },
+  {
+    role: "Draft",
+    desc: "Prepare structured reply outlines, synthesized meeting briefs, or proposal summaries for mandatory human review."
+  }
+];
+
+const controlPatterns = [
+  { name: "Strict Output Schema", desc: "Forcing language models to respond strictly matching JSON Schemas, eliminating formatting inconsistencies." },
+  { name: "Deterministic Validation", desc: "Passing AI-generated fields through type checkers, regex checks, and business threshold rules." },
+  { name: "Confidence Thresholds", desc: "Setting strict score barriers; anything below the required threshold routes to human review." },
+  { name: "Human Review Before Send", desc: "Ensuring customer-facing messages or contract commitments require explicit team approval." },
+  { name: "Deterministic Fallbacks", desc: "Defaulting to pre-set routing rules when a model request times out or schema fails." },
+  { name: "Exception Queues", desc: "Logging unvalidated extractions to a dedicated remediation interface with raw context preserved." }
+];
+---
+
+<ServiceLayout
+  title={seoData.ai.title}
+  description={seoData.ai.description}
+  canonicalPath={seoData.ai.canonicalPath}
+  eyebrow={aiService.eyebrow}
+  h1={aiService.h1}
+  subheadline={aiService.subheadline}
+  ctaLabel={aiService.ctaLabel}
+  ctaHref={aiService.ctaHref}
+  secondaryCtaLabel="Explore use cases"
+  secondaryCtaHref="/use-cases"
+>
+  <!-- Technical Visual: AI Step in Pipeline (No Clichés) -->
+  <div slot="hero-visual" class="ai-pipeline-card">
+    <div class="ai-card-header">
+      <span>CONTROLLED AI STEP TOPOLOGY</span>
+    </div>
+    <div class="ai-flow-stack">
+      <div class="flow-pill flow-input">
+        <span class="pill-label">1. Unstructured Input</span>
+        <span class="pill-type">Raw Text / PDF</span>
+      </div>
+      <div class="flow-arrow" aria-hidden="true">↓</div>
+      
+      <div class="flow-pill flow-ai">
+        <span class="pill-label">2. Targeted AI Task</span>
+        <span class="pill-type">Strict JSON Output</span>
+      </div>
+      <div class="flow-arrow" aria-hidden="true">↓</div>
+
+      <div class="flow-pill flow-check">
+        <span class="pill-label">3. Deterministic Validation</span>
+        <span class="pill-type">Schema &amp; Threshold Check</span>
+      </div>
+      <div class="flow-arrow" aria-hidden="true">↓</div>
+
+      <div class="flow-split-row">
+        <div class="flow-pill flow-pass">
+          <span class="pill-label">Pass</span>
+          <span class="pill-type">Execute Action</span>
+        </div>
+        <div class="flow-pill flow-review">
+          <span class="pill-label">Low Confidence</span>
+          <span class="pill-type">Human Queue</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1. Four Useful Roles -->
+  <section class="ai-roles-section section-py">
+    <div class="container-default">
+      <div class="section-intro">
+        <SectionEyebrow>TARGETED CAPABILITIES</SectionEyebrow>
+        <h2 class="section-title">Useful roles for AI in business workflows</h2>
+        <p class="body-large">
+          AI is deployed as a single specialized step within an end-to-end process—not as an unaccountable replacement for business logic.
+        </p>
+      </div>
+
+      <div class="roles-grid">
+        {roles.map((r) => (
+          <div class="role-card">
+            <h3 class="role-title">{r.role}</h3>
+            <p class="role-desc">{r.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. AI is one step, not the whole process -->
+  <section class="ai-step-section section-py">
+    <div class="container-default">
+      <div class="ai-sequence-box">
+        <span class="eyebrow">PROCESS GOVERNANCE</span>
+        <h2 class="section-title">AI is one step, not the whole process.</h2>
+        <p class="body-large sequence-lead">
+          We embed AI tasks inside deterministic workflow wrappers that enforce security, data privacy, and deterministic rules.
+        </p>
+
+        <div class="sequence-strip">
+          <span class="seq-item">Trigger</span>
+          <span class="seq-sep" aria-hidden="true">→</span>
+          <span class="seq-item">Retrieve Context</span>
+          <span class="seq-sep" aria-hidden="true">→</span>
+          <span class="seq-item seq-item-ai">AI Operation</span>
+          <span class="seq-sep" aria-hidden="true">→</span>
+          <span class="seq-item">Validate Output</span>
+          <span class="seq-sep" aria-hidden="true">→</span>
+          <span class="seq-item">Rule Check</span>
+          <span class="seq-sep" aria-hidden="true">→</span>
+          <span class="seq-item seq-item-end">Action OR Review</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Control patterns -->
+  <section class="ai-controls-section section-py">
+    <div class="container-default">
+      <div class="section-intro">
+        <SectionEyebrow>RISK MITIGATION</SectionEyebrow>
+        <h2 class="section-title">Control patterns that prevent failures</h2>
+      </div>
+
+      <div class="controls-grid">
+        {controlPatterns.map((cp) => (
+          <div class="control-card">
+            <h3 class="control-name">{cp.name}</h3>
+            <p class="control-desc">{cp.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. What not to promise -->
+  <section class="ai-boundary-section">
+    <div class="container-default">
+      <div class="ai-boundary-card">
+        <h3 class="boundary-heading">Our Public Accuracy &amp; Evidence Standard</h3>
+        <p class="boundary-copy">
+          AI output quality depends on the task, available information and validation design. Where errors would create material risk, the workflow should include appropriate controls or review. We do not deploy autonomous agents where failure would compromise customer relationships or financial accuracy.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Technical Disclosure -->
+  <section class="ai-tech-section section-py">
+    <div class="container-default">
+      <Details summary="Technical AI engineering details" id="ai-technical-details">
+        <div class="readable-prose">
+          <p>
+            When integrating language models into production systems, our technical criteria include:
+          </p>
+          <ul>
+            <li><strong>Input minimization:</strong> Redacting unnecessary customer PII and passing only the minimum essential fields required for the classification or extraction task.</li>
+            <li><strong>Structured JSON Schema output:</strong> Utilizing strict schema-constrained sampling so outputs parse deterministically into typed TypeScript interfaces.</li>
+            <li><strong>Zero data retention agreements:</strong> Ensuring enterprise API providers do not store or use client operational data for model retraining.</li>
+            <li><strong>Cost &amp; latency boundaries:</strong> Selecting right-sized models to keep invocation costs predictable and execution latency under service level thresholds.</li>
+            <li><strong>Version pinning &amp; regression sets:</strong> Testing prompt revisions against established golden test datasets prior to production deployment.</li>
+          </ul>
+        </div>
+      </Details>
+    </div>
+  </section>
+
+  <!-- 6. FAQ -->
+  <section class="ai-faq-section section-py">
+    <div class="container-default">
+      <h2 class="section-title crm-faq-title">AI Automation FAQs</h2>
+      <div class="faq-list">
+        {aiService.faq.map((item, idx) => (
+          <Details summary={item.question} id={`ai-faq-${idx}`} open={idx === 0}>
+            <p>{item.answer}</p>
+          </Details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Final CTA -->
+  <section class="ai-final-cta section-py-lg">
+    <div class="container-default text-center">
+      <h2 class="section-title">Find the step where AI is actually useful.</h2>
+      <div class="cta-wrap">
+        <Button href={aiService.ctaHref} variant="primary">
+          Discuss an AI-assisted process
+        </Button>
+      </div>
+    </div>
+  </section>
+</ServiceLayout>
+
+<style>
+  .ai-pipeline-card {
+    background-color: var(--ink-950);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-panel);
+    padding: var(--space-6);
+    width: 100%;
+    max-width: 440px;
+  }
+
+  .ai-card-header {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--signal-blue);
+    font-family: var(--font-mono);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .ai-flow-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    align-items: center;
+  }
+
+  .flow-pill {
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .pill-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .pill-type {
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+  }
+
+  .flow-input {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #FFFFFF;
+  }
+
+  .flow-ai {
+    background-color: rgba(59, 91, 255, 0.2);
+    border: 1px solid var(--signal-blue);
+    color: var(--signal-blue-soft);
+  }
+
+  .flow-check {
+    background-color: rgba(15, 175, 154, 0.2);
+    border: 1px solid var(--signal-teal);
+    color: var(--signal-teal-soft);
+  }
+
+  .flow-split-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2);
+    width: 100%;
+  }
+
+  .flow-pass {
+    background-color: rgba(15, 175, 154, 0.15);
+    color: var(--signal-teal-soft);
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .flow-review {
+    background-color: rgba(217, 119, 6, 0.15);
+    color: #FFF3D6;
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .flow-arrow {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.875rem;
+  }
+
+  .section-intro {
+    max-width: 720px;
+    margin-bottom: var(--space-12);
+  }
+
+  .roles-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
+  }
+
+  @media (max-width: 1024px) {
+    .roles-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .roles-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .role-card {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-card);
+    padding: var(--space-8);
+  }
+
+  .role-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--signal-blue);
+    margin-bottom: var(--space-2);
+  }
+
+  .role-desc {
+    font-size: 0.9375rem;
+    color: var(--slate-600);
+    line-height: 1.55;
+  }
+
+  /* Sequence box */
+  .ai-sequence-box {
+    background-color: var(--canvas-alt);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-panel);
+    padding: var(--space-10);
+  }
+
+  .sequence-lead {
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-8);
+  }
+
+  .sequence-strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-md);
+    padding: var(--space-4) var(--space-6);
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .seq-item-ai {
+    color: var(--signal-blue);
+    background-color: var(--signal-blue-soft);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+  }
+
+  .seq-item-end {
+    color: var(--signal-teal-dark);
+  }
+
+  .seq-sep {
+    color: var(--slate-300);
+  }
+
+  /* Controls grid */
+  .controls-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+  }
+
+  @media (max-width: 1024px) {
+    .controls-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .control-card {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-card);
+    padding: var(--space-6);
+  }
+
+  .control-name {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--ink-950);
+    margin-bottom: var(--space-2);
+  }
+
+  .control-desc {
+    font-size: 0.875rem;
+    color: var(--slate-600);
+    line-height: 1.5;
+  }
+
+  /* Boundary card */
+  .ai-boundary-card {
+    background-color: var(--canvas-alt);
+    border-left: 4px solid var(--signal-amber);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: var(--space-6) var(--space-8);
+    max-width: 900px;
+    margin: var(--space-8) auto;
+  }
+
+  .boundary-heading {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--ink-950);
+    margin-bottom: var(--space-2);
+  }
+
+  .boundary-copy {
+    font-size: 0.9375rem;
+    color: var(--slate-600);
+    line-height: 1.6;
+  }
+
+  .text-center { text-align: center; }
+  .cta-wrap { margin-top: var(--space-6); }
+</style>

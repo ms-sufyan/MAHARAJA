@@ -1,0 +1,45 @@
+---
+import Icons from "../visual/Icons.astro";
+
+interface Props {
+  href: string;
+  variant?: "light" | "dark";
+  showArrow?: boolean;
+  class?: string;
+  target?: string;
+  rel?: string;
+}
+
+const {
+  href,
+  variant = "light",
+  showArrow = true,
+  class: className = "",
+  target,
+  rel
+} = Astro.props;
+
+const variantClass = variant === "dark" ? "text-link text-link-dark" : "text-link";
+const isExternal = target === "_blank" || (href.startsWith("http") && !href.includes("maharajasystems.com"));
+const computedRel = rel || (isExternal ? "noopener noreferrer" : undefined);
+---
+
+<a href={href} class={`${variantClass} ${className}`} target={target} rel={computedRel}>
+  <slot />
+  {showArrow && (
+    <span class="link-arrow" aria-hidden="true">
+      {isExternal ? <Icons name="external" size={14} /> : <Icons name="arrow" size={16} />}
+    </span>
+  )}
+</a>
+
+<style>
+  .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    transition: transform var(--motion-fast) var(--ease-standard);
+  }
+  a:hover .link-arrow {
+    transform: translateX(2px);
+  }
+</style>

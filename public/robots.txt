@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /contact/success
+
+Sitemap: https://maharajasystems.com/sitemap.xml

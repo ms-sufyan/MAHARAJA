@@ -1,0 +1,496 @@
+---
+export const prerender = true;
+
+import ServiceLayout from "../../layouts/ServiceLayout.astro";
+import SectionEyebrow from "../../components/ui/SectionEyebrow.astro";
+import Button from "../../components/ui/Button.astro";
+import { services } from "../../data/services";
+import { seoData } from "../../data/seo";
+
+const reportingService = services.find((s) => s.slug === "reporting-visibility")!;
+
+const visibilityAreas = [
+  "Pipeline Stage & Exit Criteria",
+  "Lead Acquisition Source",
+  "Team Follow-Up Activity",
+  "Appointment & Booking State",
+  "Internal Task Progression",
+  "Automated Workflow Exceptions",
+  "Contract & Document Signatures",
+  "Cross-System Operational Handoffs"
+];
+
+const measurementFramework = [
+  {
+    question: "Are workflows completing?",
+    evidence: "Run and event execution history",
+    utility: "Verifies automation reliability and uptime"
+  },
+  {
+    question: "Where do records stop?",
+    evidence: "Status transition timestamps",
+    utility: "Identifies operational bottlenecks and delays"
+  },
+  {
+    question: "Are handoffs occurring?",
+    evidence: "Source and destination cross-references",
+    utility: "Validates synchronization accuracy"
+  },
+  {
+    question: "Are exceptions increasing?",
+    evidence: "Error and exception record queues",
+    utility: "Guides proactive technical remediation"
+  },
+  {
+    question: "Are records routed correctly?",
+    evidence: "Ownership audit trails and sampling",
+    utility: "Maintains sales governance and parity"
+  }
+];
+---
+
+<ServiceLayout
+  title={seoData.reporting.title}
+  description={seoData.reporting.description}
+  canonicalPath={seoData.reporting.canonicalPath}
+  eyebrow={reportingService.eyebrow}
+  h1={reportingService.h1}
+  subheadline={reportingService.subheadline}
+  ctaLabel={reportingService.ctaLabel}
+  ctaHref={reportingService.ctaHref}
+  secondaryCtaLabel="Explore use cases"
+  secondaryCtaHref="/use-cases"
+>
+  <!-- Non-Numeric Dashboard Abstraction (Section 37) -->
+  <div slot="hero-visual" class="dashboard-abstract-card">
+    <div class="dash-card-header">
+      <span class="dash-status-dot" aria-hidden="true"></span>
+      <span>OPERATIONAL METRICS DASHBOARD</span>
+    </div>
+
+    <!-- Status Metric Cards (No fake numbers, neutral markers) -->
+    <div class="dash-metric-cards-grid">
+      <div class="dash-stat-box">
+        <span class="stat-label">Pipeline State</span>
+        <span class="stat-marker marker-active">Active</span>
+      </div>
+      <div class="dash-stat-box">
+        <span class="stat-label">Review Queue</span>
+        <span class="stat-marker marker-waiting">Waiting</span>
+      </div>
+      <div class="dash-stat-box">
+        <span class="stat-label">Completed Handoffs</span>
+        <span class="stat-marker marker-done">Completed</span>
+      </div>
+      <div class="dash-stat-box">
+        <span class="stat-label">Unresolved Errors</span>
+        <span class="stat-marker marker-alert">Exception</span>
+      </div>
+    </div>
+
+    <!-- Illustrative Pipeline Stage Rows -->
+    <div class="dash-stages-view">
+      <div class="stage-track-item">
+        <div class="stage-name-row">
+          <span>Inbound Qualification</span>
+          <span class="font-mono text-muted">—</span>
+        </div>
+        <div class="stage-bar bar-teal"></div>
+      </div>
+      <div class="stage-track-item">
+        <div class="stage-name-row">
+          <span>Active Scoping</span>
+          <span class="font-mono text-muted">—</span>
+        </div>
+        <div class="stage-bar bar-blue"></div>
+      </div>
+      <div class="stage-track-item">
+        <div class="stage-name-row">
+          <span>Proposal Review</span>
+          <span class="font-mono text-muted">—</span>
+        </div>
+        <div class="stage-bar bar-amber"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1. What visibility can cover -->
+  <section class="visibility-areas-section section-py">
+    <div class="container-default">
+      <div class="section-intro">
+        <SectionEyebrow>COVERAGE</SectionEyebrow>
+        <h2 class="section-title">What operational visibility can track</h2>
+        <p class="body-large">
+          Visibility is built on standardized field data and system events rather than subjective self-reporting.
+        </p>
+      </div>
+
+      <div class="areas-grid">
+        {visibilityAreas.map((area) => (
+          <div class="area-tag-card">
+            <span class="area-indicator" aria-hidden="true">✓</span>
+            <span class="area-name">{area}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Why structure comes first -->
+  <section class="structure-first-section section-py">
+    <div class="container-default">
+      <div class="structure-box">
+        <span class="eyebrow">DEPENDENCY CHAIN</span>
+        <h2 class="section-title">Why structure comes before reporting</h2>
+        <p class="body-large structure-lead">
+          Layering dashboards over inconsistent fields produces misleading charts faster. Real operational visibility requires a disciplined foundational sequence:
+        </p>
+
+        <div class="dependency-strip">
+          <div class="dep-step">
+            <span class="dep-num">1</span>
+            <span class="dep-title">Consistent Fields</span>
+          </div>
+          <span class="dep-arrow" aria-hidden="true">→</span>
+          <div class="dep-step">
+            <span class="dep-num">2</span>
+            <span class="dep-title">Clear Statuses</span>
+          </div>
+          <span class="dep-arrow" aria-hidden="true">→</span>
+          <div class="dep-step">
+            <span class="dep-num">3</span>
+            <span class="dep-title">Reliable Event History</span>
+          </div>
+          <span class="dep-arrow" aria-hidden="true">→</span>
+          <div class="dep-step dep-step-final">
+            <span class="dep-num">4</span>
+            <span class="dep-title">Useful Reporting</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Measurement framework table -->
+  <section class="measurement-framework-section section-py">
+    <div class="container-default">
+      <div class="section-intro">
+        <SectionEyebrow>OPERATIONAL FRAMEWORK</SectionEyebrow>
+        <h2 class="section-title">Non-numeric operational measurement framework</h2>
+      </div>
+
+      <div class="framework-table-wrap">
+        <div class="framework-table">
+          <div class="framework-row header-row">
+            <span>Operational Question</span>
+            <span>Required Evidence</span>
+            <span>Governance Purpose</span>
+          </div>
+          {measurementFramework.map((row) => (
+            <div class="framework-row">
+              <span class="q-cell font-bold">{row.question}</span>
+              <span class="evidence-cell">{row.evidence}</span>
+              <span class="utility-cell">{row.utility}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Prominent Evidence Standard -->
+  <section class="evidence-standard-section">
+    <div class="container-default">
+      <div class="evidence-card">
+        <h3 class="evidence-title">Reporting Evidence Standard</h3>
+        <p class="evidence-copy">
+          Time saved, cost reduction, conversion lift, revenue impact and similar performance claims should only be reported when supported by approved production data. We focus on verifiable operational facts: execution history, bottleneck identification, and system state integrity.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Final CTA -->
+  <section class="reporting-final-cta section-py-lg">
+    <div class="container-default text-center">
+      <h2 class="section-title">Build visibility on clean data.</h2>
+      <div class="cta-wrap">
+        <Button href={reportingService.ctaHref} variant="primary">
+          Discuss reporting requirements
+        </Button>
+      </div>
+    </div>
+  </section>
+</ServiceLayout>
+
+<style>
+  .dashboard-abstract-card {
+    background-color: var(--ink-950);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-panel);
+    padding: var(--space-6);
+    width: 100%;
+    max-width: 440px;
+  }
+
+  .dash-card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--signal-blue);
+    font-family: var(--font-mono);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+
+  .dash-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--signal-teal);
+  }
+
+  .dash-metric-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+  }
+
+  .dash-stat-box {
+    background-color: var(--ink-900);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--dark-muted);
+  }
+
+  .stat-marker {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+  }
+
+  .marker-active { color: var(--signal-blue); }
+  .marker-waiting { color: var(--signal-amber); }
+  .marker-done { color: var(--signal-teal); }
+  .marker-alert { color: var(--error); }
+
+  .dash-stages-view {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .stage-track-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .stage-name-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8125rem;
+    color: var(--slate-300);
+  }
+
+  .stage-bar {
+    height: 6px;
+    border-radius: var(--radius-full);
+  }
+
+  .bar-teal { background-color: var(--signal-teal); width: 85%; }
+  .bar-blue { background-color: var(--signal-blue); width: 60%; }
+  .bar-amber { background-color: var(--signal-amber); width: 35%; }
+
+  .section-intro {
+    max-width: 720px;
+    margin-bottom: var(--space-12);
+  }
+
+  .areas-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+  }
+
+  @media (max-width: 1024px) {
+    .areas-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .areas-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .area-tag-card {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .area-indicator {
+    color: var(--signal-teal);
+    font-weight: 700;
+  }
+
+  .area-name {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--ink-950);
+  }
+
+  /* Structure first box */
+  .structure-box {
+    background-color: var(--canvas-alt);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-panel);
+    padding: var(--space-10);
+  }
+
+  .structure-lead {
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-8);
+  }
+
+  .dependency-strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+  }
+
+  .dep-step {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .dep-num {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: var(--slate-100);
+    color: var(--slate-700);
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+  }
+
+  .dep-title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--ink-950);
+  }
+
+  .dep-step-final .dep-num {
+    background-color: var(--signal-teal);
+    color: var(--ink-950);
+  }
+
+  .dep-arrow {
+    color: var(--slate-300);
+  }
+
+  /* Framework table */
+  .framework-table-wrap {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-panel);
+    overflow: hidden;
+  }
+
+  .framework-table {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .framework-row {
+    display: grid;
+    grid-template-columns: 4fr 4fr 4fr;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-6);
+    border-bottom: 1px solid var(--slate-100);
+    font-size: 0.9375rem;
+  }
+
+  @media (max-width: 768px) {
+    .framework-row {
+      grid-template-columns: 1fr;
+      gap: var(--space-1);
+    }
+  }
+
+  .header-row {
+    background-color: var(--canvas-alt);
+    font-weight: 700;
+    color: var(--ink-950);
+    border-bottom: 1px solid var(--slate-200);
+  }
+
+  .font-bold {
+    font-weight: 600;
+    color: var(--ink-950);
+  }
+
+  .evidence-cell {
+    color: var(--slate-600);
+  }
+
+  .utility-cell {
+    color: var(--signal-blue);
+    font-weight: 500;
+  }
+
+  /* Evidence Standard Box */
+  .evidence-card {
+    background-color: var(--canvas-alt);
+    border-left: 4px solid var(--signal-teal);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: var(--space-6) var(--space-8);
+    max-width: 900px;
+    margin: var(--space-8) auto;
+  }
+
+  .evidence-title {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--ink-950);
+    margin-bottom: var(--space-2);
+  }
+
+  .evidence-copy {
+    font-size: 0.9375rem;
+    color: var(--slate-600);
+    line-height: 1.6;
+  }
+
+  .text-center { text-align: center; }
+  .cta-wrap { margin-top: var(--space-6); }
+</style>

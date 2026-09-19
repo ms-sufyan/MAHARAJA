@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <radialGradient id="ogGlow" cx="70%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#3B5BFF" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#0A1020" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="pathGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3B5BFF"/>
+      <stop offset="50%" stop-color="#0FAF9A"/>
+      <stop offset="100%" stop-color="#3B5BFF"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0A1020"/>
+  <rect width="1200" height="630" fill="url(#ogGlow)"/>
+
+  <!-- Subtle Grid Pattern -->
+  <g stroke="rgba(255, 255, 255, 0.04)" stroke-width="1">
+    <line x1="80" y1="0" x2="80" y2="630"/>
+    <line x1="240" y1="0" x2="240" y2="630"/>
+    <line x1="400" y1="0" x2="400" y2="630"/>
+    <line x1="560" y1="0" x2="560" y2="630"/>
+    <line x1="720" y1="0" x2="720" y2="630"/>
+    <line x1="880" y1="0" x2="880" y2="630"/>
+    <line x1="1040" y1="0" x2="1040" y2="630"/>
+
+    <line x1="0" y1="120" x2="1200" y2="120"/>
+    <line x1="0" y1="240" x2="1200" y2="240"/>
+    <line x1="0" y1="360" x2="1200" y2="360"/>
+    <line x1="0" y1="480" x2="1200" y2="480"/>
+  </g>
+
+  <!-- Abstract Systems Workflow Illustration -->
+  <g transform="translate(680, 160)">
+    <!-- Circuit Lines -->
+    <path d="M 0 60 L 120 60 L 200 140 L 360 140" fill="none" stroke="url(#pathGrad)" stroke-width="3"/>
+    <path d="M 0 220 L 120 220 L 200 140" fill="none" stroke="rgba(255, 255, 255, 0.15)" stroke-width="2" stroke-dasharray="6,6"/>
+    <path d="M 200 140 L 200 280 L 360 280" fill="none" stroke="rgba(255, 255, 255, 0.15)" stroke-width="2"/>
+
+    <!-- Nodes -->
+    <circle cx="0" cy="60" r="14" fill="#182235" stroke="#3B5BFF" stroke-width="3"/>
+    <circle cx="0" cy="220" r="14" fill="#182235" stroke="#748094" stroke-width="2"/>
+    <rect x="175" y="115" width="50" height="50" rx="12" fill="#111827" stroke="#3B5BFF" stroke-width="2"/>
+    <circle cx="200" cy="140" r="8" fill="#3B5BFF"/>
+    <circle cx="360" cy="140" r="14" fill="#182235" stroke="#0FAF9A" stroke-width="3"/>
+    <circle cx="360" cy="280" r="14" fill="#182235" stroke="#D97706" stroke-width="3"/>
+  </g>
+
+  <!-- Typography -->
+  <text x="80" y="140" fill="#3B5BFF" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="700" letter-spacing="3">CRM · WORKFLOW AUTOMATION · SYSTEMS INTEGRATION</text>
+  <text x="80" y="240" fill="#FFFFFF" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="700" letter-spacing="-2">MAHARAJA</text>
+  <text x="80" y="320" fill="#ECEFF3" font-family="system-ui, -apple-system, sans-serif" font-size="34" font-weight="600" letter-spacing="-1">Connect your systems.</text>
+  <text x="80" y="365" fill="#ECEFF3" font-family="system-ui, -apple-system, sans-serif" font-size="34" font-weight="600" letter-spacing="-1">Automate the work that slows your team down.</text>
+  <text x="80" y="440" fill="#AAB4C4" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="400">Practical CRM, workflow and integration systems designed around real business processes.</text>
+
+  <!-- Badge / URL -->
+  <rect x="80" y="500" width="260" height="48" rx="10" fill="#182235" stroke="rgba(255, 255, 255, 0.12)"/>
+  <text x="100" y="531" fill="#ECEFF3" font-family="system-ui, -apple-system, monospace" font-size="16" font-weight="500">maharajasystems.com</text>
+</svg>

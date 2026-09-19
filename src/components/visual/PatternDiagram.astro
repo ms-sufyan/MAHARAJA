@@ -1,0 +1,110 @@
+---
+interface Props {
+  patternSlug: string;
+  steps: string[];
+}
+
+const { patternSlug, steps } = Astro.props;
+---
+
+<div class="pattern-diagram-box" data-pattern={patternSlug}>
+  <div class="pattern-diagram-flow">
+    {steps.map((step, idx) => {
+      const isFirst = idx === 0;
+      const isLast = idx === steps.length - 1;
+      return (
+        <div class="pattern-flow-node">
+          <div class={`node-box ${isFirst ? "box-trigger" : isLast ? "box-complete" : "box-step"}`}>
+            <span class="node-seq">{idx + 1}</span>
+            <span class="node-title">{step}</span>
+          </div>
+          {!isLast && (
+            <div class="node-arrow" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M 8 2 L 8 14 M 4 10 L 8 14 L 12 10" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+          )}
+        </div>
+      );
+    })}
+  </div>
+</div>
+
+<style>
+  .pattern-diagram-box {
+    background-color: var(--ink-950);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-card);
+    padding: var(--space-6);
+  }
+
+  .pattern-diagram-flow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .pattern-flow-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .node-box {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    width: 100%;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-sm);
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+
+  .box-trigger {
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #FFFFFF;
+  }
+
+  .box-step {
+    background-color: rgba(59, 91, 255, 0.12);
+    border: 1px solid rgba(59, 91, 255, 0.3);
+    color: var(--signal-blue-soft);
+  }
+
+  .box-complete {
+    background-color: rgba(15, 175, 154, 0.12);
+    border: 1px solid rgba(15, 175, 154, 0.3);
+    color: var(--signal-teal-soft);
+  }
+
+  .node-seq {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6875rem;
+    font-family: var(--font-mono);
+  }
+
+  .node-title {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .node-arrow {
+    color: rgba(255, 255, 255, 0.25);
+    display: flex;
+    justify-content: center;
+    padding: 2px 0;
+  }
+</style>

@@ -1,0 +1,89 @@
+/* Typography Scale & Styles - In accordance with Section 70 & 71 */
+
+@font-face {
+  font-family: "Instrument Sans";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/instrument-sans-variable.woff2") format("woff2-variations");
+}
+
+.hero-title {
+  font-size: clamp(3.1rem, 6.3vw, 6.25rem);
+  line-height: 0.96;
+  letter-spacing: -0.05em;
+  font-weight: 650;
+  color: var(--ink-950);
+}
+
+.interior-title {
+  font-size: clamp(2.65rem, 5vw, 4.9rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  font-weight: 650;
+  color: var(--ink-950);
+}
+
+h2, .section-title {
+  font-size: clamp(2.05rem, 3.6vw, 3.55rem);
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+  color: var(--ink-950);
+}
+
+h3, .card-title {
+  font-size: clamp(1.35rem, 2vw, 1.65rem);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  color: var(--ink-950);
+}
+
+.eyebrow {
+  font-size: clamp(0.75rem, 1.2vw, 0.8125rem);
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--signal-blue);
+  display: inline-block;
+  margin-bottom: var(--space-3);
+}
+
+.eyebrow-dark {
+  color: var(--signal-teal);
+}
+
+.body-large {
+  font-size: clamp(1.125rem, 1.5vw, 1.25rem);
+  line-height: 1.6;
+  color: var(--slate-700);
+  max-width: 640px;
+}
+
+.body-base {
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--slate-600);
+}
+
+.body-small {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--slate-500);
+}
+
+.code-token, code {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  letter-spacing: -0.01em;
+}
+
+.readable-prose {
+  max-width: var(--max-text);
+  line-height: 1.7;
+}
+
+.readable-prose p + p {
+  margin-top: var(--space-4);
+}

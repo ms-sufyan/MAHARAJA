@@ -1,0 +1,426 @@
+---
+export const prerender = true;
+
+import ServiceLayout from "../../layouts/ServiceLayout.astro";
+import SectionEyebrow from "../../components/ui/SectionEyebrow.astro";
+import Details from "../../components/ui/Details.astro";
+import Button from "../../components/ui/Button.astro";
+import { services } from "../../data/services";
+import { seoData } from "../../data/seo";
+
+const integrations = services.find((s) => s.slug === "integrations")!;
+
+const frictionPoints = [
+  "Duplicate data entry across departments",
+  "Disconnected status flags (paid in Stripe, still pending in CRM)",
+  "Manual exports and daily CSV uploads between software tools",
+  "Contract and invoice files separated from customer CRM records",
+  "Slow informal handoffs between sales, onboarding, and finance teams",
+  "Customer data fragmentation across multiple single-purpose SaaS products"
+];
+
+const integrationMethods = [
+  {
+    name: "Native Connector",
+    badge: "Direct",
+    desc: "Use an existing supported connection when it exposes the right trigger and action reliably with zero intermediary latency."
+  },
+  {
+    name: "Automation Connector",
+    badge: "Orchestration",
+    desc: "Use an orchestration platform (e.g. Make, Zapier) when several systems, multi-branch conditions or payload transformations must be coordinated."
+  },
+  {
+    name: "Webhook Delivery",
+    badge: "Event-Driven",
+    desc: "Use real-time event-driven HTTP delivery when a source application can notify downstream listeners instantly upon state changes."
+  },
+  {
+    name: "REST API Endpoint",
+    badge: "Custom Logic",
+    desc: "Use supported REST/GraphQL APIs when required business operations or complex custom schemas are not available through prebuilt connectors."
+  }
+];
+
+const dataMappings = [
+  { source: "Customer Phone: '(555) 019-2834'", transform: "E.164 Normalization", dest: "+15550192834" },
+  { source: "Deal State: 'Closed Won'", transform: "Status Key Mapping", dest: "Account Status: 'active_client'" },
+  { source: "Invoice Date: '19/09/2026'", transform: "ISO 8601 Formatting", dest: "2026-09-19T00:00:00Z" },
+  { source: "Stripe Charge ID: 'ch_3M...'", transform: "Immutable Key Preservation", dest: "External Transaction Ref: 'ch_3M...'" }
+];
+---
+
+<ServiceLayout
+  title={seoData.integrations.title}
+  description={seoData.integrations.description}
+  canonicalPath={seoData.integrations.canonicalPath}
+  eyebrow={integrations.eyebrow}
+  h1={integrations.h1}
+  subheadline={integrations.subheadline}
+  ctaLabel={integrations.ctaLabel}
+  ctaHref={integrations.ctaHref}
+  secondaryCtaLabel="View integration patterns"
+  secondaryCtaHref="/capabilities"
+>
+  <!-- Systems Map Visual (Section 33) -->
+  <div slot="hero-visual" class="systems-map-card">
+    <div class="systems-map-header">
+      <span>TOPOLOGY INTEGRATION MAP</span>
+    </div>
+    <svg viewBox="0 0 440 320" class="systems-svg" role="img" aria-label="Diagram showing CRM connected via an automation layer to finance, documents, calendar, and storage systems">
+      <!-- Central Orchestration Hub -->
+      <g transform="translate(220, 160)">
+        <circle r="38" fill="#182235" stroke="#3B5BFF" stroke-width="2.5" />
+        <text y="-4" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">AUTOMATION</text>
+        <text y="10" text-anchor="middle" font-size="9" fill="#3B5BFF">LAYER</text>
+      </g>
+
+      <!-- Surrounding Peripheral Systems with directional indicators -->
+      <!-- Left: CRM -->
+      <g transform="translate(60, 160)">
+        <rect x="-45" y="-20" width="90" height="40" rx="8" fill="#FFFFFF" stroke="#0FAF9A" stroke-width="2" />
+        <text y="5" text-anchor="middle" font-size="11" font-weight="700" fill="#111827">CRM Hub</text>
+      </g>
+      <line x1="105" y1="160" x2="182" y2="160" stroke="#0FAF9A" stroke-width="2" />
+
+      <!-- Top: Finance & Documents -->
+      <g transform="translate(140, 50)">
+        <rect x="-40" y="-16" width="80" height="32" rx="6" fill="#FFFFFF" stroke="#C4CBD6" stroke-width="1.5" />
+        <text y="4" text-anchor="middle" font-size="10" font-weight="600" fill="#111827">Finance</text>
+      </g>
+      <line x1="160" y1="78" x2="200" y2="130" stroke="#748094" stroke-width="1.5" />
+
+      <g transform="translate(300, 50)">
+        <rect x="-40" y="-16" width="80" height="32" rx="6" fill="#FFFFFF" stroke="#C4CBD6" stroke-width="1.5" />
+        <text y="4" text-anchor="middle" font-size="10" font-weight="600" fill="#111827">Documents</text>
+      </g>
+      <line x1="280" y1="78" x2="240" y2="130" stroke="#748094" stroke-width="1.5" />
+
+      <!-- Bottom: Calendar & Cloud Storage -->
+      <g transform="translate(140, 270)">
+        <rect x="-40" y="-16" width="80" height="32" rx="6" fill="#FFFFFF" stroke="#C4CBD6" stroke-width="1.5" />
+        <text y="4" text-anchor="middle" font-size="10" font-weight="600" fill="#111827">Calendar</text>
+      </g>
+      <line x1="160" y1="242" x2="200" y2="190" stroke="#748094" stroke-width="1.5" />
+
+      <g transform="translate(300, 270)">
+        <rect x="-40" y="-16" width="80" height="32" rx="6" fill="#FFFFFF" stroke="#C4CBD6" stroke-width="1.5" />
+        <text y="4" text-anchor="middle" font-size="10" font-weight="600" fill="#111827">Storage</text>
+      </g>
+      <line x1="280" y1="242" x2="240" y2="190" stroke="#748094" stroke-width="1.5" />
+    </svg>
+  </div>
+
+  <!-- 1. What integration solves -->
+  <section class="integration-friction-section section-py">
+    <div class="container-default">
+      <div class="section-intro">
+        <SectionEyebrow>OPERATIONAL BOTTLENECKS</SectionEyebrow>
+        <h2 class="section-title">What systems integration actually solves</h2>
+        <p class="body-large">
+          When teams lack synchronized tools, administrative friction multiplies with every customer transaction.
+        </p>
+      </div>
+
+      <div class="friction-grid">
+        {frictionPoints.map((point) => (
+          <div class="friction-item">
+            <span class="friction-icon" aria-hidden="true">✕</span>
+            <p class="friction-text">{point}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Integration methods -->
+  <section class="integration-methods-section section-py">
+    <div class="container-default">
+      <div class="section-intro">
+        <SectionEyebrow>APPROACHES</SectionEyebrow>
+        <h2 class="section-title">Selecting the right integration method</h2>
+        <p class="body-large">
+          We select the simplest reliable mechanism that satisfies business rules rather than over-engineering every handoff.
+        </p>
+      </div>
+
+      <div class="methods-grid">
+        {integrationMethods.map((m) => (
+          <div class="method-card">
+            <span class="method-badge">{m.badge}</span>
+            <h3 class="method-title">{m.name}</h3>
+            <p class="method-desc">{m.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="api-boundary-box">
+        <p>
+          <strong>API Reality Check:</strong> The presence of an API does not automatically make every desired workflow feasible. Authentication boundaries, rate limits, webhooks support, and available field endpoints still matter.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Data-mapping visualization -->
+  <section class="data-mapping-section section-py">
+    <div class="container-default">
+      <div class="section-intro">
+        <SectionEyebrow>DATA TRANSFORMATION</SectionEyebrow>
+        <h2 class="section-title">Field mapping &amp; schema normalization</h2>
+      </div>
+
+      <div class="mapping-table-wrap">
+        <div class="mapping-table">
+          <div class="mapping-row header-row">
+            <span>Source Field</span>
+            <span>Transformation Logic</span>
+            <span>Destination Value</span>
+          </div>
+          {dataMappings.map((row) => (
+            <div class="mapping-row">
+              <span class="code-cell font-mono">{row.source}</span>
+              <span class="transform-cell">
+                <span class="transform-pill">{row.transform}</span>
+              </span>
+              <span class="code-cell font-mono dest-cell">{row.dest}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Technical Considerations Disclosure -->
+  <section class="integrations-tech-section section-py">
+    <div class="container-default">
+      <Details summary="Technical integration considerations" id="integrations-technical-details">
+        <div class="readable-prose">
+          <p>
+            When designing systems integrations, our engineering approach accounts for:
+          </p>
+          <ul>
+            <li><strong>Source-of-truth governance:</strong> Explicitly designating which system owns each field (e.g. Stripe owns billing status, CRM owns lifecycle stage).</li>
+            <li><strong>Unique record identifiers:</strong> Retaining external ledger IDs and primary keys across databases to prevent orphan records.</li>
+            <li><strong>Idempotency &amp; duplicates:</strong> Enforcing deduplication so re-sent webhooks do not trigger duplicated actions.</li>
+            <li><strong>Sync direction &amp; conflict resolution:</strong> Preferring one-way state flows where possible, and routing conflicting parallel edits to review.</li>
+            <li><strong>Rate limits &amp; backoff:</strong> Throttling batch updates to operate safely within third-party vendor quotas.</li>
+          </ul>
+        </div>
+      </Details>
+    </div>
+  </section>
+
+  <!-- 5. Feasibility Statement & CTA -->
+  <section class="integrations-final-section section-py-lg">
+    <div class="container-default text-center">
+      <div class="feasibility-card">
+        <span class="eyebrow">FEASIBILITY CONFIRMATION</span>
+        <h2 class="section-title">Technical feasibility is confirmed before implementation.</h2>
+        <p class="body-large feasibility-lead">
+          We inspect your actual software versions and integration methods to confirm feasibility before project promises are made.
+        </p>
+        <div class="cta-wrap">
+          <Button href={integrations.ctaHref} variant="primary">
+            Review the systems involved
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+</ServiceLayout>
+
+<style>
+  .systems-map-card {
+    background-color: var(--ink-950);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-panel);
+    padding: var(--space-6);
+    width: 100%;
+    max-width: 440px;
+  }
+
+  .systems-map-header {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--signal-blue);
+    font-family: var(--font-mono);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .systems-svg {
+    width: 100%;
+    height: auto;
+  }
+
+  .section-intro {
+    max-width: 720px;
+    margin-bottom: var(--space-12);
+  }
+
+  /* Friction */
+  .friction-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+
+  @media (max-width: 768px) {
+    .friction-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .friction-item {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-md);
+    padding: var(--space-4) var(--space-6);
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .friction-icon {
+    color: var(--error);
+    font-weight: 700;
+  }
+
+  .friction-text {
+    font-size: 0.9375rem;
+    color: var(--slate-700);
+  }
+
+  /* Methods */
+  .methods-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+
+  @media (max-width: 1024px) {
+    .methods-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .methods-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .method-card {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-card);
+    padding: var(--space-8);
+  }
+
+  .method-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: var(--signal-blue);
+    background-color: var(--signal-blue-soft);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    margin-bottom: var(--space-3);
+  }
+
+  .method-title {
+    font-size: 1.1875rem;
+    font-weight: 700;
+    color: var(--ink-950);
+    margin-bottom: var(--space-2);
+  }
+
+  .method-desc {
+    font-size: 0.875rem;
+    color: var(--slate-600);
+    line-height: 1.55;
+  }
+
+  .api-boundary-box {
+    background-color: var(--canvas-alt);
+    border-left: 3px solid var(--slate-400);
+    padding: var(--space-4) var(--space-6);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+
+  /* Mapping */
+  .mapping-table-wrap {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-panel);
+    overflow: hidden;
+  }
+
+  .mapping-table {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mapping-row {
+    display: grid;
+    grid-template-columns: 4fr 3fr 5fr;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-6);
+    border-bottom: 1px solid var(--slate-100);
+    align-items: center;
+    font-size: 0.875rem;
+  }
+
+  @media (max-width: 768px) {
+    .mapping-row {
+      grid-template-columns: 1fr;
+      gap: var(--space-2);
+    }
+  }
+
+  .header-row {
+    background-color: var(--canvas-alt);
+    font-weight: 700;
+    color: var(--ink-950);
+    border-bottom: 1px solid var(--slate-200);
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+  }
+
+  .transform-pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    background-color: var(--signal-blue-soft);
+    color: var(--signal-blue);
+    font-weight: 600;
+    font-size: 0.75rem;
+  }
+
+  .dest-cell {
+    color: var(--signal-teal-dark);
+  }
+
+  /* Feasibility card */
+  .feasibility-card {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .feasibility-lead {
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-8);
+  }
+
+  .text-center { text-align: center; }
+  .cta-wrap { margin-top: var(--space-6); }
+</style>

@@ -1,0 +1,208 @@
+---
+import { brand } from "../../data/brand";
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container-default footer-inner">
+    <div class="footer-top-grid">
+      <!-- Company Information & Positioning -->
+      <div class="footer-brand-col">
+        <a href="/" class="footer-logo">
+          <span class="brand-text">{brand.companyName}</span>
+          <span class="brand-dot" aria-hidden="true"></span>
+        </a>
+        <p class="footer-tagline">
+          CRM systems, workflow automation and integrations designed around real business processes.
+        </p>
+        
+        {brand.contactEmail && (
+          <p class="footer-contact-info">
+            <span class="contact-label">Inquiries:</span>
+            <a href={`mailto:${brand.contactEmail}`} class="contact-link">{brand.contactEmail}</a>
+          </p>
+        )}
+
+        {brand.socialLinks.length > 0 && (
+          <div class="footer-social-row">
+            {brand.socialLinks.map((item) => (
+              <a href={item.url} target="_blank" rel="noopener noreferrer" class="footer-social-link">
+                {item.label}
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <!-- Services Column -->
+      <div class="footer-nav-col">
+        <h3 class="footer-col-title">Services</h3>
+        <ul class="footer-links-list">
+          <li><a href="/services/crm">CRM Systems</a></li>
+          <li><a href="/services/workflow-automation">Workflow Automation</a></li>
+          <li><a href="/services/integrations">Integrations</a></li>
+          <li><a href="/services/ai-assisted-automation">AI-Assisted Operations</a></li>
+          <li><a href="/services/reporting-visibility">Reporting</a></li>
+          <li><a href="/services" class="footer-view-all">View all services →</a></li>
+        </ul>
+      </div>
+
+      <!-- Explore Column -->
+      <div class="footer-nav-col">
+        <h3 class="footer-col-title">Explore</h3>
+        <ul class="footer-links-list">
+          <li><a href="/use-cases">Use Cases</a></li>
+          <li><a href="/how-we-work">How We Work</a></li>
+          <li><a href="/capabilities">Capabilities</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Legal Column -->
+      <div class="footer-nav-col">
+        <h3 class="footer-col-title">Legal</h3>
+        <ul class="footer-links-list">
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/terms">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Footer Bottom Note & Microcopy -->
+    <div class="footer-bottom">
+      <p class="footer-disclaimer">
+        Platform names and trademarks belong to their respective owners. Their inclusion does not imply partnership or endorsement.
+      </p>
+      <div class="footer-copy-row">
+        <span>&copy; {currentYear} {brand.legalEntity || brand.companyName}. All rights reserved.</span>
+        <span>Start with the process, not the platform.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--ink-950);
+    color: var(--dark-muted);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: var(--space-20);
+    padding-bottom: var(--space-12);
+    font-size: 0.875rem;
+  }
+
+  .footer-top-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: var(--space-12);
+    margin-bottom: var(--space-16);
+  }
+
+  @media (max-width: 1024px) {
+    .footer-top-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .footer-top-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+  }
+
+  .footer-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 1.35rem;
+    font-weight: 750;
+    letter-spacing: -0.04em;
+    color: #FFFFFF;
+    text-decoration: none;
+    margin-bottom: var(--space-3);
+  }
+
+  .brand-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--signal-teal);
+    border-radius: 50%;
+  }
+
+  .footer-tagline {
+    max-width: 320px;
+    line-height: 1.6;
+    margin-bottom: var(--space-4);
+    color: var(--slate-500);
+  }
+
+  .footer-contact-info {
+    margin-top: var(--space-3);
+  }
+
+  .contact-label {
+    color: var(--slate-500);
+    margin-right: var(--space-1);
+  }
+
+  .contact-link {
+    color: var(--signal-teal);
+    text-decoration: underline;
+  }
+
+  .footer-col-title {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    margin-bottom: var(--space-4);
+  }
+
+  .footer-links-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .footer-links-list a {
+    color: var(--dark-muted);
+    text-decoration: none;
+    transition: color var(--motion-fast) var(--ease-standard);
+  }
+
+  .footer-links-list a:hover {
+    color: #FFFFFF;
+  }
+
+  .footer-view-all {
+    color: var(--signal-teal) !important;
+    font-weight: 500;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: var(--space-8);
+  }
+
+  .footer-disclaimer {
+    font-size: 0.8125rem;
+    color: var(--slate-600);
+    line-height: 1.5;
+    margin-bottom: var(--space-4);
+    max-width: 800px;
+  }
+
+  .footer-copy-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-4);
+    font-size: 0.8125rem;
+    color: var(--slate-500);
+  }
+</style>

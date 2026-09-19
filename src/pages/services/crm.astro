@@ -1,0 +1,468 @@
+---
+export const prerender = true;
+
+import ServiceLayout from "../../layouts/ServiceLayout.astro";
+import SectionEyebrow from "../../components/ui/SectionEyebrow.astro";
+import Details from "../../components/ui/Details.astro";
+import Button from "../../components/ui/Button.astro";
+import { services } from "../../data/services";
+import { seoData } from "../../data/seo";
+
+const crm = services.find((s) => s.slug === "crm")!;
+---
+
+<ServiceLayout
+  title={seoData.crm.title}
+  description={seoData.crm.description}
+  canonicalPath={seoData.crm.canonicalPath}
+  eyebrow={crm.eyebrow}
+  h1={crm.h1}
+  subheadline={crm.subheadline}
+  ctaLabel={crm.ctaLabel}
+  ctaHref={crm.ctaHref}
+  secondaryCtaLabel="See CRM use cases"
+  secondaryCtaHref="/use-cases"
+>
+  <!-- Custom Hero Visual: Abstract CRM Lifecycle Diagram (Section 30) -->
+  <div slot="hero-visual" class="crm-diagram-card">
+    <div class="diagram-pill-header">
+      <span>LIFECYCLE PIPELINE ARCHITECTURE</span>
+    </div>
+    <svg viewBox="0 0 420 300" class="crm-svg" role="img" aria-label="Abstract CRM stage progression and activity tracking diagram">
+      <!-- Main Horizontal Pipeline Stages -->
+      <g stroke="#DDE2EA" stroke-width="2">
+        <line x1="50" y1="80" x2="370" y2="80" />
+      </g>
+      <!-- Stages Nodes -->
+      <g transform="translate(60, 80)">
+        <circle r="18" fill="#FFFFFF" stroke="#3B5BFF" stroke-width="2" />
+        <text y="4" text-anchor="middle" font-size="9" font-weight="700" fill="#111827">Lead</text>
+      </g>
+      <g transform="translate(160, 80)">
+        <circle r="18" fill="#FFFFFF" stroke="#3B5BFF" stroke-width="2" />
+        <text y="4" text-anchor="middle" font-size="9" font-weight="700" fill="#111827">Qual</text>
+      </g>
+      <g transform="translate(260, 80)">
+        <circle r="18" fill="#FFFFFF" stroke="#3B5BFF" stroke-width="2" />
+        <text y="4" text-anchor="middle" font-size="9" font-weight="700" fill="#111827">Active</text>
+      </g>
+      <g transform="translate(360, 80)">
+        <circle r="18" fill="#0FAF9A" stroke="#067B6C" stroke-width="2" />
+        <text y="4" text-anchor="middle" font-size="9" font-weight="700" fill="#0A1020">Outcome</text>
+      </g>
+
+      <!-- Connected Vertical Context Attributes -->
+      <g stroke="#DDE2EA" stroke-width="1.5" stroke-dasharray="4,4">
+        <line x1="60" y1="98" x2="60" y2="180" />
+        <line x1="160" y1="98" x2="160" y2="180" />
+        <line x1="260" y1="98" x2="260" y2="180" />
+        <line x1="360" y1="98" x2="360" y2="180" />
+      </g>
+
+      <!-- Context Badges -->
+      <g transform="translate(60, 195)">
+        <rect x="-42" y="-12" width="84" height="24" rx="6" fill="#182235" />
+        <text y="4" text-anchor="middle" font-size="9" font-weight="600" fill="#ECEFF3">Owner Assigned</text>
+      </g>
+      <g transform="translate(160, 195)">
+        <rect x="-42" y="-12" width="84" height="24" rx="6" fill="#182235" />
+        <text y="4" text-anchor="middle" font-size="9" font-weight="600" fill="#ECEFF3">Tasks &amp; Notes</text>
+      </g>
+      <g transform="translate(260, 195)">
+        <rect x="-42" y="-12" width="84" height="24" rx="6" fill="#182235" />
+        <text y="4" text-anchor="middle" font-size="9" font-weight="600" fill="#ECEFF3">Systems Sync</text>
+      </g>
+      <g transform="translate(360, 195)">
+        <rect x="-42" y="-12" width="84" height="24" rx="6" fill="#182235" />
+        <text y="4" text-anchor="middle" font-size="9" font-weight="600" fill="#ECEFF3">Reporting Log</text>
+      </g>
+    </svg>
+  </div>
+
+  <!-- 1. When CRM structure is the problem -->
+  <section class="crm-symptoms-section section-py">
+    <div class="container-default">
+      <div class="symptoms-header">
+        <SectionEyebrow>SYMPTOMS OF MISALIGNMENT</SectionEyebrow>
+        <h2 class="section-title">A CRM can contain the right data and still create the wrong workflow.</h2>
+        <p class="body-large">
+          When pipeline stages do not match real customer journeys, team members avoid using the CRM or spend unnecessary time copying information into side spreadsheets.
+        </p>
+      </div>
+
+      <div class="symptoms-grid">
+        {crm.symptoms?.map((sym) => (
+          <div class="symptom-card">
+            <span class="symptom-dot" aria-hidden="true"></span>
+            <p class="symptom-text">{sym}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. What implementation can involve -->
+  <section class="crm-scope-section section-py">
+    <div class="container-default">
+      <div class="scope-header">
+        <SectionEyebrow>IMPLEMENTATION AREAS</SectionEyebrow>
+        <h2 class="section-title">What CRM implementation involves</h2>
+      </div>
+
+      <div class="scope-columns-grid">
+        <div class="scope-col">
+          <h3 class="col-heading">01. Structure</h3>
+          <ul class="col-list">
+            {crm.implementationStructure?.structure.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+
+        <div class="scope-col">
+          <h3 class="col-heading">02. Workflow</h3>
+          <ul class="col-list">
+            {crm.implementationStructure?.workflow.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+
+        <div class="scope-col">
+          <h3 class="col-heading">03. Visibility</h3>
+          <ul class="col-list">
+            {crm.implementationStructure?.visibility.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Example Architecture -->
+  <section class="crm-arch-section section-py">
+    <div class="container-default">
+      <div class="arch-box">
+        <span class="eyebrow">FLOW ARCHITECTURE</span>
+        <h2 class="section-title">Example Lead-to-Reporting Sequence</h2>
+        
+        <div class="flow-pill-sequence">
+          <span>Lead source</span>
+          <span class="seq-arrow" aria-hidden="true">→</span>
+          <span>Normalize</span>
+          <span class="seq-arrow" aria-hidden="true">→</span>
+          <span>CRM record</span>
+          <span class="seq-arrow" aria-hidden="true">→</span>
+          <span>Owner</span>
+          <span class="seq-arrow" aria-hidden="true">→</span>
+          <span>Stage/status</span>
+          <span class="seq-arrow" aria-hidden="true">→</span>
+          <span>Follow-up</span>
+          <span class="seq-arrow" aria-hidden="true">→</span>
+          <span>Activity</span>
+          <span class="seq-arrow" aria-hidden="true">→</span>
+          <span>Reporting</span>
+        </div>
+
+        <p class="arch-explanation body-base">
+          Rather than forcing sales staff to manually update multiple screens, inbound inquiries are normalized, checked against existing accounts, assigned to reps with clear follow-up tasks, and surfaced in management reporting views immediately.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Systems Represented -->
+  <section class="crm-platforms-section section-py">
+    <div class="container-default">
+      <div class="platforms-bar">
+        <span class="bar-title">Systems represented in implementation work:</span>
+        <div class="bar-tags">
+          <span class="platform-tag">monday.com</span>
+          <span class="platform-tag">HubSpot</span>
+          <span class="platform-tag">GoHighLevel</span>
+        </div>
+        <p class="bar-note">
+          Examples represented in implementation work; final platform scope depends on the project.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Technical Details Disclosure -->
+  <section class="crm-tech-section section-py">
+    <div class="container-default">
+      <Details summary="Technical details &amp; data governance" id="crm-technical-details">
+        <div class="readable-prose">
+          <p>
+            In-depth technical architecture considerations for CRM optimization include:
+          </p>
+          <ul>
+            {crm.technicalTopics.map((topic) => (
+              <li><strong>{topic}</strong></li>
+            ))}
+          </ul>
+        </div>
+      </Details>
+    </div>
+  </section>
+
+  <!-- 6. Important Boundary -->
+  <section class="crm-boundary-section">
+    <div class="container-default">
+      <div class="boundary-alert-box">
+        <h3 class="boundary-title">Scope Boundary Notice</h3>
+        <p class="boundary-text">
+          Historical migration, large-scale cleanup or complex deduplication should be scoped separately when required. Do not assume they are included in a CRM implementation.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. FAQ -->
+  <section class="crm-faq-section section-py">
+    <div class="container-default">
+      <h2 class="section-title crm-faq-title">Frequently Asked Questions</h2>
+      <div class="faq-list">
+        {crm.faq.map((item, idx) => (
+          <Details summary={item.question} id={`crm-faq-${idx}`} open={idx === 0}>
+            <p>{item.answer}</p>
+          </Details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Final CTA -->
+  <section class="crm-final-cta section-py-lg">
+    <div class="container-default text-center">
+      <h2 class="section-title">Make the CRM easier to operate.</h2>
+      <div class="cta-wrap">
+        <Button href={crm.ctaHref} variant="primary">
+          Discuss your CRM workflow
+        </Button>
+      </div>
+    </div>
+  </section>
+</ServiceLayout>
+
+<style>
+  .crm-diagram-card {
+    background-color: var(--ink-950);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-panel);
+    padding: var(--space-6);
+    width: 100%;
+    max-width: 440px;
+  }
+
+  .diagram-pill-header {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--signal-blue);
+    font-family: var(--font-mono);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .crm-svg {
+    width: 100%;
+    height: auto;
+  }
+
+  /* Symptoms */
+  .crm-symptoms-section {
+    background-color: var(--canvas);
+  }
+
+  .symptoms-header {
+    max-width: 720px;
+    margin-bottom: var(--space-12);
+  }
+
+  .symptoms-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+
+  @media (max-width: 768px) {
+    .symptoms-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .symptom-card {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-md);
+    padding: var(--space-4) var(--space-6);
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .symptom-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--signal-amber);
+    flex-shrink: 0;
+  }
+
+  .symptom-text {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--slate-700);
+  }
+
+  /* Scope */
+  .crm-scope-section {
+    background-color: var(--canvas-alt);
+    border-top: 1px solid var(--slate-200);
+    border-bottom: 1px solid var(--slate-200);
+  }
+
+  .scope-header {
+    margin-bottom: var(--space-12);
+  }
+
+  .scope-columns-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+  }
+
+  @media (max-width: 1024px) {
+    .scope-columns-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .scope-col {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-card);
+    padding: var(--space-8);
+  }
+
+  .col-heading {
+    font-size: 1.1875rem;
+    font-weight: 700;
+    color: var(--ink-950);
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--slate-100);
+  }
+
+  .col-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .col-list li {
+    font-size: 0.9375rem;
+    color: var(--slate-600);
+    padding-left: var(--space-3);
+    border-left: 2px solid var(--signal-blue);
+  }
+
+  /* Flow pill sequence */
+  .arch-box {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-panel);
+    padding: var(--space-10);
+  }
+
+  .flow-pill-sequence {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    margin: var(--space-6) 0;
+    padding: var(--space-4);
+    background-color: var(--canvas-alt);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--ink-950);
+  }
+
+  .seq-arrow {
+    color: var(--slate-400);
+  }
+
+  .arch-explanation {
+    max-width: 720px;
+  }
+
+  /* Platforms bar */
+  .platforms-bar {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .bar-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--ink-950);
+  }
+
+  .bar-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .platform-tag {
+    background-color: var(--canvas-alt);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-sm);
+    padding: var(--space-1) var(--space-3);
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+
+  .bar-note {
+    font-size: 0.8125rem;
+    color: var(--slate-500);
+    font-style: italic;
+  }
+
+  /* Boundary */
+  .boundary-alert-box {
+    background-color: var(--canvas-alt);
+    border-left: 4px solid var(--slate-500);
+    padding: var(--space-6);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    margin-top: var(--space-8);
+  }
+
+  .boundary-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ink-950);
+    margin-bottom: var(--space-2);
+  }
+
+  .boundary-text {
+    font-size: 0.9375rem;
+    color: var(--slate-600);
+  }
+
+  /* FAQ */
+  .crm-faq-title {
+    margin-bottom: var(--space-8);
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .cta-wrap {
+    margin-top: var(--space-6);
+  }
+</style>

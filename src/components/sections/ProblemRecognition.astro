@@ -1,0 +1,161 @@
+---
+import SectionEyebrow from "../ui/SectionEyebrow.astro";
+import TextLink from "../ui/TextLink.astro";
+
+const scenarios = [
+  {
+    num: "01",
+    title: "Leads are copied between systems",
+    desc: "A form, inbox or ad generates the lead, but someone still has to create the CRM record and assign it."
+  },
+  {
+    num: "02",
+    title: "Follow-up depends on memory",
+    desc: "The next email, task or reminder happens only if someone remembers to do it."
+  },
+  {
+    num: "03",
+    title: "Statuses drift apart",
+    desc: "One system says a job, deal or invoice is complete while another still shows the previous state."
+  },
+  {
+    num: "04",
+    title: "Documents require repeated handling",
+    desc: "The same information is copied into documents, downloaded, renamed, moved and attached again."
+  },
+  {
+    num: "05",
+    title: "Appointments create manual admin",
+    desc: "Confirmations, reminders, reschedules and CRM updates are handled one event at a time."
+  },
+  {
+    num: "06",
+    title: "Nobody can quickly see what is waiting",
+    desc: "The information exists, but not in a consistent state that supports useful reporting."
+  }
+];
+---
+
+<section class="problem-recognition-section section-py" aria-labelledby="problem-heading">
+  <div class="container-default">
+    <div class="section-intro-block">
+      <SectionEyebrow>WHEN THE PROCESS STARTS TO BREAK</SectionEyebrow>
+      <h2 id="problem-heading" class="section-title">
+        If the work lives in copy-paste, tabs and reminders, it can probably be structured better.
+      </h2>
+      <p class="body-large section-lead">
+        Automation becomes useful when the same information is repeatedly moved, checked, reformatted, assigned, sent or updated by hand.
+      </p>
+    </div>
+
+    <!-- Six Compact Scenario Blocks -->
+    <div class="scenarios-grid">
+      {scenarios.map((item) => (
+        <div class="scenario-item">
+          <div class="scenario-num-bar">
+            <span class="scenario-index">{item.num}</span>
+            <span class="scenario-indicator-line" aria-hidden="true"></span>
+          </div>
+          <h3 class="scenario-title">{item.title}</h3>
+          <p class="scenario-desc">{item.desc}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="scenarios-footer-link">
+      <TextLink href="/use-cases" class="use-cases-cta">
+        Explore real workflow patterns
+      </TextLink>
+    </div>
+  </div>
+</section>
+
+<style>
+  .problem-recognition-section {
+    background-color: var(--canvas);
+  }
+
+  .section-intro-block {
+    max-width: 760px;
+    margin-bottom: var(--space-16);
+  }
+
+  .section-lead {
+    margin-top: var(--space-4);
+  }
+
+  .scenarios-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+    margin-bottom: var(--space-12);
+  }
+
+  @media (max-width: 1024px) {
+    .scenarios-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .scenarios-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+  }
+
+  .scenario-item {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-card);
+    padding: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--motion-fast) var(--ease-standard),
+                border-color var(--motion-fast) var(--ease-standard);
+  }
+
+  .scenario-item:hover {
+    transform: translateY(-2px);
+    border-color: var(--slate-300);
+  }
+
+  .scenario-num-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+
+  .scenario-index {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: var(--signal-blue);
+  }
+
+  .scenario-indicator-line {
+    flex: 1;
+    height: 1px;
+    background-color: var(--slate-200);
+  }
+
+  .scenario-title {
+    font-size: 1.1875rem;
+    font-weight: 700;
+    color: var(--ink-950);
+    margin-bottom: var(--space-2);
+    line-height: 1.35;
+  }
+
+  .scenario-desc {
+    font-size: 0.9375rem;
+    color: var(--slate-600);
+    line-height: 1.6;
+  }
+
+  .scenarios-footer-link {
+    display: flex;
+    justify-content: flex-start;
+  }
+</style>

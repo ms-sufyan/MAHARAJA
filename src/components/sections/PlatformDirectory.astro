@@ -1,0 +1,127 @@
+---
+import { platformGroups } from "../../data/platforms";
+import SectionEyebrow from "../ui/SectionEyebrow.astro";
+---
+
+<section class="platform-directory-section section-py" aria-labelledby="platforms-dir-heading">
+  <div class="container-default">
+    <div class="directory-header">
+      <SectionEyebrow>COMPATIBILITY &amp; TOOLING</SectionEyebrow>
+      <h2 id="platforms-dir-heading" class="section-title">
+        Systems represented in implementation work
+      </h2>
+      <p class="body-large directory-intro">
+        The right workflow depends on the systems already involved. These names indicate implementation experience—not certification or vendor partnership.
+      </p>
+    </div>
+
+    <!-- Structured Categorized Text Directory -->
+    <div class="directory-grid">
+      {platformGroups.map((group) => (
+        <div class="directory-category-card">
+          <h3 class="category-name">{group.category}</h3>
+          <p class="category-desc">{group.description}</p>
+          <ul class="platforms-list">
+            {group.platforms.map((p) => (
+              <li class="platform-text-tag">
+                {p.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="directory-footnote">
+      <p>
+        Additional systems can be integrated provided suitable APIs, webhooks, or export interfaces exist. We evaluate technical feasibility against your specific platforms during discovery.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .platform-directory-section {
+    background-color: var(--canvas);
+    border-bottom: 1px solid var(--slate-200);
+  }
+
+  .directory-header {
+    max-width: 760px;
+    margin-bottom: var(--space-16);
+  }
+
+  .directory-header h2 {
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .directory-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+    margin-bottom: var(--space-12);
+  }
+
+  @media (max-width: 1024px) {
+    .directory-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .directory-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+  }
+
+  .directory-category-card {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-card);
+    padding: var(--space-8);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .category-name {
+    font-size: 1.1875rem;
+    font-weight: 700;
+    color: var(--ink-950);
+    margin-bottom: var(--space-2);
+  }
+
+  .category-desc {
+    font-size: 0.875rem;
+    color: var(--slate-500);
+    line-height: 1.5;
+    margin-bottom: var(--space-6);
+  }
+
+  .platforms-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: auto;
+  }
+
+  .platform-text-tag {
+    display: inline-block;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-sm);
+    background-color: var(--canvas-alt);
+    border: 1px solid var(--slate-200);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--slate-700);
+  }
+
+  .directory-footnote {
+    padding-top: var(--space-4);
+    font-size: 0.875rem;
+    color: var(--slate-500);
+    max-width: 800px;
+    line-height: 1.55;
+  }
+</style>

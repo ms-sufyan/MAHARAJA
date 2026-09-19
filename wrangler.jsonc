@@ -1,0 +1,31 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "maharaja-systems",
+  "main": "./dist/_worker.js/index.js",
+  "compatibility_date": "2024-12-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "maharaja-prod-db",
+      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "triggers": {
+    "crons": [
+      // Scheduled cleanup: run once daily at 03:00 UTC to purge expired rate limits and data exceeding retention days
+      "0 3 * * *"
+    ]
+  },
+  "vars": {
+    "CANONICAL_ORIGIN": "https://maharajasystems.com",
+    "TURNSTILE_EXPECTED_HOSTNAME": "maharajasystems.com",
+    "DATA_RETENTION_DAYS": "90",
+    "ENABLE_WEB_ANALYTICS": "false"
+  }
+}

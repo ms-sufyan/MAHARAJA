@@ -1,0 +1,90 @@
+---
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+  class?: string;
+}
+
+const { items, class: className = "" } = Astro.props;
+
+// Schema.org BreadcrumbList
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": items.map((item, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": item.label,
+    ...(item.href ? { "item": `https://maharajasystems.com${item.href}` } : {})
+  }))
+};
+---
+
+<nav aria-label="Breadcrumb" class={`breadcrumbs-nav ${className}`}>
+  <ol class="breadcrumbs-list">
+    {items.map((item, index) => {
+      const isLast = index === items.length - 1;
+      return (
+        <li class="breadcrumbs-item">
+          {item.href && !isLast ? (
+            <a href={item.href} class="breadcrumbs-link">
+              {item.label}
+            </a>
+          ) : (
+            <span class="breadcrumbs-current" aria-current="page">
+              {item.label}
+            </span>
+          )}
+          {!isLast && <span class="breadcrumbs-separator" aria-hidden="true">/</span>}
+        </li>
+      );
+    })}
+  </ol>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+</nav>
+
+<style>
+  .breadcrumbs-nav {
+    margin-bottom: var(--space-6);
+  }
+
+  .breadcrumbs-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 0.875rem;
+    color: var(--slate-500);
+  }
+
+  .breadcrumbs-item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .breadcrumbs-link {
+    color: var(--slate-600);
+    text-decoration: none;
+    transition: color var(--motion-fast) var(--ease-standard);
+  }
+
+  .breadcrumbs-link:hover {
+    color: var(--signal-blue);
+    text-decoration: underline;
+  }
+
+  .breadcrumbs-current {
+    color: var(--ink-950);
+    font-weight: 500;
+  }
+
+  .breadcrumbs-separator {
+    color: var(--slate-300);
+    user-select: none;
+  }
+</style>

@@ -1,0 +1,218 @@
+---
+export const prerender = true;
+
+import ContentLayout from "../layouts/ContentLayout.astro";
+import SectionEyebrow from "../components/ui/SectionEyebrow.astro";
+import { brand } from "../data/brand";
+import { seoData } from "../data/seo";
+
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: "Privacy Policy" }
+];
+---
+
+<ContentLayout
+  title={seoData.privacy.title}
+  description={seoData.privacy.description}
+  canonicalPath={seoData.privacy.canonicalPath}
+  breadcrumbs={breadcrumbs}
+>
+  <div class="legal-page-container">
+    <div class="legal-header">
+      <SectionEyebrow>DATA PRIVACY &amp; SECURITY</SectionEyebrow>
+      <h1 class="interior-title">Privacy Policy</h1>
+      <p class="body-base legal-updated">
+        Effective Date: September 19, 2026 | Last Updated: September 19, 2026
+      </p>
+    </div>
+
+    <!-- Production Configuration Notice if Legal Entity Pending -->
+    {(!brand.legalEntity || !brand.privacyContactEmail) && (
+      <div class="legal-config-notice">
+        <strong>Notice for Production Deployment:</strong> Final legal entity registration details and privacy officer contact email will be configured upon production deployment. Inquiries may be submitted via the primary website contact form.
+      </div>
+    )}
+
+    <div class="legal-body readable-prose">
+      <section class="legal-section">
+        <h2>1. Who Operates This Website</h2>
+        <p>
+          This website is operated by <strong>{brand.legalEntity || brand.companyName}</strong> ("we," "our," or "us"). We provide business-systems consulting services specializing in CRM architecture, workflow automation, and systems integration.
+        </p>
+        <p>
+          Our architecture is built on principles of data minimization, purpose limitation, and storage limitation. We deliberately do not run third-party advertising trackers, session replay recorders, or behavioural profiling scripts.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>2. Information Collected Through the Contact Form</h2>
+        <p>
+          When you submit an inquiry through our website contact form, we collect only the information necessary to review your request and communicate with you:
+        </p>
+        <ul>
+          <li><strong>Contact Details:</strong> Your full name and work email address.</li>
+          <li><strong>Business Context:</strong> Company name (optional), current systems or tools (optional), and chosen service interest category.</li>
+          <li><strong>Workflow Description:</strong> The operational friction, manual steps, or goals you share in the message description.</li>
+          <li><strong>Referral Context:</strong> The source page path on our website and standard campaign parameters (UTMs), if present in your browser URL.</li>
+        </ul>
+        <p>
+          We do not collect or store telephone numbers, financial billing numbers, postal addresses, or government identification through the public contact form.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>3. Purpose and Legal Basis for Processing</h2>
+        <p>
+          We process contact submissions for the sole purpose of:
+        </p>
+        <ul>
+          <li>Evaluating the feasibility of your proposed workflow or systems engagement.</li>
+          <li>Responding directly to your business inquiry and scheduling initial scoping discussions.</li>
+          <li>Maintaining an operational audit record of customer inquiries.</li>
+        </ul>
+        <p>
+          Depending on your jurisdiction (such as GDPR in the EU/UK or PIPEDA in Canada), processing is conducted on the basis of taking steps at your request prior to entering into a business contract, legitimate business interests in communicating with commercial prospects, or meaningful consent.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>4. Security and Anti-Abuse Processing</h2>
+        <p>
+          To protect our infrastructure and maintain service availability, we utilize privacy-conscious anti-abuse protections:
+        </p>
+        <ul>
+          <li>
+            <strong>Cloudflare Turnstile:</strong> We use Cloudflare Turnstile to protect against automated bots and spam submissions without presenting visual image puzzles. Turnstile evaluates browser signals via Cloudflare's privacy-first challenge service.
+          </li>
+          <li>
+            <strong>Rate Limiting:</strong> We prevent abuse by limiting submission frequency per connection. To protect visitor privacy, we <em>never</em> persist raw IP addresses in our database. Instead, IP addresses are transiently hashed using a cryptographic HMAC-SHA-256 algorithm with a private salt, and only the one-way hash digest is stored to track request counts.
+          </li>
+        </ul>
+      </section>
+
+      <section class="legal-section">
+        <h2>5. Service Providers and Processors</h2>
+        <p>
+          We engage trusted infrastructure processors operating under strict data protection agreements:
+        </p>
+        <ul>
+          <li><strong>Cloudflare, Inc.:</strong> Provides edge hosting, server execution (Cloudflare Workers), and database persistence (Cloudflare D1) located in global and North American data centers.</li>
+        </ul>
+        <p>
+          We do not sell, rent, monetize, or trade your inquiry information to third-party data brokers, ad networks, or marketing aggregators.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>6. Data Retention Policy</h2>
+        <p>
+          In accordance with data minimization principles, contact submissions are retained for an active operational period of <strong>{brand.dataRetentionDays} days</strong>, after which inquiries that did not result in an active commercial contract or legal record-keeping requirement are purged through automated database cleanup schedules.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>7. Individual Privacy Rights</h2>
+        <p>
+          Subject to applicable local laws (including EU/UK GDPR, Canadian PIPEDA, or US state privacy statutes), you have rights regarding your personal information, including:
+        </p>
+        <ul>
+          <li>The right to access the personal data we hold about you.</li>
+          <li>The right to request correction of inaccurate information.</li>
+          <li>The right to request deletion of your contact submission record.</li>
+          <li>The right to object to or restrict certain processing activities.</li>
+        </ul>
+        <p>
+          To exercise any of these rights, please contact our data stewardship team using the contact details below.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>8. Contact Information</h2>
+        <p>
+          For privacy-related inquiries, requests, or questions regarding this policy, please reach out to:
+        </p>
+        <p class="contact-details-box">
+          <strong>Privacy Stewardship:</strong> {brand.companyName}<br />
+          <strong>Email:</strong> {brand.privacyContactEmail || brand.contactEmail || "privacy@maharajasystems.com"}<br />
+          <strong>Website:</strong> <a href="/contact">Inquiry Form</a>
+        </p>
+      </section>
+    </div>
+  </div>
+</ContentLayout>
+
+<style>
+  .legal-page-container {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .legal-header {
+    margin-bottom: var(--space-8);
+    border-bottom: 1px solid var(--slate-200);
+    padding-bottom: var(--space-6);
+  }
+
+  .legal-updated {
+    font-size: 0.875rem;
+    color: var(--slate-500);
+    margin-top: var(--space-2);
+  }
+
+  .legal-config-notice {
+    background-color: var(--signal-amber-soft);
+    border: 1px solid rgba(217, 119, 6, 0.3);
+    border-radius: var(--radius-md);
+    padding: var(--space-4) var(--space-6);
+    margin-bottom: var(--space-8);
+    font-size: 0.875rem;
+    color: #92400E;
+  }
+
+  .legal-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .legal-section h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--ink-950);
+    margin-bottom: var(--space-3);
+  }
+
+  .legal-section p {
+    font-size: 1rem;
+    color: var(--slate-600);
+    line-height: 1.65;
+    margin-bottom: var(--space-3);
+  }
+
+  .legal-section ul {
+    list-style: disc;
+    padding-left: var(--space-6);
+    margin-bottom: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .legal-section li {
+    font-size: 0.9375rem;
+    color: var(--slate-600);
+    line-height: 1.55;
+  }
+
+  .contact-details-box {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--ink-950);
+  }
+</style>

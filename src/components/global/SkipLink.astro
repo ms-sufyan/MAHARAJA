@@ -1,0 +1,29 @@
+---
+// Skip to main content link for accessibility (WCAG 2.2 AA)
+---
+<a href="#main-content" class="skip-link">
+  Skip to main content
+</a>
+
+<style>
+  .skip-link {
+    position: absolute;
+    top: -100px;
+    left: var(--space-4);
+    z-index: 9999;
+    padding: var(--space-3) var(--space-6);
+    background-color: var(--signal-blue);
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    transition: top var(--motion-fast) var(--ease-standard);
+  }
+
+  .skip-link:focus {
+    top: var(--space-4);
+    outline: 3px solid #FFFFFF !important;
+    outline-offset: 2px !important;
+  }
+</style>

@@ -1,0 +1,59 @@
+---
+interface Props {
+  variant?: "primary" | "secondary" | "ghost" | "dark";
+  href?: string;
+  type?: "button" | "submit" | "reset";
+  id?: string;
+  class?: string;
+  ariaExpanded?: boolean;
+  ariaControls?: string;
+  ariaLabel?: string;
+  disabled?: boolean;
+}
+
+const {
+  variant = "primary",
+  href,
+  type = "button",
+  id,
+  class: className = "",
+  ariaExpanded,
+  ariaControls,
+  ariaLabel,
+  disabled = false
+} = Astro.props;
+
+const variantClass = {
+  primary: "btn-primary",
+  secondary: "btn-secondary",
+  ghost: "btn-ghost",
+  dark: "btn-dark"
+}[variant];
+---
+
+{
+  href ? (
+    <a
+      href={href}
+      id={id}
+      class={`btn ${variantClass} ${className}`}
+      aria-label={ariaLabel}
+      aria-disabled={disabled ? "true" : undefined}
+      tabindex={disabled ? -1 : undefined}
+    >
+      <slot />
+    </a>
+  ) : (
+    <button
+      type={type}
+      id={id}
+      class={`btn ${variantClass} ${className}`}
+      aria-expanded={ariaExpanded !== undefined ? (ariaExpanded ? "true" : "false") : undefined}
+      aria-controls={ariaControls}
+      aria-label={ariaLabel}
+      disabled={disabled}
+    >
+      <slot />
+    </button>
+  )
+}

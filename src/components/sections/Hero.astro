@@ -1,0 +1,115 @@
+---
+import { brand } from "../../data/brand";
+import Button from "../ui/Button.astro";
+import SectionEyebrow from "../ui/SectionEyebrow.astro";
+import HeroWorkflowMap from "../visual/HeroWorkflowMap.astro";
+---
+
+<section class="hero-section section-radial-light" aria-labelledby="hero-main-heading">
+  <div class="container-default hero-container">
+    <div class="hero-grid">
+      <!-- Left Column: 58% Narrative Copy -->
+      <div class="hero-copy-col">
+        <SectionEyebrow>CRM · WORKFLOW AUTOMATION · SYSTEMS INTEGRATION</SectionEyebrow>
+        
+        <h1 id="hero-main-heading" class="hero-title">
+          Connect your systems. Automate the work that slows your team down.
+        </h1>
+
+        <p class="body-large hero-paragraph">
+          {brand.companyName} designs practical CRM, workflow and integration systems that connect the tools your business already uses—so leads, tasks, documents, appointments, payments, files and operational data move where they need to.
+        </p>
+
+        <div class="hero-actions-group">
+          <div class="hero-buttons-row">
+            <Button href="/contact" variant="primary" class="hero-primary-cta">
+              Discuss your workflow
+            </Button>
+            <Button href="#workflow-explorer" variant="secondary" class="hero-secondary-cta">
+              See what can be automated
+            </Button>
+          </div>
+          <p class="hero-microcopy">
+            Start with the process, not the platform.
+          </p>
+        </div>
+      </div>
+
+      <!-- Right Column: 42% Technical Visual -->
+      <div class="hero-visual-col">
+        <HeroWorkflowMap />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    padding-top: clamp(48px, 6vw, 88px);
+    padding-bottom: clamp(64px, 8vw, 104px);
+    border-bottom: 1px solid var(--slate-200);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 58% 42%;
+    gap: var(--space-8);
+    align-items: center;
+  }
+
+  @media (max-width: 1024px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+    }
+  }
+
+  .hero-copy-col {
+    max-width: 680px;
+  }
+
+  .hero-title {
+    margin-bottom: var(--space-6);
+  }
+
+  .hero-paragraph {
+    margin-bottom: var(--space-8);
+  }
+
+  .hero-actions-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .hero-buttons-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .hero-microcopy {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--slate-500);
+  }
+
+  .hero-visual-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media (max-width: 640px) {
+    .hero-buttons-row {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .hero-primary-cta, .hero-secondary-cta {
+      width: 100%;
+    }
+  }
+</style>

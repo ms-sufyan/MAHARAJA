@@ -1,0 +1,94 @@
+/* Master Global Stylesheet */
+@import "./tokens.css";
+@import "./reset.css";
+@import "./typography.css";
+@import "./utilities.css";
+
+/* Section Vertical Spacing - Section 72 */
+.section-py {
+  padding-top: var(--space-24);
+  padding-bottom: var(--space-24);
+}
+
+.section-py-lg {
+  padding-top: var(--space-32);
+  padding-bottom: var(--space-32);
+}
+
+@media (max-width: 768px) {
+  .section-py {
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-16);
+  }
+  .section-py-lg {
+    padding-top: var(--space-20);
+    padding-bottom: var(--space-20);
+  }
+}
+
+/* Detail Disclosure Accordions - Section 27, 140 */
+details.custom-details {
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-md);
+  background-color: var(--surface);
+  margin-bottom: var(--space-3);
+  transition: border-color var(--motion-base) var(--ease-standard);
+}
+
+details.custom-details[open] {
+  border-color: var(--slate-300);
+  box-shadow: var(--shadow-sm);
+}
+
+details.custom-details summary {
+  padding: var(--space-4) var(--space-6);
+  font-weight: 600;
+  color: var(--ink-950);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  min-height: 48px;
+}
+
+details.custom-details summary::-webkit-details-marker {
+  display: none;
+}
+
+details.custom-details summary::after {
+  content: "+";
+  font-size: 1.25rem;
+  color: var(--slate-500);
+  transition: transform var(--motion-fast) var(--ease-standard);
+}
+
+details.custom-details[open] summary::after {
+  content: "−";
+  color: var(--signal-blue);
+}
+
+details.custom-details .details-body {
+  padding: 0 var(--space-6) var(--space-6);
+  color: var(--slate-600);
+  line-height: 1.65;
+}
+
+/* Dark mode details */
+details.custom-details-dark {
+  background-color: var(--ink-900);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--surface);
+}
+
+details.custom-details-dark[open] {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+details.custom-details-dark summary {
+  color: #FFFFFF;
+}
+
+details.custom-details-dark .details-body {
+  color: var(--dark-muted);
+}

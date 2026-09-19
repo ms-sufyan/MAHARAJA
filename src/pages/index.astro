@@ -1,0 +1,60 @@
+---
+export const prerender = true;
+
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/sections/Hero.astro";
+import ProofStrip from "../components/sections/ProofStrip.astro";
+import ProblemRecognition from "../components/sections/ProblemRecognition.astro";
+import WorkflowExplorer from "../components/visual/WorkflowExplorer.astro";
+import ServiceArchitecture from "../components/sections/ServiceArchitecture.astro";
+import StickyStory from "../components/sections/StickyStory.astro";
+import ImplementationPatterns from "../components/sections/ImplementationPatterns.astro";
+import ProcessPreview from "../components/sections/ProcessPreview.astro";
+import TechnicalTrust from "../components/sections/TechnicalTrust.astro";
+import PlatformDirectory from "../components/sections/PlatformDirectory.astro";
+import FAQSection from "../components/sections/FAQSection.astro";
+import FinalCTA from "../components/sections/FinalCTA.astro";
+import { seoData } from "../data/seo";
+---
+
+<BaseLayout
+  title={seoData.home.title}
+  description={seoData.home.description}
+  canonicalPath={seoData.home.canonicalPath}
+>
+  <!-- 1. Hero -->
+  <Hero />
+
+  <!-- 2. Implementation-experience proof strip -->
+  <ProofStrip />
+
+  <!-- 3. Problem-recognition section -->
+  <ProblemRecognition />
+
+  <!-- 4. Interactive Workflow Explorer -->
+  <WorkflowExplorer />
+
+  <!-- 5. Core service architecture -->
+  <ServiceArchitecture />
+
+  <!-- 6. Sticky storytelling section -->
+  <StickyStory />
+
+  <!-- 7. Selected implementation patterns -->
+  <ImplementationPatterns />
+
+  <!-- 8. How We Work preview -->
+  <ProcessPreview />
+
+  <!-- 9. Reliability & technical trust section -->
+  <TechnicalTrust />
+
+  <!-- 10. Systems represented in implementation work -->
+  <PlatformDirectory />
+
+  <!-- 11. FAQ -->
+  <FAQSection />
+
+  <!-- 12. Final conversion section -->
+  <FinalCTA />
+</BaseLayout>

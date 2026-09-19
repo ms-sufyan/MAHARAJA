@@ -1,0 +1,370 @@
+---
+export const prerender = true;
+
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/global/Breadcrumbs.astro";
+import SectionEyebrow from "../components/ui/SectionEyebrow.astro";
+import Button from "../components/ui/Button.astro";
+import Details from "../components/ui/Details.astro";
+import PatternDiagram from "../components/visual/PatternDiagram.astro";
+import PlatformDirectory from "../components/sections/PlatformDirectory.astro";
+import FinalCTA from "../components/sections/FinalCTA.astro";
+import { implementationPatterns } from "../data/implementationPatterns";
+import { seoData } from "../data/seo";
+
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: "Capabilities" }
+];
+---
+
+<BaseLayout
+  title={seoData.capabilities.title}
+  description={seoData.capabilities.description}
+  canonicalPath={seoData.capabilities.canonicalPath}
+>
+  <!-- Capabilities Hero -->
+  <section class="capabilities-hero section-py">
+    <div class="container-default">
+      <Breadcrumbs items={breadcrumbs} />
+
+      <div class="hero-content-block">
+        <SectionEyebrow>IMPLEMENTATION CAPABILITIES</SectionEyebrow>
+        <h1 class="interior-title">See how the systems and workflow logic fit together.</h1>
+        <p class="body-large hero-sub">
+          These patterns illustrate types of architecture represented in implementation work. They describe the work itself, not unverified business outcomes.
+        </p>
+        <div class="hero-cta-row">
+          <Button href="/contact" variant="primary">
+            Discuss a similar workflow
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pattern Jump Navigation -->
+  <section class="pattern-index-bar">
+    <div class="container-default">
+      <span class="index-label">Architectural Patterns:</span>
+      <div class="index-links-row">
+        {implementationPatterns.map((p) => (
+          <a href={`#pat-${p.slug}`} class="index-anchor">
+            {p.shortTitle}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 Detailed Implementation Patterns -->
+  <section class="detailed-patterns-section section-py">
+    <div class="container-default">
+      <div class="patterns-vertical-stack">
+        {implementationPatterns.map((pat, idx) => (
+          <article class="pattern-detail-card" id={`pat-${pat.slug}`}>
+            <div class="pattern-detail-header">
+              <span class="detail-num-badge">Pattern 0{idx + 1}</span>
+              <h2 class="detail-pattern-title">{pat.title}</h2>
+            </div>
+
+            <div class="pattern-detail-grid">
+              <!-- Left Column: Situation, Considerations, Human Control -->
+              <div class="pattern-text-col">
+                <div class="detail-section-group">
+                  <span class="group-label">Business Situation</span>
+                  <p class="group-text">{pat.situation}</p>
+                </div>
+
+                <div class="detail-section-group">
+                  <span class="group-label">Implementation Considerations</span>
+                  <ul class="considerations-list">
+                    {pat.considerations.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div class="detail-section-group human-gate-group">
+                  <span class="group-label text-amber">Human Control</span>
+                  <p class="group-text text-amber-dark">{pat.humanControl}</p>
+                </div>
+
+                <div class="pattern-footer-meta">
+                  <div class="related-services-row">
+                    <span class="meta-label">Related Services:</span>
+                    {pat.relatedServices.map((rs) => (
+                      <a href={rs.href} class="meta-service-link">{rs.label}</a>
+                    ))}
+                  </div>
+
+                  <Details summary="Technical topics &amp; engineering notes" id={`tech-notes-${pat.slug}`}>
+                    <ul class="tech-topics-list">
+                      {pat.technicalTopics.map((tt) => <li>{tt}</li>)}
+                    </ul>
+                  </Details>
+                </div>
+              </div>
+
+              <!-- Right Column: Visual Diagram -->
+              <div class="pattern-visual-col">
+                <span class="visual-header-label">DATA &amp; LOGIC FLOW</span>
+                <PatternDiagram patternSlug={pat.slug} steps={pat.flowSteps} />
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Systems represented in implementation work -->
+  <PlatformDirectory />
+
+  <!-- Evidence Standard Box -->
+  <section class="capabilities-evidence-section section-py">
+    <div class="container-default">
+      <div class="evidence-standard-box">
+        <SectionEyebrow>GOVERNANCE</SectionEyebrow>
+        <h2 class="section-title">Evidence &amp; Measurement Standard</h2>
+        <p class="body-large evidence-text">
+          Implementation architecture, configured systems and documented workflow logic demonstrate capability. Performance metrics (time saved, revenue generated, cost reductions) are published only when verified by production operational reporting.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <FinalCTA />
+</BaseLayout>
+
+<style>
+  .capabilities-hero {
+    background-color: var(--canvas-alt);
+    border-bottom: 1px solid var(--slate-200);
+  }
+
+  .hero-content-block {
+    max-width: 800px;
+  }
+
+  .hero-sub {
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-8);
+  }
+
+  /* Index Bar */
+  .pattern-index-bar {
+    background-color: var(--surface);
+    border-bottom: 1px solid var(--slate-200);
+    padding: var(--space-4) 0;
+  }
+
+  .pattern-index-bar .container-default {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .index-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--slate-500);
+  }
+
+  .index-links-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .index-anchor {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--slate-700);
+    background-color: var(--canvas-alt);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-sm);
+    padding: 2px var(--space-3);
+    text-decoration: none;
+    transition: all var(--motion-fast) var(--ease-standard);
+  }
+
+  .index-anchor:hover {
+    color: var(--signal-blue);
+    border-color: var(--signal-blue);
+  }
+
+  /* Patterns Stack */
+  .detailed-patterns-section {
+    background-color: var(--canvas);
+  }
+
+  .patterns-vertical-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+
+  .pattern-detail-card {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-panel);
+    padding: var(--space-10);
+    scroll-margin-top: calc(var(--header-height-desktop) + var(--space-8));
+  }
+
+  @media (max-width: 768px) {
+    .pattern-detail-card {
+      padding: var(--space-6);
+    }
+  }
+
+  .pattern-detail-header {
+    border-bottom: 1px solid var(--slate-100);
+    padding-bottom: var(--space-4);
+    margin-bottom: var(--space-8);
+  }
+
+  .detail-num-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: var(--signal-blue);
+    display: inline-block;
+    margin-bottom: var(--space-2);
+  }
+
+  .detail-pattern-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--ink-950);
+  }
+
+  .pattern-detail-grid {
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    gap: var(--space-12);
+    align-items: flex-start;
+  }
+
+  @media (max-width: 1024px) {
+    .pattern-detail-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+  }
+
+  .pattern-text-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .detail-section-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .group-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--slate-500);
+  }
+
+  .group-text {
+    font-size: 0.9375rem;
+    color: var(--slate-600);
+    line-height: 1.6;
+  }
+
+  .considerations-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .considerations-list li {
+    font-size: 0.875rem;
+    color: var(--ink-950);
+    padding-left: var(--space-3);
+    border-left: 2px solid var(--signal-blue);
+  }
+
+  .human-gate-group {
+    background-color: var(--signal-amber-soft);
+    border-left: 3px solid var(--signal-amber);
+    padding: var(--space-4) var(--space-6);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+
+  .text-amber { color: var(--signal-amber); }
+  .text-amber-dark { color: #92400E; }
+
+  .pattern-footer-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--slate-100);
+  }
+
+  .related-services-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 0.875rem;
+  }
+
+  .meta-label {
+    font-weight: 600;
+    color: var(--slate-500);
+  }
+
+  .meta-service-link {
+    color: var(--signal-blue);
+    text-decoration: underline;
+  }
+
+  .tech-topics-list {
+    list-style: disc;
+    padding-left: var(--space-6);
+    margin-top: var(--space-2);
+    font-size: 0.875rem;
+    color: var(--slate-600);
+  }
+
+  .pattern-visual-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .visual-header-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--slate-500);
+    font-family: var(--font-mono);
+  }
+
+  /* Evidence Standard */
+  .evidence-standard-box {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-panel);
+    padding: var(--space-12);
+    max-width: 860px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .evidence-text {
+    margin-top: var(--space-4);
+  }
+</style>

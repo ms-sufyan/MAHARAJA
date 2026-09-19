@@ -1,0 +1,240 @@
+/* Layout and Component Utilities */
+
+.container-default {
+  width: 100%;
+  max-width: var(--max-container);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--gutter-desktop);
+  padding-right: var(--gutter-desktop);
+}
+
+@media (max-width: 1024px) {
+  .container-default {
+    padding-left: var(--gutter-tablet);
+    padding-right: var(--gutter-tablet);
+  }
+}
+
+@media (max-width: 640px) {
+  .container-default {
+    padding-left: var(--gutter-mobile);
+    padding-right: var(--gutter-mobile);
+  }
+}
+
+/* Accessible Focus Styling - Section 88 */
+:focus-visible {
+  outline: 2px solid var(--signal-blue) !important;
+  outline-offset: 3px !important;
+}
+
+/* Button System - Section 76 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 48px;
+  padding: 0 var(--space-6);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--motion-base) var(--ease-standard),
+              transform var(--motion-base) var(--ease-standard),
+              border-color var(--motion-base) var(--ease-standard),
+              color var(--motion-base) var(--ease-standard);
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background-color: var(--signal-blue);
+  color: #FFFFFF;
+  border: 1px solid var(--signal-blue);
+}
+
+.btn-primary:hover {
+  background-color: var(--signal-blue-hover);
+  border-color: var(--signal-blue-hover);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background-color: var(--surface);
+  color: var(--ink-950);
+  border: 1px solid var(--slate-300);
+}
+
+.btn-secondary:hover {
+  background-color: var(--surface-muted);
+  border-color: var(--slate-500);
+  color: var(--ink-950);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--slate-700);
+  border: 1px solid transparent;
+}
+
+.btn-ghost:hover {
+  color: var(--ink-950);
+  background-color: var(--slate-100);
+}
+
+.btn-dark {
+  background-color: var(--ink-800);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.btn-dark:hover {
+  background-color: var(--ink-900);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn:disabled, .btn[aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Card & Surface System - Section 74 */
+.card-standard {
+  background-color: var(--surface);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-card);
+  padding: var(--space-8);
+  transition: transform var(--motion-base) var(--ease-standard),
+              border-color var(--motion-base) var(--ease-standard),
+              box-shadow var(--motion-base) var(--ease-standard);
+}
+
+.card-standard:hover {
+  transform: translateY(-2px);
+  border-color: var(--slate-300);
+  box-shadow: var(--shadow-hover);
+}
+
+.panel-feature {
+  background-color: var(--surface);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-panel);
+  padding: var(--space-10);
+}
+
+@media (max-width: 640px) {
+  .panel-feature {
+    padding: var(--space-6);
+  }
+}
+
+.panel-dark {
+  background-color: var(--ink-950);
+  color: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-panel);
+  padding: var(--space-10);
+}
+
+@media (max-width: 640px) {
+  .panel-dark {
+    padding: var(--space-6);
+  }
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  border: 1px solid var(--slate-200);
+  background-color: var(--surface);
+  color: var(--slate-700);
+}
+
+.chip-dark {
+  background-color: var(--ink-900);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--dark-muted);
+}
+
+/* Grid Layouts - Section 73 */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--space-6);
+}
+
+@media (max-width: 1024px) {
+  .grid-12 {
+    grid-template-columns: repeat(8, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .grid-12 {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+}
+
+/* Text Link with Arrow */
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-weight: 600;
+  color: var(--signal-blue);
+  text-decoration: none;
+  transition: gap var(--motion-fast) var(--ease-standard);
+}
+
+.text-link:hover {
+  gap: var(--space-2);
+  text-decoration: underline;
+}
+
+.text-link-dark {
+  color: var(--signal-teal);
+}
+
+/* Atmospheric Gradients - Section 69 */
+.section-radial-light {
+  background-image: radial-gradient(
+    circle at 75% 20%,
+    rgba(59, 91, 255, 0.06),
+    transparent 45%
+  );
+}
+
+.section-radial-dark {
+  background-image: radial-gradient(
+    circle at 75% 20%,
+    rgba(59, 91, 255, 0.12),
+    transparent 50%
+  );
+}
+
+/* Screen Reader Only Utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

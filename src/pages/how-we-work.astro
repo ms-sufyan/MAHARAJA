@@ -1,0 +1,404 @@
+---
+export const prerender = true;
+
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/global/Breadcrumbs.astro";
+import SectionEyebrow from "../components/ui/SectionEyebrow.astro";
+import Button from "../components/ui/Button.astro";
+import Details from "../components/ui/Details.astro";
+import FinalCTA from "../components/sections/FinalCTA.astro";
+import { howWeWorkFaqs } from "../data/faq";
+import { seoData } from "../data/seo";
+
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: "How We Work" }
+];
+
+const phases = [
+  {
+    num: "01",
+    phase: "Understand",
+    heading: "Understand what really happens today.",
+    lead: "Every successful system starts by examining the operational reality on the ground—not by picking software.",
+    deliverables: [
+      "Inbound trigger inventory & data origins",
+      "Stakeholder interviews & ownership map",
+      "Systems catalog & access credentials",
+      "Manual bottlenecks, copy-paste points & delays",
+      "Documented process failure modes"
+    ]
+  },
+  {
+    num: "02",
+    phase: "Map",
+    heading: "Make the handoffs and exceptions visible.",
+    lead: "We produce an end-to-end data flow diagram showing exactly where information moves, mutates, or stalls.",
+    deliverables: [
+      "Field-level schema and transformation mapping",
+      "Primary matching keys & unique record IDs",
+      "Decision trees for branching business rules",
+      "Duplicate entry points & circular loop risks",
+      "Explicit edge-case and missing-value branches"
+    ]
+  },
+  {
+    num: "03",
+    phase: "Design",
+    heading: "Decide what should change—and what should not.",
+    lead: "Automation should only be applied where logic is clear. Everything requiring nuanced judgment stays under human control.",
+    deliverables: [
+      "Explicit system-of-record governance matrix",
+      "Integration connector and webhook architecture",
+      "Human checkpoint & approval boundary design",
+      "Error recovery and exception queue routing",
+      "Least-privilege security and API scopes"
+    ]
+  },
+  {
+    num: "04",
+    phase: "Build",
+    heading: "Implement the smallest reliable system that solves the problem.",
+    lead: "We construct workflows that are lean, observable, and easy to maintain rather than sprawling fragile dependency chains.",
+    deliverables: [
+      "CRM custom objects, properties, and pipelines",
+      "Automation triggers, conditions, and delays",
+      "Direct API integrations & webhook endpoints",
+      "Payload transformations & schema validation",
+      "Targeted alerts, tasks, and document flows"
+    ]
+  },
+  {
+    num: "05",
+    phase: "Validate",
+    heading: "Test normal paths and the cases that make workflows fail.",
+    lead: "Workflows must be battle-tested against missing inputs, API timeouts, and corrupted payloads before production release.",
+    deliverables: [
+      "Happy-path end-to-end data verification",
+      "Missing required fields & malformed payload tests",
+      "Simulated third-party API 429/500 outage recovery",
+      "Duplicate trigger and replay suppression checks",
+      "Verification of human exception alert delivery"
+    ]
+  },
+  {
+    num: "06",
+    phase: "Handover",
+    heading: "Leave the workflow understandable and maintainable.",
+    lead: "You receive clean, transparent systems with comprehensive operational manuals and direct team walkthroughs.",
+    deliverables: [
+      "Complete architectural flow diagrams",
+      "Field mapping dictionaries and endpoint specs",
+      "Team operating instructions and runbooks",
+      "Exception troubleshooting protocols",
+      "Operational health monitoring guidance"
+    ]
+  }
+];
+---
+
+<BaseLayout
+  title={seoData.howWeWork.title}
+  description={seoData.howWeWork.description}
+  canonicalPath={seoData.howWeWork.canonicalPath}
+>
+  <!-- How We Work Hero -->
+  <section class="how-we-work-hero section-py">
+    <div class="container-default">
+      <Breadcrumbs items={breadcrumbs} />
+
+      <div class="hero-content-block">
+        <SectionEyebrow>DELIVERY LIFECYCLE</SectionEyebrow>
+        <h1 class="interior-title">Understand the process before changing the system.</h1>
+        <p class="body-large hero-sub">
+          The first job is to understand what currently happens, what the business rules are and where the handoffs fail. The implementation comes after that.
+        </p>
+        <div class="hero-cta-row">
+          <Button href="/contact" variant="primary">
+            Start with your current process
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Six Phases Deep Dive -->
+  <section class="phases-section section-py">
+    <div class="container-default">
+      <div class="phases-stack">
+        {phases.map((p) => (
+          <div class="phase-card" id={`phase-${p.num}`}>
+            <div class="phase-num-badge">Phase {p.num}</div>
+            
+            <div class="phase-content-grid">
+              <div class="phase-narrative">
+                <span class="phase-name-eyebrow">{p.phase.toUpperCase()}</span>
+                <h2 class="phase-heading">{p.heading}</h2>
+                <p class="phase-lead">{p.lead}</p>
+              </div>
+
+              <div class="phase-deliverables-box">
+                <span class="deliverables-label">Key Actions &amp; Artifacts</span>
+                <ul class="deliverables-list">
+                  {p.deliverables.map((item) => (
+                    <li>
+                      <span class="bullet-dot" aria-hidden="true">✓</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Scoping Criteria Section - Section 52 -->
+  <section class="scope-section section-py">
+    <div class="container-default">
+      <div class="scope-container-card">
+        <SectionEyebrow>ENGAGEMENT SCOPING</SectionEyebrow>
+        <h2 class="section-title">What determines project scope</h2>
+        <p class="body-large scope-intro">
+          The effort involved depends on the number of systems and workflows, the quality of the available data, integration methods, business rules, exception paths, testing requirements and the level of documentation or support required.
+        </p>
+
+        <div class="scope-factors-grid">
+          <div class="factor-card">
+            <h3 class="factor-title">Number of Systems &amp; Workflows</h3>
+            <p class="factor-desc">Connecting two tools with a straightforward trigger is vastly simpler than orchestrating a multi-branch workflow across five disparate platforms.</p>
+          </div>
+          <div class="factor-card">
+            <h3 class="factor-title">Data Quality &amp; Structure</h3>
+            <p class="factor-desc">Clean, structured databases require significantly less prep than legacy spreadsheets riddled with missing fields, duplicates, and unstructured notes.</p>
+          </div>
+          <div class="factor-card">
+            <h3 class="factor-title">Integration Methods Available</h3>
+            <p class="factor-desc">Supported native connectors and well-documented REST APIs move quickly, whereas legacy proprietary tools or scrapers demand custom engineering.</p>
+          </div>
+          <div class="factor-card">
+            <h3 class="factor-title">Exception &amp; Error Handling Depth</h3>
+            <p class="factor-desc">Designing multi-level exception alerts, fallback queues, and retry mechanisms adds resilience and warrants thorough edge-case testing.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process FAQs -->
+  <section class="process-faqs-section section-py">
+    <div class="container-default">
+      <div class="faq-header-wrap">
+        <SectionEyebrow>COMMON QUESTIONS</SectionEyebrow>
+        <h2 class="section-title">Implementation Process FAQs</h2>
+      </div>
+
+      <div class="process-faq-list">
+        {howWeWorkFaqs.map((faq, idx) => (
+          <Details summary={faq.question} id={`process-faq-${idx}`} open={idx === 0}>
+            <p>{faq.answer}</p>
+          </Details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <FinalCTA />
+</BaseLayout>
+
+<style>
+  .how-we-work-hero {
+    background-color: var(--canvas-alt);
+    border-bottom: 1px solid var(--slate-200);
+  }
+
+  .hero-content-block {
+    max-width: 800px;
+  }
+
+  .hero-sub {
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-8);
+  }
+
+  /* Phases Stack */
+  .phases-section {
+    background-color: var(--canvas);
+  }
+
+  .phases-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .phase-card {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-panel);
+    padding: var(--space-10);
+    position: relative;
+    transition: transform var(--motion-fast) var(--ease-standard);
+  }
+
+  @media (max-width: 768px) {
+    .phase-card {
+      padding: var(--space-6);
+    }
+  }
+
+  .phase-num-badge {
+    display: inline-block;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: var(--signal-blue);
+    background-color: var(--signal-blue-soft);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    margin-bottom: var(--space-4);
+  }
+
+  .phase-content-grid {
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    gap: var(--space-12);
+  }
+
+  @media (max-width: 1024px) {
+    .phase-content-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+  }
+
+  .phase-name-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--slate-500);
+    display: block;
+    margin-bottom: var(--space-2);
+  }
+
+  .phase-heading {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--ink-950);
+    line-height: 1.3;
+    margin-bottom: var(--space-3);
+  }
+
+  .phase-lead {
+    font-size: 1.0625rem;
+    color: var(--slate-600);
+    line-height: 1.6;
+  }
+
+  .phase-deliverables-box {
+    background-color: var(--canvas-alt);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+  }
+
+  .deliverables-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--slate-500);
+    display: block;
+    margin-bottom: var(--space-3);
+  }
+
+  .deliverables-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .deliverables-list li {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    font-size: 0.875rem;
+    color: var(--ink-950);
+    line-height: 1.45;
+  }
+
+  .bullet-dot {
+    color: var(--signal-teal);
+    font-weight: 700;
+  }
+
+  /* Scoping */
+  .scope-section {
+    background-color: var(--canvas-alt);
+    border-top: 1px solid var(--slate-200);
+    border-bottom: 1px solid var(--slate-200);
+  }
+
+  .scope-container-card {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-panel);
+    padding: var(--space-12);
+  }
+
+  @media (max-width: 768px) {
+    .scope-container-card {
+      padding: var(--space-6);
+    }
+  }
+
+  .scope-intro {
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-10);
+    max-width: 800px;
+  }
+
+  .scope-factors-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+  }
+
+  @media (max-width: 768px) {
+    .scope-factors-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .factor-card {
+    background-color: var(--canvas-alt);
+    padding: var(--space-6);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--slate-200);
+  }
+
+  .factor-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--ink-950);
+    margin-bottom: var(--space-2);
+  }
+
+  .factor-desc {
+    font-size: 0.9375rem;
+    color: var(--slate-600);
+    line-height: 1.55;
+  }
+
+  /* FAQs */
+  .faq-header-wrap {
+    max-width: 720px;
+    margin-bottom: var(--space-12);
+  }
+
+  .process-faq-list {
+    max-width: 900px;
+  }
+</style>

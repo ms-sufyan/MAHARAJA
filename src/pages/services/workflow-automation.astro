@@ -1,0 +1,454 @@
+---
+export const prerender = true;
+
+import ServiceLayout from "../../layouts/ServiceLayout.astro";
+import SectionEyebrow from "../../components/ui/SectionEyebrow.astro";
+import Details from "../../components/ui/Details.astro";
+import Button from "../../components/ui/Button.astro";
+import { services } from "../../data/services";
+import { seoData } from "../../data/seo";
+
+const workflow = services.find((s) => s.slug === "workflow-automation")!;
+
+const criteria = [
+  { title: "Repeatable Trigger", desc: "A standard event occurs (form submission, stage change, payment, incoming webhook)." },
+  { title: "Clear Data", desc: "Input fields are structured with reliable types (names, emails, IDs, amounts)." },
+  { title: "Definable Rule", desc: "Logic follows explicit conditions: if condition A is met, route to path B." },
+  { title: "Predictable Next Action", desc: "The intended downstream result is explicit (update field, alert owner, dispatch file)." }
+];
+
+const buildingBlocks = [
+  { step: "TRIGGER", desc: "Monitors for an explicit event in an operational tool or webhook listener." },
+  { step: "VALIDATE", desc: "Checks payload completeness and verifies that required fields are present and safe." },
+  { step: "CONDITION", desc: "Evaluates business logic branches to determine which execution route applies." },
+  { step: "TRANSFORM", desc: "Normalizes data formats, maps schemas, and calculates derived values." },
+  { step: "ACTION", desc: "Executes changes in destination systems via native connectors or REST APIs." },
+  { step: "NOTIFY", desc: "Dispatches targeted alerts to relevant team members via Slack, email, or tasks." },
+  { step: "RECORD RESULT", desc: "Logs execution timestamps, destination record IDs, and status outcomes." }
+];
+---
+
+<ServiceLayout
+  title={seoData.workflow.title}
+  description={seoData.workflow.description}
+  canonicalPath={seoData.workflow.canonicalPath}
+  eyebrow={workflow.eyebrow}
+  h1={workflow.h1}
+  subheadline={workflow.subheadline}
+  ctaLabel={workflow.ctaLabel}
+  ctaHref={workflow.ctaHref}
+  secondaryCtaLabel="Explore use cases"
+  secondaryCtaHref="/use-cases"
+>
+  <!-- Hero Visual Pipeline -->
+  <div slot="hero-visual" class="pipeline-visual-card">
+    <div class="pipeline-header">
+      <span>DETERMINISTIC WORKFLOW PIPELINE</span>
+    </div>
+    <div class="pipeline-steps-col">
+      <div class="pipeline-node node-trig">1. Trigger Event</div>
+      <div class="pipeline-arrow" aria-hidden="true">↓</div>
+      <div class="pipeline-node node-rule">2. Validate &amp; Condition</div>
+      <div class="pipeline-arrow" aria-hidden="true">↓</div>
+      <div class="pipeline-node node-act">3. Multi-System Action</div>
+      <div class="pipeline-arrow" aria-hidden="true">↓</div>
+      <div class="pipeline-node node-res">4. Result &amp; Human Review</div>
+    </div>
+  </div>
+
+  <!-- 1. What makes a good automation candidate? -->
+  <section class="candidate-section section-py">
+    <div class="container-default">
+      <div class="section-intro">
+        <SectionEyebrow>CRITERIA</SectionEyebrow>
+        <h2 class="section-title">What makes a good automation candidate?</h2>
+        <p class="body-large">
+          Effective automations rely on structured predictability. When a process meets these four criteria, it can usually be automated reliably.
+        </p>
+      </div>
+
+      <div class="criteria-grid">
+        {criteria.map((c, i) => (
+          <div class="criteria-card">
+            <span class="criteria-num">0{i + 1}</span>
+            <h3 class="criteria-title">{c.title}</h3>
+            <p class="criteria-desc">{c.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="boundary-note">
+        <p>
+          <strong>Operational boundary:</strong> Processes full of ambiguous judgment or unstructured negotiations may need redesign or human review checkpoints before automation is introduced.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Building blocks -->
+  <section class="building-blocks-section section-py">
+    <div class="container-default">
+      <div class="section-intro">
+        <SectionEyebrow>WORKFLOW ENGINE</SectionEyebrow>
+        <h2 class="section-title">The Anatomy of a Production Workflow</h2>
+      </div>
+
+      <div class="blocks-pipeline">
+        {buildingBlocks.map((b) => (
+          <div class="block-step">
+            <div class="block-badge">{b.step}</div>
+            <p class="block-desc">{b.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. What workflows can do -->
+  <section class="what-workflows-do-section section-py">
+    <div class="container-default">
+      <div class="section-intro">
+        <SectionEyebrow>ACTION TAXONOMY</SectionEyebrow>
+        <h2 class="section-title">What automated workflows can execute</h2>
+      </div>
+
+      <div class="capabilities-grid-4">
+        <div class="cap-group-card">
+          <h3 class="group-title">Records</h3>
+          <ul class="group-list">
+            <li>Create CRM entities</li>
+            <li>Update custom fields</li>
+            <li>Assign ownership dynamically</li>
+            <li>Transition pipeline stages</li>
+          </ul>
+        </div>
+
+        <div class="cap-group-card">
+          <h3 class="group-title">Communication</h3>
+          <ul class="group-list">
+            <li>Customer email sequences</li>
+            <li>Pre-meeting reminders</li>
+            <li>Internal Slack/Teams alerts</li>
+            <li>Follow-up task assignment</li>
+          </ul>
+        </div>
+
+        <div class="cap-group-card">
+          <h3 class="group-title">Documents &amp; Files</h3>
+          <ul class="group-list">
+            <li>Generate contract PDFs</li>
+            <li>Route for digital signature</li>
+            <li>Store in governed cloud folders</li>
+            <li>Write file URLs back to CRM</li>
+          </ul>
+        </div>
+
+        <div class="cap-group-card">
+          <h3 class="group-title">Timing &amp; Rules</h3>
+          <ul class="group-list">
+            <li>Time-delay intervals</li>
+            <li>Wait for customer interaction</li>
+            <li>Halt sequence on reply</li>
+            <li>Multi-branch conditions</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Human control -->
+  <section class="human-control-section section-py">
+    <div class="container-default">
+      <div class="human-control-box">
+        <span class="eyebrow amber-eyebrow">HUMAN-IN-THE-LOOP</span>
+        <h2 class="section-title">Automation does not mean removing every person from the process.</h2>
+        <p class="body-large control-text">
+          Critical operations should never be completely autonomous. We build deliberate human checkpoints for:
+        </p>
+
+        <div class="control-tags-grid">
+          <div class="control-tag-card">
+            <strong>Approvals</strong>
+            <span>Contract signing, discounts, and high-value deal transitions.</span>
+          </div>
+          <div class="control-tag-card">
+            <strong>Ambiguous Records</strong>
+            <span>Incoming leads with missing information or conflicting account names.</span>
+          </div>
+          <div class="control-tag-card">
+            <strong>High-Risk Decisions</strong>
+            <span>Credit decisions, billing overrides, and access deprovisioning.</span>
+          </div>
+          <div class="control-tag-card">
+            <strong>Sensitive Messages</strong>
+            <span>VIP client interactions and complex customer complaints.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Reliability & FAQ -->
+  <section class="workflow-faq-section section-py">
+    <div class="container-default">
+      <h2 class="section-title crm-faq-title">Workflow Reliability &amp; FAQs</h2>
+      <div class="faq-list">
+        {workflow.faq.map((item, idx) => (
+          <Details summary={item.question} id={`wf-faq-${idx}`} open={idx === 0}>
+            <p>{item.answer}</p>
+          </Details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Final CTA -->
+  <section class="workflow-final-cta section-py-lg">
+    <div class="container-default text-center">
+      <h2 class="section-title">Show us the repeated steps.</h2>
+      <div class="cta-wrap">
+        <Button href={workflow.ctaHref} variant="primary">
+          Map a workflow with us
+        </Button>
+      </div>
+    </div>
+  </section>
+</ServiceLayout>
+
+<style>
+  .pipeline-visual-card {
+    background-color: var(--ink-950);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-panel);
+    padding: var(--space-6);
+    width: 100%;
+    max-width: 440px;
+  }
+
+  .pipeline-header {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--signal-blue);
+    font-family: var(--font-mono);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .pipeline-steps-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    align-items: center;
+  }
+
+  .pipeline-node {
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .node-trig { background-color: rgba(255, 255, 255, 0.1); color: #FFFFFF; }
+  .node-rule { background-color: rgba(59, 91, 255, 0.2); color: var(--signal-blue-soft); border: 1px solid var(--signal-blue); }
+  .node-act { background-color: rgba(15, 175, 154, 0.2); color: var(--signal-teal-soft); border: 1px solid var(--signal-teal); }
+  .node-res { background-color: rgba(217, 119, 6, 0.2); color: #FFF3D6; border: 1px solid var(--signal-amber); }
+
+  .pipeline-arrow {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 1rem;
+  }
+
+  .section-intro {
+    max-width: 720px;
+    margin-bottom: var(--space-12);
+  }
+
+  .criteria-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+
+  @media (max-width: 1024px) {
+    .criteria-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .criteria-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .criteria-card {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-card);
+    padding: var(--space-8);
+  }
+
+  .criteria-num {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: var(--signal-blue);
+    display: block;
+    margin-bottom: var(--space-2);
+  }
+
+  .criteria-title {
+    font-size: 1.1875rem;
+    font-weight: 700;
+    color: var(--ink-950);
+    margin-bottom: var(--space-2);
+  }
+
+  .criteria-desc {
+    font-size: 0.9375rem;
+    color: var(--slate-600);
+    line-height: 1.55;
+  }
+
+  .boundary-note {
+    background-color: var(--canvas-alt);
+    border-left: 3px solid var(--signal-amber);
+    padding: var(--space-4) var(--space-6);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+
+  .blocks-pipeline {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: var(--space-4);
+  }
+
+  @media (max-width: 1024px) {
+    .blocks-pipeline {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .block-step {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+  }
+
+  .block-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: var(--signal-blue);
+    margin-bottom: var(--space-2);
+  }
+
+  .block-desc {
+    font-size: 0.8125rem;
+    color: var(--slate-600);
+    line-height: 1.5;
+  }
+
+  .capabilities-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
+  }
+
+  @media (max-width: 1024px) {
+    .capabilities-grid-4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .capabilities-grid-4 {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .cap-group-card {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-card);
+    padding: var(--space-8);
+  }
+
+  .group-title {
+    font-size: 1.1875rem;
+    font-weight: 700;
+    color: var(--ink-950);
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--slate-100);
+  }
+
+  .group-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .group-list li {
+    font-size: 0.875rem;
+    color: var(--slate-600);
+    padding-left: var(--space-2);
+    border-left: 2px solid var(--slate-300);
+  }
+
+  .human-control-box {
+    background-color: var(--surface);
+    border: 1px solid rgba(217, 119, 6, 0.3);
+    border-radius: var(--radius-panel);
+    padding: var(--space-10);
+  }
+
+  .amber-eyebrow {
+    color: var(--signal-amber) !important;
+  }
+
+  .control-text {
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-8);
+  }
+
+  .control-tags-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
+  }
+
+  @media (max-width: 768px) {
+    .control-tags-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .control-tag-card {
+    background-color: var(--canvas-alt);
+    padding: var(--space-4) var(--space-6);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .control-tag-card strong {
+    font-size: 0.9375rem;
+    color: var(--ink-950);
+  }
+
+  .control-tag-card span {
+    font-size: 0.875rem;
+    color: var(--slate-600);
+  }
+
+  .text-center { text-align: center; }
+  .cta-wrap { margin-top: var(--space-6); }
+</style>

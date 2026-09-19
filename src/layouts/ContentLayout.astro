@@ -1,0 +1,34 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Breadcrumbs from "../components/global/Breadcrumbs.astro";
+
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath?: string;
+  breadcrumbs?: BreadcrumbItem[];
+  noindex?: boolean;
+}
+
+const { title, description, canonicalPath, breadcrumbs, noindex } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} canonicalPath={canonicalPath} noindex={noindex}>
+  <div class="content-layout-wrapper section-py">
+    <div class="container-default">
+      {breadcrumbs && <Breadcrumbs items={breadcrumbs} />}
+      <slot />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .content-layout-wrapper {
+    min-height: 70vh;
+  }
+</style>

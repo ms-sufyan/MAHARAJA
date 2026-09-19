@@ -1,0 +1,72 @@
+---
+import { homepageFaqs } from "../../data/faq";
+import SectionEyebrow from "../ui/SectionEyebrow.astro";
+import Details from "../ui/Details.astro";
+---
+
+<section class="faq-section section-py" aria-labelledby="faq-main-heading">
+  <div class="container-default">
+    <div class="faq-layout">
+      <!-- Left Column: FAQ Header -->
+      <div class="faq-header-col">
+        <SectionEyebrow>FREQUENTLY ASKED QUESTIONS</SectionEyebrow>
+        <h2 id="faq-main-heading" class="section-title">
+          Clear answers on systems, scope, and automation.
+        </h2>
+        <p class="body-large faq-lead">
+          Everything you need to know about our implementation approach and operational boundaries.
+        </p>
+      </div>
+
+      <!-- Right Column: Accessible FAQ Accordions -->
+      <div class="faq-accordion-col">
+        {homepageFaqs.map((faq, idx) => (
+          <Details summary={faq.question} id={`home-faq-${idx}`} open={idx === 0}>
+            <p>{faq.answer}</p>
+          </Details>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    background-color: var(--canvas-alt);
+    border-bottom: 1px solid var(--slate-200);
+  }
+
+  .faq-layout {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: var(--space-16);
+    align-items: flex-start;
+  }
+
+  @media (max-width: 1024px) {
+    .faq-layout {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+  }
+
+  .faq-header-col {
+    max-width: 480px;
+    position: sticky;
+    top: calc(var(--header-height-desktop) + var(--space-8));
+  }
+
+  .faq-header-col h2 {
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .faq-lead {
+    font-size: 1.0625rem;
+  }
+
+  .faq-accordion-col {
+    display: flex;
+    flex-direction: column;
+  }
+</style>

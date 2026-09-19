@@ -1,0 +1,87 @@
+:root {
+  /* Color System - In accordance with Section 68 */
+  --ink-950: #0A1020;
+  --ink-900: #111827;
+  --ink-800: #182235;
+
+  --slate-700: #485365;
+  --slate-600: #5B6474;
+  --slate-500: #748094;
+  --slate-300: #C4CBD6;
+  --slate-200: #DDE2EA;
+  --slate-100: #ECEFF3;
+
+  --canvas: #F7F7F4;
+  --canvas-alt: #FAFAF8;
+  --surface: #FFFFFF;
+  --surface-muted: #F0F2F5;
+
+  --signal-blue: #3B5BFF;
+  --signal-blue-hover: #2F4FE3;
+  --signal-blue-soft: #E8ECFF;
+
+  --signal-teal: #0FAF9A;
+  --signal-teal-dark: #067B6C;
+  --signal-teal-soft: #DDF7F2;
+
+  --signal-amber: #D97706;
+  --signal-amber-soft: #FFF3D6;
+
+  --success: #067647;
+  --success-soft: #DFF4E8;
+
+  --error: #B42318;
+  --error-soft: #FEE4E2;
+
+  --dark-muted: #AAB4C4;
+
+  /* Typography Fonts - Section 70 */
+  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+
+  /* Spacing Tokens - Section 72 */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+  --space-40: 160px;
+
+  /* Layout Containers */
+  --max-container: 1280px;
+  --max-text: 760px;
+  --gutter-desktop: 48px;
+  --gutter-tablet: 32px;
+  --gutter-mobile: 20px;
+
+  /* Header Heights - Section 12 */
+  --header-height-desktop: 76px;
+  --header-height-mobile: 64px;
+
+  /* Radii - Section 74 */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-card: 18px;
+  --radius-panel: 24px;
+  --radius-full: 999px;
+
+  /* Shadows - Section 75 */
+  --shadow-sm: 0 1px 2px rgba(10, 16, 32, 0.05);
+  --shadow-card: 0 14px 40px rgba(10, 16, 32, 0.07);
+  --shadow-hover: 0 18px 48px rgba(10, 16, 32, 0.10);
+
+  /* Motion - Section 80 */
+  --motion-fast: 140ms;
+  --motion-base: 200ms;
+  --motion-medium: 320ms;
+  --motion-reveal: 420ms;
+  --motion-diagram: 700ms;
+  --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+}

@@ -1,0 +1,51 @@
+---
+interface Props {
+  variant?: "light" | "dark" | "blue" | "teal" | "amber";
+  class?: string;
+}
+
+const { variant = "light", class: className = "" } = Astro.props;
+---
+
+<span class={`badge badge-${variant} ${className}`}>
+  <slot />
+</span>
+
+<style>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: 2px var(--space-3);
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+  }
+  .badge-light {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    color: var(--slate-700);
+  }
+  .badge-dark {
+    background-color: var(--ink-800);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--dark-muted);
+  }
+  .badge-blue {
+    background-color: var(--signal-blue-soft);
+    border: 1px solid rgba(59, 91, 255, 0.2);
+    color: var(--signal-blue);
+  }
+  .badge-teal {
+    background-color: var(--signal-teal-soft);
+    border: 1px solid rgba(15, 175, 154, 0.2);
+    color: var(--signal-teal-dark);
+  }
+  .badge-amber {
+    background-color: var(--signal-amber-soft);
+    border: 1px solid rgba(217, 119, 6, 0.2);
+    color: var(--signal-amber);
+  }
+</style>

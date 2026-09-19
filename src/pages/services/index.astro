@@ -1,0 +1,361 @@
+---
+export const prerender = true;
+
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/global/Breadcrumbs.astro";
+import SectionEyebrow from "../../components/ui/SectionEyebrow.astro";
+import Button from "../../components/ui/Button.astro";
+import TextLink from "../../components/ui/TextLink.astro";
+import FinalCTA from "../../components/sections/FinalCTA.astro";
+import { services } from "../../data/services";
+import { seoData } from "../../data/seo";
+
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: "Services" }
+];
+
+const navigatorItems = [
+  {
+    problem: "Our CRM does not reflect how the team works.",
+    serviceTitle: "CRM Systems & Optimization",
+    href: "/services/crm",
+    summary: "Pipelines, custom objects, ownership, and deal stages aligned to your actual operational handoffs."
+  },
+  {
+    problem: "Too many recurring steps depend on people remembering.",
+    serviceTitle: "Workflow Automation",
+    href: "/services/workflow-automation",
+    summary: "Trigger-based follow-ups, alerts, task creation, and state updates that run without manual intervention."
+  },
+  {
+    problem: "The same information lives in several disconnected systems.",
+    serviceTitle: "Systems Integration & Data Sync",
+    href: "/services/integrations",
+    summary: "API, webhook, and connector-driven synchronization between CRM, finance, project, and file storage tools."
+  },
+  {
+    problem: "We have unstructured information that needs interpreting before the next step.",
+    serviceTitle: "AI-Assisted Operations",
+    href: "/services/ai-assisted-automation",
+    summary: "Controlled extraction, categorization, and draft preparation bounded by strict validation schemas."
+  },
+  {
+    problem: "We have data, but not useful operational visibility.",
+    serviceTitle: "Reporting & Visibility",
+    href: "/services/reporting-visibility",
+    summary: "Consistent stage timestamps, exception feeds, and pipeline velocity views built on structured data."
+  }
+];
+---
+
+<BaseLayout
+  title={seoData.services.title}
+  description={seoData.services.description}
+  canonicalPath={seoData.services.canonicalPath}
+>
+  <!-- Services Hero -->
+  <section class="services-hub-hero section-py">
+    <div class="container-default">
+      <Breadcrumbs items={breadcrumbs} />
+
+      <div class="services-hero-content">
+        <SectionEyebrow>SERVICES</SectionEyebrow>
+        <h1 class="interior-title hub-h1">
+          CRM, automation and integration services built around real operations.
+        </h1>
+        <p class="body-large hub-sub">
+          Start with the business process. Then determine which systems, rules and automation methods are appropriate.
+        </p>
+        <div class="hub-hero-cta">
+          <Button href="/contact" variant="primary">
+            Discuss your workflow
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1. Five-Service Architecture Cards -->
+  <section class="services-cards-section section-py">
+    <div class="container-default">
+      <div class="section-title-wrap">
+        <SectionEyebrow>SERVICE PRACTICE AREAS</SectionEyebrow>
+        <h2 class="section-title">Core capabilities designed for dependable operations</h2>
+      </div>
+
+      <div class="services-hub-grid">
+        {services.map((svc) => (
+          <div class="service-hub-card">
+            <span class="card-eyebrow">{svc.eyebrow}</span>
+            <h3 class="card-h3">{svc.title}</h3>
+            <p class="card-summary">{svc.summary}</p>
+
+            <div class="card-caps-box">
+              <span class="caps-label">Core Focus:</span>
+              <ul class="caps-list">
+                {svc.capabilities.map((cap) => (
+                  <li>{cap}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="card-footer-link">
+              <TextLink href={`/services/${svc.slug}`}>
+                Explore {svc.shortTitle}
+              </TextLink>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. "Which problem sounds familiar?" Cross-Service Navigator -->
+  <section class="problem-navigator-section section-py">
+    <div class="container-default">
+      <div class="navigator-header">
+        <SectionEyebrow>PROBLEM NAVIGATOR</SectionEyebrow>
+        <h2 class="section-title">Which problem sounds familiar?</h2>
+        <p class="body-large">
+          Identify the operational challenge your team faces today to explore the relevant service architecture.
+        </p>
+      </div>
+
+      <div class="navigator-items-list">
+        {navigatorItems.map((item) => (
+          <div class="navigator-card">
+            <div class="nav-problem-col">
+              <span class="problem-tag">Current Challenge</span>
+              <p class="problem-text">“{item.problem}”</p>
+            </div>
+            <div class="nav-arrow-col" aria-hidden="true">→</div>
+            <div class="nav-solution-col">
+              <span class="solution-tag">Relevant Service</span>
+              <h3 class="solution-title">{item.serviceTitle}</h3>
+              <p class="solution-summary">{item.summary}</p>
+              <TextLink href={item.href} class="nav-link-cta">
+                View service architecture
+              </TextLink>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Feasibility & Engagement Boundaries -->
+  <section class="feasibility-section section-py">
+    <div class="container-default">
+      <div class="feasibility-box">
+        <span class="eyebrow">ENGAGEMENT BOUNDARY</span>
+        <h2 class="section-title">Technical feasibility is verified before promises are made.</h2>
+        <p class="body-large feasibility-text">
+          Not all software combinations support every theoretical workflow. We inspect the actual APIs, webhook behaviors, data consistency, and vendor rate limits of your existing tools before finalizing scope.
+        </p>
+        <div class="feasibility-cta">
+          <Button href="/contact" variant="primary">
+            Review your systems with us
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <FinalCTA />
+</BaseLayout>
+
+<style>
+  .services-hub-hero {
+    background-color: var(--canvas-alt);
+    border-bottom: 1px solid var(--slate-200);
+  }
+
+  .services-hero-content {
+    max-width: 800px;
+  }
+
+  .hub-h1 {
+    margin-bottom: var(--space-4);
+  }
+
+  .hub-sub {
+    margin-bottom: var(--space-8);
+  }
+
+  .section-title-wrap {
+    max-width: 700px;
+    margin-bottom: var(--space-12);
+  }
+
+  .services-hub-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+  }
+
+  @media (max-width: 1024px) {
+    .services-hub-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .services-hub-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .service-hub-card {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-panel);
+    padding: var(--space-8);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--signal-blue);
+    display: block;
+    margin-bottom: var(--space-2);
+  }
+
+  .card-h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--ink-950);
+    margin-bottom: var(--space-3);
+  }
+
+  .card-summary {
+    font-size: 0.9375rem;
+    color: var(--slate-600);
+    line-height: 1.6;
+    margin-bottom: var(--space-6);
+  }
+
+  .card-caps-box {
+    margin-top: auto;
+    margin-bottom: var(--space-6);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--slate-100);
+  }
+
+  .caps-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--slate-500);
+    display: block;
+    margin-bottom: var(--space-2);
+  }
+
+  .caps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .caps-list li {
+    font-size: 0.8125rem;
+    color: var(--slate-600);
+    padding-left: var(--space-2);
+    border-left: 2px solid var(--slate-200);
+  }
+
+  /* Navigator */
+  .problem-navigator-section {
+    background-color: var(--canvas-alt);
+    border-top: 1px solid var(--slate-200);
+    border-bottom: 1px solid var(--slate-200);
+  }
+
+  .navigator-header {
+    max-width: 720px;
+    margin-bottom: var(--space-12);
+  }
+
+  .navigator-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .navigator-card {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-card);
+    padding: var(--space-6) var(--space-8);
+    display: grid;
+    grid-template-columns: 5fr 1fr 6fr;
+    align-items: center;
+    gap: var(--space-6);
+  }
+
+  @media (max-width: 768px) {
+    .navigator-card {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+    .nav-arrow-col {
+      display: none;
+    }
+  }
+
+  .problem-tag, .solution-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--slate-500);
+    display: block;
+    margin-bottom: var(--space-1);
+  }
+
+  .problem-text {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--ink-950);
+  }
+
+  .nav-arrow-col {
+    font-size: 1.5rem;
+    color: var(--slate-300);
+    text-align: center;
+  }
+
+  .solution-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--signal-blue);
+    margin-bottom: var(--space-1);
+  }
+
+  .solution-summary {
+    font-size: 0.875rem;
+    color: var(--slate-600);
+    margin-bottom: var(--space-2);
+  }
+
+  /* Feasibility */
+  .feasibility-box {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-panel);
+    padding: var(--space-12);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .feasibility-text {
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-8);
+  }
+</style>

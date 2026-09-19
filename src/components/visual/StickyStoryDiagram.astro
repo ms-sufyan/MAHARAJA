@@ -1,0 +1,169 @@
+---
+interface Props {
+  activeStep?: number;
+  class?: string;
+}
+
+const { activeStep = 1, class: className = "" } = Astro.props;
+---
+
+<div class={`sticky-diagram-card ${className}`} id="sticky-story-diagram-card">
+  <div class="diagram-meta-header">
+    <span class="step-badge" id="sticky-step-badge">Phase 0{activeStep} Architecture</span>
+    <span class="architecture-status" id="sticky-step-status">Process Mapping</span>
+  </div>
+
+  <svg
+    viewBox="0 0 460 360"
+    class="sticky-svg"
+    role="img"
+    aria-label="Workflow architecture evolution diagram"
+  >
+    <!-- Background grid -->
+    <defs>
+      <pattern id="stickyGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+        <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255, 255, 255, 0.05)" stroke-width="1" />
+      </pattern>
+    </defs>
+    <rect width="460" height="360" fill="url(#stickyGrid)" rx="16" />
+
+    <!-- State 1: Disconnected nodes & dashed manual lines -->
+    <g id="diagram-state-1" class="diagram-state-layer">
+      <!-- Scattered manual nodes -->
+      <g transform="translate(80, 80)">
+        <circle r="26" fill="#182235" stroke="#748094" stroke-width="1.5" />
+        <text y="4" text-anchor="middle" font-size="10" fill="#ECEFF3">Inbox</text>
+      </g>
+      <g transform="translate(380, 80)">
+        <circle r="26" fill="#182235" stroke="#748094" stroke-width="1.5" />
+        <text y="4" text-anchor="middle" font-size="10" fill="#ECEFF3">Sheets</text>
+      </g>
+      <g transform="translate(140, 260)">
+        <circle r="26" fill="#182235" stroke="#748094" stroke-width="1.5" />
+        <text y="4" text-anchor="middle" font-size="10" fill="#ECEFF3">CRM</text>
+      </g>
+      <g transform="translate(320, 260)">
+        <circle r="26" fill="#182235" stroke="#748094" stroke-width="1.5" />
+        <text y="4" text-anchor="middle" font-size="10" fill="#ECEFF3">Files</text>
+      </g>
+
+      <!-- Dashed manual copy-paste handoffs -->
+      <path d="M 106 80 Q 230 40 354 80" stroke="#D97706" stroke-width="2" stroke-dasharray="6,6" fill="none" />
+      <path d="M 80 106 Q 90 200 120 240" stroke="#D97706" stroke-width="2" stroke-dasharray="6,6" fill="none" />
+      <path d="M 380 106 Q 370 200 340 240" stroke="#D97706" stroke-width="2" stroke-dasharray="6,6" fill="none" />
+      
+      <!-- Warning badges on manual links -->
+      <g transform="translate(230, 48)">
+        <rect x="-40" y="-10" width="80" height="20" rx="10" fill="#FFF3D6" />
+        <text y="4" text-anchor="middle" font-size="9" font-weight="700" fill="#B45309">Manual copy</text>
+      </g>
+      <g transform="translate(230, 180)">
+        <text text-anchor="middle" font-size="13" font-weight="600" fill="#748094">Disjointed manual handoffs</text>
+      </g>
+    </g>
+
+    <!-- State 2: Central Rules Layer Introduced -->
+    <g id="diagram-state-2" class="diagram-state-layer" style="display: none;">
+      <g transform="translate(80, 80)">
+        <circle r="24" fill="#182235" stroke="#3B5BFF" stroke-width="2" />
+        <text y="4" text-anchor="middle" font-size="10" fill="#FFFFFF">Inputs</text>
+      </g>
+      <!-- Central Rules Core -->
+      <g transform="translate(230, 180)">
+        <rect x="-80" y="-30" width="160" height="60" rx="12" fill="#182235" stroke="#3B5BFF" stroke-width="2" />
+        <text y="-5" text-anchor="middle" font-size="11" font-weight="700" fill="#3B5BFF">STANDARDIZED RULES</text>
+        <text y="15" text-anchor="middle" font-size="9" fill="#AAB4C4">Conditions &amp; Schema</text>
+      </g>
+      <path d="M 104 80 L 150 150" stroke="#3B5BFF" stroke-width="2" fill="none" />
+      <g transform="translate(380, 80)">
+        <circle r="24" fill="#182235" stroke="#748094" stroke-width="1.5" />
+        <text y="4" text-anchor="middle" font-size="10" fill="#ECEFF3">Waiting</text>
+      </g>
+    </g>
+
+    <!-- State 3: Connected Systems -->
+    <g id="diagram-state-3" class="diagram-state-layer" style="display: none;">
+      <!-- Rules Layer -->
+      <g transform="translate(230, 120)">
+        <rect x="-70" y="-22" width="140" height="44" rx="10" fill="#182235" stroke="#3B5BFF" stroke-width="2" />
+        <text y="5" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">RULES &amp; DISPATCH</text>
+      </g>
+      <!-- Connected Output Hubs -->
+      <g transform="translate(80, 260)">
+        <rect x="-40" y="-18" width="80" height="36" rx="8" fill="#111827" stroke="#0FAF9A" stroke-width="1.5" />
+        <text y="4" text-anchor="middle" font-size="10" fill="#FFFFFF">CRM Hub</text>
+      </g>
+      <g transform="translate(230, 260)">
+        <rect x="-40" y="-18" width="80" height="36" rx="8" fill="#111827" stroke="#0FAF9A" stroke-width="1.5" />
+        <text y="4" text-anchor="middle" font-size="10" fill="#FFFFFF">Docs</text>
+      </g>
+      <g transform="translate(380, 260)">
+        <rect x="-40" y="-18" width="80" height="36" rx="8" fill="#111827" stroke="#0FAF9A" stroke-width="1.5" />
+        <text y="4" text-anchor="middle" font-size="10" fill="#FFFFFF">Billing</text>
+      </g>
+      <!-- Connections -->
+      <path d="M 200 142 L 80 242" stroke="#0FAF9A" stroke-width="2" fill="none" />
+      <path d="M 230 142 L 230 242" stroke="#0FAF9A" stroke-width="2" fill="none" />
+      <path d="M 260 142 L 380 242" stroke="#0FAF9A" stroke-width="2" fill="none" />
+    </g>
+
+    <!-- State 4: Make Failure Visible (Success Path + Human Exception Queue) -->
+    <g id="diagram-state-4" class="diagram-state-layer" style="display: none;">
+      <!-- Main Path -->
+      <g transform="translate(140, 100)">
+        <rect x="-55" y="-18" width="110" height="36" rx="8" fill="#182235" stroke="#3B5BFF" stroke-width="2" />
+        <text y="4" text-anchor="middle" font-size="11" font-weight="600" fill="#FFFFFF">Execution Path</text>
+      </g>
+      <!-- Green Success Branch -->
+      <path d="M 140 118 L 140 240" stroke="#0FAF9A" stroke-width="2.5" fill="none" />
+      <g transform="translate(140, 260)">
+        <circle r="22" fill="#0FAF9A" />
+        <text y="4" text-anchor="middle" font-size="10" font-weight="700" fill="#0A1020">Complete</text>
+      </g>
+      <!-- Amber Human Review / Exception Queue -->
+      <path d="M 195 100 L 320 180" stroke="#D97706" stroke-width="2" stroke-dasharray="4,4" fill="none" />
+      <g transform="translate(320, 200)">
+        <rect x="-65" y="-22" width="130" height="44" rx="8" fill="#FFF3D6" stroke="#D97706" stroke-width="2" />
+        <text y="-2" text-anchor="middle" font-size="10" font-weight="700" fill="#B45309">EXCEPTION QUEUE</text>
+        <text y="14" text-anchor="middle" font-size="9" fill="#92400E">Human Review Gate</text>
+      </g>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .sticky-diagram-card {
+    background-color: var(--ink-950);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-panel);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-card);
+  }
+
+  .diagram-meta-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+
+  .step-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--signal-blue);
+    font-family: var(--font-mono);
+  }
+
+  .architecture-status {
+    font-size: 0.75rem;
+    color: var(--signal-teal);
+    font-family: var(--font-mono);
+  }
+
+  .sticky-svg {
+    width: 100%;
+    height: auto;
+  }
+</style>

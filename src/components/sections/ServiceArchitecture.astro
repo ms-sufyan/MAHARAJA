@@ -1,0 +1,281 @@
+---
+import SectionEyebrow from "../ui/SectionEyebrow.astro";
+import TextLink from "../ui/TextLink.astro";
+import { services } from "../../data/services";
+
+const crm = services.find((s) => s.slug === "crm")!;
+const workflow = services.find((s) => s.slug === "workflow-automation")!;
+const integrations = services.find((s) => s.slug === "integrations")!;
+const ai = services.find((s) => s.slug === "ai-assisted-automation")!;
+const reporting = services.find((s) => s.slug === "reporting-visibility")!;
+---
+
+<section class="service-architecture-section section-py" aria-labelledby="services-core-heading">
+  <div class="container-default">
+    <div class="section-header-centered">
+      <SectionEyebrow>CORE SERVICES</SectionEyebrow>
+      <h2 id="services-core-heading" class="section-title">
+        Build the system around the work that actually needs to happen.
+      </h2>
+      <p class="body-large section-lead">
+        The technology may vary. The underlying job is usually to create clearer records, better handoffs and less repetitive handling.
+      </p>
+    </div>
+
+    <!-- Editorial Bento Composition - Section 21 -->
+    <div class="bento-grid">
+      <!-- Top Row: CRM (6 cols) & Workflow Automation (6 cols) -->
+      <div class="bento-item bento-crm">
+        <div class="bento-content">
+          <span class="bento-service-eyebrow">CRM SYSTEMS &amp; OPTIMIZATION</span>
+          <h3 class="bento-title">Structure records, stages, and ownership around operations</h3>
+          <p class="bento-summary">{crm.summary}</p>
+          
+          <ul class="bento-caps-list">
+            {crm.capabilities.map((cap) => (
+              <li>
+                <span class="cap-check" aria-hidden="true">✓</span>
+                <span>{cap}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div class="bento-action">
+            <TextLink href="/services/crm">Explore CRM systems</TextLink>
+          </div>
+        </div>
+      </div>
+
+      <div class="bento-item bento-workflow">
+        <div class="bento-content">
+          <span class="bento-service-eyebrow">WORKFLOW AUTOMATION</span>
+          <h3 class="bento-title">Turn repeatable handoffs into defined workflows</h3>
+          <p class="bento-summary">{workflow.summary}</p>
+          
+          <ul class="bento-caps-list">
+            {workflow.capabilities.map((cap) => (
+              <li>
+                <span class="cap-check" aria-hidden="true">✓</span>
+                <span>{cap}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div class="bento-action">
+            <TextLink href="/services/workflow-automation">Explore workflow automation</TextLink>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Row: Integrations (4 cols), AI (4 cols), Reporting (4 cols) -->
+      <div class="bento-item bento-integrations">
+        <div class="bento-content">
+          <span class="bento-service-eyebrow">INTEGRATIONS &amp; DATA SYNC</span>
+          <h3 class="bento-title-sm">Move data between tools without manual re-entry</h3>
+          <p class="bento-summary-sm">{integrations.summary}</p>
+          
+          <ul class="bento-caps-list-sm">
+            {integrations.capabilities.map((cap) => (
+              <li><span>{cap}</span></li>
+            ))}
+          </ul>
+
+          <div class="bento-action">
+            <TextLink href="/services/integrations">Explore integrations</TextLink>
+          </div>
+        </div>
+      </div>
+
+      <div class="bento-item bento-ai">
+        <div class="bento-content">
+          <span class="bento-service-eyebrow">AI-ASSISTED OPERATIONS</span>
+          <h3 class="bento-title-sm">Give AI a defined job inside a controlled workflow</h3>
+          <p class="bento-summary-sm">{ai.summary}</p>
+          
+          <ul class="bento-caps-list-sm">
+            {ai.capabilities.map((cap) => (
+              <li><span>{cap}</span></li>
+            ))}
+          </ul>
+
+          <div class="bento-action">
+            <TextLink href="/services/ai-assisted-automation">Explore AI-assisted workflows</TextLink>
+          </div>
+        </div>
+      </div>
+
+      <div class="bento-item bento-reporting">
+        <div class="bento-content">
+          <span class="bento-service-eyebrow">REPORTING &amp; VISIBILITY</span>
+          <h3 class="bento-title-sm">Create consistent data so teams see what is moving</h3>
+          <p class="bento-summary-sm">{reporting.summary}</p>
+          
+          <ul class="bento-caps-list-sm">
+            {reporting.capabilities.map((cap) => (
+              <li><span>{cap}</span></li>
+            ))}
+          </ul>
+
+          <div class="bento-action">
+            <TextLink href="/services/reporting-visibility">Explore reporting</TextLink>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .service-architecture-section {
+    background-color: var(--canvas-alt);
+    border-bottom: 1px solid var(--slate-200);
+  }
+
+  .section-header-centered {
+    text-align: center;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: var(--space-16);
+  }
+
+  .section-header-centered h2 {
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--space-6);
+  }
+
+  .bento-item {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-panel);
+    padding: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform var(--motion-base) var(--ease-standard),
+                border-color var(--motion-base) var(--ease-standard),
+                box-shadow var(--motion-base) var(--ease-standard);
+  }
+
+  .bento-item:hover {
+    transform: translateY(-2px);
+    border-color: var(--slate-300);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .bento-crm {
+    grid-column: span 6;
+  }
+
+  .bento-workflow {
+    grid-column: span 6;
+  }
+
+  .bento-integrations {
+    grid-column: span 4;
+  }
+
+  .bento-ai {
+    grid-column: span 4;
+  }
+
+  .bento-reporting {
+    grid-column: span 4;
+  }
+
+  @media (max-width: 1024px) {
+    .bento-crm, .bento-workflow {
+      grid-column: span 12;
+    }
+    .bento-integrations, .bento-ai, .bento-reporting {
+      grid-column: span 12;
+    }
+  }
+
+  .bento-service-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--signal-blue);
+    display: block;
+    margin-bottom: var(--space-3);
+  }
+
+  .bento-title {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--ink-950);
+    line-height: 1.3;
+    margin-bottom: var(--space-3);
+  }
+
+  .bento-title-sm {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--ink-950);
+    line-height: 1.35;
+    margin-bottom: var(--space-3);
+  }
+
+  .bento-summary {
+    font-size: 1rem;
+    color: var(--slate-600);
+    line-height: 1.6;
+    margin-bottom: var(--space-6);
+  }
+
+  .bento-summary-sm {
+    font-size: 0.9375rem;
+    color: var(--slate-600);
+    line-height: 1.55;
+    margin-bottom: var(--space-4);
+  }
+
+  .bento-caps-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-bottom: var(--space-8);
+  }
+
+  .bento-caps-list li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--slate-700);
+  }
+
+  .cap-check {
+    color: var(--signal-teal);
+    font-weight: 700;
+  }
+
+  .bento-caps-list-sm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    margin-bottom: var(--space-6);
+  }
+
+  .bento-caps-list-sm li {
+    font-size: 0.875rem;
+    color: var(--slate-600);
+    padding-left: var(--space-3);
+    border-left: 2px solid var(--slate-200);
+  }
+
+  .bento-action {
+    margin-top: auto;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--slate-100);
+  }
+</style>

@@ -1,0 +1,267 @@
+---
+import Icons from "../visual/Icons.astro";
+import Button from "../ui/Button.astro";
+
+interface ServiceLink {
+  href: string;
+  label: string;
+}
+
+interface Props {
+  currentPath: string;
+  servicesLinks: ServiceLink[];
+}
+
+const { currentPath, servicesLinks } = Astro.props;
+---
+
+<div id="mobile-nav-dialog" class="mobile-drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation Menu" hidden>
+  <div class="drawer-overlay" id="drawer-backdrop"></div>
+  
+  <div class="drawer-content">
+    <div class="drawer-header">
+      <span class="drawer-title">Navigation</span>
+      <button
+        type="button"
+        id="mobile-menu-close"
+        class="drawer-close-btn"
+        aria-label="Close navigation menu"
+      >
+        <Icons name="close" size={20} />
+      </button>
+    </div>
+
+    <nav class="drawer-nav" aria-label="Mobile Menu Navigation">
+      <ul class="drawer-list">
+        <li class="drawer-item">
+          <div class="services-group">
+            <span class="services-group-title">Services</span>
+            <ul class="services-sublist">
+              {servicesLinks.map((item) => (
+                <li>
+                  <a href={item.href} class={`drawer-sublink ${currentPath === item.href ? "is-active" : ""}`}>
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+              <li>
+                <a href="/services" class="drawer-sublink drawer-sublink-all">
+                  View all services →
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="drawer-item">
+          <a href="/use-cases" class={`drawer-link ${currentPath === "/use-cases" ? "is-active" : ""}`}>
+            Use Cases
+          </a>
+        </li>
+
+        <li class="drawer-item">
+          <a href="/how-we-work" class={`drawer-link ${currentPath === "/how-we-work" ? "is-active" : ""}`}>
+            How We Work
+          </a>
+        </li>
+
+        <li class="drawer-item">
+          <a href="/capabilities" class={`drawer-link ${currentPath === "/capabilities" ? "is-active" : ""}`}>
+            Capabilities
+          </a>
+        </li>
+
+        <li class="drawer-item">
+          <a href="/about" class={`drawer-link ${currentPath === "/about" ? "is-active" : ""}`}>
+            About
+          </a>
+        </li>
+
+        <li class="drawer-item">
+          <a href="/contact" class={`drawer-link ${currentPath === "/contact" ? "is-active" : ""}`}>
+            Contact
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="drawer-footer">
+      <Button href="/contact" variant="primary" class="drawer-cta-btn">
+        Discuss your workflow
+      </Button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .mobile-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+  }
+
+  .mobile-drawer[hidden] {
+    display: none;
+  }
+
+  .drawer-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(10, 16, 32, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .drawer-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 85%;
+    max-width: 360px;
+    background-color: var(--surface);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    box-shadow: var(--shadow-card);
+    padding: var(--space-6);
+  }
+
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--slate-200);
+    margin-bottom: var(--space-4);
+  }
+
+  .drawer-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--ink-950);
+  }
+
+  .drawer-close-btn {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    color: var(--slate-700);
+    background-color: var(--slate-100);
+  }
+
+  .drawer-nav {
+    flex: 1;
+  }
+
+  .drawer-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .drawer-link {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--ink-950);
+    text-decoration: none;
+    border-bottom: 1px solid var(--slate-100);
+  }
+
+  .drawer-link.is-active {
+    color: var(--signal-blue);
+  }
+
+  .services-group {
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--slate-100);
+  }
+
+  .services-group-title {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--signal-blue);
+    display: block;
+    padding: var(--space-2) 0;
+  }
+
+  .services-sublist {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-left: var(--space-3);
+  }
+
+  .drawer-sublink {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--slate-700);
+    text-decoration: none;
+  }
+
+  .drawer-sublink.is-active {
+    color: var(--signal-blue);
+    font-weight: 600;
+  }
+
+  .drawer-sublink-all {
+    color: var(--signal-blue);
+    font-weight: 600;
+  }
+
+  .drawer-footer {
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--slate-200);
+    margin-top: auto;
+  }
+
+  .drawer-cta-btn {
+    width: 100%;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const trigger = document.getElementById("mobile-menu-trigger");
+    const drawer = document.getElementById("mobile-nav-dialog");
+    const closeBtn = document.getElementById("mobile-menu-close");
+    const backdrop = document.getElementById("drawer-backdrop");
+
+    if (trigger && drawer && closeBtn && backdrop) {
+      const openDrawer = () => {
+        drawer.removeAttribute("hidden");
+        trigger.setAttribute("aria-expanded", "true");
+        document.body.style.overflow = "hidden";
+        closeBtn.focus();
+      };
+
+      const closeDrawer = () => {
+        drawer.setAttribute("hidden", "");
+        trigger.setAttribute("aria-expanded", "false");
+        document.body.style.overflow = "";
+        trigger.focus();
+      };
+
+      trigger.addEventListener("click", openDrawer);
+      closeBtn.addEventListener("click", closeDrawer);
+      backdrop.addEventListener("click", closeDrawer);
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && !drawer.hasAttribute("hidden")) {
+          closeDrawer();
+        }
+      });
+    }
+  });
+</script>

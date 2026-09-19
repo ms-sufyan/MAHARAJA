@@ -1,0 +1,221 @@
+---
+import StickyStoryDiagram from "../visual/StickyStoryDiagram.astro";
+
+const steps = [
+  {
+    num: "01",
+    title: "See the current process",
+    copy: "Identify where information enters, who touches it, what gets copied, what decisions are made and where work tends to stop.",
+    statusLabel: "Process Discovery"
+  },
+  {
+    num: "02",
+    title: "Define the rules",
+    copy: "Separate repeatable logic from judgment. Define required data, routing conditions, exceptions and approval points.",
+    statusLabel: "Logic Taxonomy"
+  },
+  {
+    num: "03",
+    title: "Connect the systems",
+    copy: "Map each system's responsibility and move only the information required for the next step.",
+    statusLabel: "Systems Integration"
+  },
+  {
+    num: "04",
+    title: "Make failure visible",
+    copy: "A workflow should have a known result when it succeeds and a clear exception path when it does not.",
+    statusLabel: "Resilience & Review"
+  }
+];
+---
+
+<section class="sticky-story-section section-py" id="sticky-story-root">
+  <div class="container-default">
+    <div class="story-section-header">
+      <span class="eyebrow">SYSTEMS METHODOLOGY</span>
+      <h2 class="section-title">A reliable automation starts before anything is automated.</h2>
+    </div>
+
+    <!-- Desktop Sticky Container -->
+    <div class="story-sticky-layout">
+      <!-- Left Column: 4 narrative steps -->
+      <div class="story-steps-col">
+        {steps.map((step, idx) => (
+          <div class="story-step-card" data-step-index={idx + 1}>
+            <div class="step-num-pill">Step {step.num}</div>
+            <h3 class="step-card-title">{step.title}</h3>
+            <p class="step-card-copy">{step.copy}</p>
+          </div>
+        ))}
+        
+        <div class="story-footer-note">
+          <p class="footer-note-text">
+            The objective is not maximum automation. It is a process the team can understand and rely on.
+          </p>
+        </div>
+      </div>
+
+      <!-- Right Column: Sticky diagram updating state -->
+      <div class="story-diagram-col">
+        <div class="sticky-diagram-anchor">
+          <StickyStoryDiagram activeStep={1} />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sticky-story-section {
+    background-color: var(--canvas-alt);
+    border-top: 1px solid var(--slate-200);
+    border-bottom: 1px solid var(--slate-200);
+  }
+
+  .story-section-header {
+    max-width: 720px;
+    margin-bottom: var(--space-16);
+  }
+
+  .story-section-header h2 {
+    margin-top: var(--space-2);
+  }
+
+  .story-sticky-layout {
+    display: grid;
+    grid-template-columns: 6fr 6fr;
+    gap: var(--space-16);
+    position: relative;
+  }
+
+  @media (max-width: 1024px) {
+    .story-sticky-layout {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+  }
+
+  .story-steps-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+  }
+
+  .story-step-card {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-card);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-sm);
+    transition: border-color var(--motion-base) var(--ease-standard);
+  }
+
+  .story-step-card.is-active {
+    border-color: var(--signal-blue);
+    box-shadow: var(--shadow-card);
+  }
+
+  .step-num-pill {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: var(--signal-blue);
+    background-color: var(--signal-blue-soft);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    margin-bottom: var(--space-3);
+  }
+
+  .step-card-title {
+    font-size: 1.45rem;
+    font-weight: 700;
+    margin-bottom: var(--space-3);
+    color: var(--ink-950);
+  }
+
+  .step-card-copy {
+    font-size: 1.0625rem;
+    color: var(--slate-600);
+    line-height: 1.6;
+  }
+
+  .story-footer-note {
+    padding: var(--space-6);
+    border-left: 3px solid var(--signal-blue);
+    background-color: var(--surface);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+
+  .footer-note-text {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--ink-950);
+    line-height: 1.5;
+  }
+
+  .story-diagram-col {
+    position: relative;
+  }
+
+  .sticky-diagram-anchor {
+    position: sticky;
+    top: calc(var(--header-height-desktop) + var(--space-8));
+  }
+
+  @media (max-width: 1024px) {
+    .story-diagram-col {
+      display: none; /* Fallback on mobile/tablet as required by Section 22 */
+    }
+  }
+</style>
+
+<script>
+  // IntersectionObserver to update diagram state on scroll
+  document.addEventListener("DOMContentLoaded", () => {
+    const stepCards = document.querySelectorAll<HTMLElement>(".story-step-card");
+    const stepBadge = document.getElementById("sticky-step-badge");
+    const stepStatus = document.getElementById("sticky-step-status");
+
+    const statusLabels = [
+      "Process Discovery",
+      "Logic Standardization",
+      "Systems Integration",
+      "Resilience & Human Review"
+    ];
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const indexStr = entry.target.getAttribute("data-step-index");
+            if (!indexStr) return;
+            const index = parseInt(indexStr, 10);
+
+            // Update card active classes
+            stepCards.forEach((c) => c.classList.remove("is-active"));
+            entry.target.classList.add("is-active");
+
+            // Update badge text
+            if (stepBadge) stepBadge.textContent = `Phase 0${index} Architecture`;
+            if (stepStatus) stepStatus.textContent = statusLabels[index - 1] || "Active";
+
+            // Switch SVG state
+            for (let i = 1; i <= 4; i++) {
+              const stateEl = document.getElementById(`diagram-state-${i}`);
+              if (stateEl) {
+                stateEl.style.display = i === index ? "block" : "none";
+              }
+            }
+          }
+        });
+      },
+      {
+        threshold: 0.6,
+        rootMargin: "-10% 0px -20% 0px"
+      }
+    );
+
+    stepCards.forEach((card) => observer.observe(card));
+  });
+</script>

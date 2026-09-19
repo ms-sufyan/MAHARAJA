@@ -1,0 +1,410 @@
+---
+export const prerender = true;
+
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/global/Breadcrumbs.astro";
+import SectionEyebrow from "../components/ui/SectionEyebrow.astro";
+import ErrorSummary from "../components/ui/ErrorSummary.astro";
+import FormField from "../components/ui/FormField.astro";
+import { seoData } from "../data/seo";
+import { VALID_SERVICE_INTERESTS, SERVICE_INTEREST_LABELS } from "../lib/validation";
+
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: "Contact" }
+];
+
+const serviceOptions = VALID_SERVICE_INTERESTS.map((key) => ({
+  value: key,
+  label: SERVICE_INTEREST_LABELS[key]
+}));
+
+// Turnstile Public Site Key (defaults to Cloudflare always-passing test key in dev/staging)
+const turnstileSiteKey = "1x00000000000000000000AA";
+---
+
+<BaseLayout
+  title={seoData.contact.title}
+  description={seoData.contact.description}
+  canonicalPath={seoData.contact.canonicalPath}
+>
+  <section class="contact-page-section section-py">
+    <div class="container-default contact-container">
+      <Breadcrumbs items={breadcrumbs} />
+
+      <div class="contact-header-block">
+        <SectionEyebrow>START A CONVERSATION</SectionEyebrow>
+        <h1 class="interior-title contact-h1">Tell us where the workflow is breaking.</h1>
+        <p class="body-large contact-intro">
+          Share what happens today, the systems involved and the part your team is still handling manually. That is enough to start.
+        </p>
+      </div>
+
+      <!-- Main Form Card with Accessible Progressive Enhancement -->
+      <div class="form-card-wrapper">
+        <ErrorSummary id="form-error-summary" />
+
+        <form
+          action="/api/contact"
+          method="POST"
+          id="contact-inquiry-form"
+          class="contact-form"
+          novalidate
+        >
+          <!-- Anti-Bot Honeypot Field (Section 102: Invisible, unfocusable, trap for bots) -->
+          <div class="oh-field" aria-hidden="true">
+            <label for="company-verification-code">Leave this field blank</label>
+            <input
+              type="text"
+              id="company-verification-code"
+              name="company_tax_reference"
+              tabindex="-1"
+              autocomplete="off"
+            />
+          </div>
+
+          <!-- Name -->
+          <FormField
+            label="Name"
+            name="name"
+            type="text"
+            required={true}
+            maxLength={120}
+            placeholder="Jane Doe"
+          />
+
+          <!-- Work Email -->
+          <FormField
+            label="Work email"
+            name="email"
+            type="email"
+            required={true}
+            maxLength={254}
+            placeholder="jane@example.com"
+          />
+
+          <!-- Service Interest Dropdown -->
+          <FormField
+            label="What do you need help with?"
+            name="service_interest"
+            type="select"
+            required={true}
+            options={serviceOptions}
+          />
+
+          <!-- Problem Description -->
+          <FormField
+            label="Describe the workflow or problem"
+            name="problem"
+            type="textarea"
+            required={true}
+            minLength={10}
+            maxLength={3000}
+            helperText="What happens today, what is being done manually and what would you like to work differently?"
+            placeholder="Our team currently enters sales leads in a spreadsheet, then manually creates records..."
+          />
+
+          <!-- Optional: Company -->
+          <FormField
+            label="Company"
+            name="company"
+            type="text"
+            required={false}
+            maxLength={160}
+            placeholder="Acme Corporation"
+          />
+
+          <!-- Optional: Current Systems -->
+          <FormField
+            label="Current systems or tools"
+            name="systems"
+            type="text"
+            required={false}
+            maxLength={500}
+            helperText="For example: CRM, spreadsheets, accounting, scheduling or communication tools."
+            placeholder="HubSpot, QuickBooks, Google Sheets, Slack"
+          />
+
+          <!-- Hidden Source Path & UTM Trackers -->
+          <input type="hidden" name="source_path" id="form-source-path" value="/contact" />
+          <input type="hidden" name="utm_source" id="form-utm-source" value="" />
+          <input type="hidden" name="utm_medium" id="form-utm-medium" value="" />
+          <input type="hidden" name="utm_campaign" id="form-utm-campaign" value="" />
+
+          <!-- Cloudflare Turnstile Anti-Abuse Widget (Section 100) -->
+          <div class="turnstile-container">
+            <div
+              class="cf-turnstile"
+              data-sitekey={turnstileSiteKey}
+              data-action="contact_form"
+              data-theme="light"
+            ></div>
+            <p id="turnstile-error" class="field-error" style="display: none;" role="alert"></p>
+          </div>
+
+          <!-- Just-in-Time Privacy Notice (Section 60) -->
+          <div class="privacy-notice-box">
+            <p class="privacy-notice-text">
+              We’ll use the information you provide to review and respond to your inquiry. See our <a href="/privacy" class="privacy-link">Privacy Policy</a> for details about how contact information is handled.
+            </p>
+          </div>
+
+          <!-- Form Submission Button -->
+          <div class="form-submit-row">
+            <button
+              type="submit"
+              id="submit-button"
+              class="btn btn-primary submit-btn"
+            >
+              <span id="submit-btn-text">Send inquiry</span>
+            </button>
+            <span id="form-status-message" class="sr-only" aria-live="polite"></span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cloudflare Turnstile Script -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</BaseLayout>
+
+<style>
+  .contact-page-section {
+    background-color: var(--canvas);
+    min-height: 80vh;
+  }
+
+  .contact-container {
+    max-width: 780px;
+  }
+
+  .contact-header-block {
+    margin-bottom: var(--space-12);
+  }
+
+  .contact-h1 {
+    margin-bottom: var(--space-4);
+  }
+
+  .form-card-wrapper {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-panel);
+    padding: var(--space-12);
+    box-shadow: var(--shadow-card);
+  }
+
+  @media (max-width: 640px) {
+    .form-card-wrapper {
+      padding: var(--space-6);
+    }
+  }
+
+  /* Honeypot hidden style */
+  .oh-field {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0;
+    width: 0;
+    z-index: -1;
+    overflow: hidden;
+  }
+
+  .turnstile-container {
+    margin-bottom: var(--space-6);
+    min-height: 65px;
+  }
+
+  .privacy-notice-box {
+    margin-bottom: var(--space-6);
+    padding-top: var(--space-2);
+  }
+
+  .privacy-notice-text {
+    font-size: 0.8125rem;
+    color: var(--slate-500);
+    line-height: 1.5;
+  }
+
+  .privacy-link {
+    color: var(--signal-blue);
+    text-decoration: underline;
+  }
+
+  .form-submit-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .submit-btn {
+    min-width: 160px;
+  }
+</style>
+
+<script>
+  // Progressive Enhancement Client Validation & Submission Handler
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("contact-inquiry-form") as HTMLFormElement | null;
+    const submitBtn = document.getElementById("submit-button") as HTMLButtonElement | null;
+    const submitBtnText = document.getElementById("submit-btn-text");
+    const statusMsg = document.getElementById("form-status-message");
+    const errorSummary = document.getElementById("form-error-summary");
+    const errorItemsList = document.getElementById("error-summary-items");
+
+    // Populate pre-fill query parameters if present (e.g. from Workflow Explorer or Services)
+    const urlParams = new URLSearchParams(window.location.search);
+    const serviceParam = urlParams.get("service");
+    const contextParam = urlParams.get("context");
+
+    if (serviceParam) {
+      const serviceSelect = document.getElementById("field-service_interest") as HTMLSelectElement | null;
+      if (serviceSelect) {
+        const optionExists = Array.from(serviceSelect.options).some(opt => opt.value === serviceParam);
+        if (optionExists) {
+          serviceSelect.value = serviceParam;
+        }
+      }
+    }
+
+    if (contextParam) {
+      const problemField = document.getElementById("field-problem") as HTMLTextAreaElement | null;
+      if (problemField && !problemField.value) {
+        const contextDescriptions: Record<string, string> = {
+          "lead-intake": "We want to improve our lead intake and routing process. Specifically, ",
+          "follow-up": "We want to automate lead follow-up sequences so opportunities don't stall. Specifically, ",
+          "appointments": "We want to connect our appointment booking tool to our CRM and reminder sequences. Specifically, ",
+          "documents": "We want to automate document generation and signed contract tracking. Specifically, ",
+          "billing": "We want our billing events and payment statuses to synchronize with our CRM. Specifically, ",
+          "data-sync": "We have customer records across multiple tools that need reliable data synchronization. Specifically, "
+        };
+        if (contextDescriptions[contextParam]) {
+          problemField.value = contextDescriptions[contextParam];
+        }
+      }
+    }
+
+    // Capture URL params for analytics attribution
+    const utmSourceEl = document.getElementById("form-utm-source") as HTMLInputElement | null;
+    const utmMediumEl = document.getElementById("form-utm-medium") as HTMLInputElement | null;
+    const utmCampaignEl = document.getElementById("form-utm-campaign") as HTMLInputElement | null;
+    if (utmSourceEl && urlParams.get("utm_source")) utmSourceEl.value = urlParams.get("utm_source")!;
+    if (utmMediumEl && urlParams.get("utm_medium")) utmMediumEl.value = urlParams.get("utm_medium")!;
+    if (utmCampaignEl && urlParams.get("utm_campaign")) utmCampaignEl.value = urlParams.get("utm_campaign")!;
+
+    // Client-side Character Counter for Problem field near limit
+    const problemTextarea = document.getElementById("field-problem") as HTMLTextAreaElement | null;
+    const charCountEl = document.getElementById("field-problem-char-count");
+    if (problemTextarea && charCountEl) {
+      const updateCharCount = () => {
+        const len = problemTextarea.value.length;
+        if (len > 2500) {
+          charCountEl.textContent = `${3000 - len} characters remaining`;
+          charCountEl.style.color = len > 2950 ? "var(--error)" : "var(--slate-500)";
+        } else {
+          charCountEl.textContent = "";
+        }
+      };
+      problemTextarea.addEventListener("input", updateCharCount);
+    }
+
+    // Intercept form submission via Fetch for inline UX (with fallback to default POST on network failure)
+    if (form && submitBtn && submitBtnText && errorSummary && errorItemsList) {
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        // Reset previous errors
+        errorSummary.style.display = "none";
+        errorItemsList.innerHTML = "";
+        document.querySelectorAll<HTMLElement>(".field-error").forEach((el) => {
+          el.style.display = "none";
+          el.textContent = "";
+        });
+        document.querySelectorAll<HTMLElement>(".form-control").forEach((el) => {
+          el.removeAttribute("aria-invalid");
+        });
+
+        // Set loading state
+        submitBtn.disabled = true;
+        submitBtnText.textContent = "Sending…";
+        if (statusMsg) statusMsg.textContent = "Submitting your inquiry...";
+
+        const formData = new FormData(form);
+        const jsonBody: Record<string, string> = {};
+        formData.forEach((val, key) => {
+          if (typeof val === "string") {
+            jsonBody[key] = val;
+          }
+        });
+
+        // Extract Turnstile response token
+        const turnstileToken = formData.get("cf-turnstile-response") as string || "";
+        jsonBody["turnstile_token"] = turnstileToken;
+
+        try {
+          const response = await fetch("/api/contact", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+            },
+            body: JSON.stringify(jsonBody)
+          });
+
+          const result = await response.json() as {
+            success: boolean;
+            redirectUrl?: string;
+            errors?: { field: string; message: string }[];
+            message?: string;
+          };
+
+          if (response.ok && result.success) {
+            // Navigate to success page
+            window.location.href = result.redirectUrl || "/contact/success";
+          } else {
+            // Render validation errors
+            submitBtn.disabled = false;
+            submitBtnText.textContent = "Send inquiry";
+
+            const errorList = result.errors || [{ field: "general", message: result.message || "An error occurred. Please try again." }];
+
+            errorSummary.style.display = "block";
+            errorSummary.focus();
+
+            errorList.forEach((err) => {
+              // Add to summary
+              const li = document.createElement("li");
+              const link = document.createElement("a");
+              link.href = `#field-${err.field}`;
+              link.textContent = err.message;
+              li.appendChild(link);
+              errorItemsList.appendChild(li);
+
+              // Field-level error
+              const inputEl = document.getElementById(`field-${err.field}`);
+              const errorEl = document.getElementById(`field-${err.field}-error`);
+              if (inputEl) inputEl.setAttribute("aria-invalid", "true");
+              if (errorEl) {
+                errorEl.textContent = err.message;
+                errorEl.style.display = "block";
+              }
+            });
+
+            // Reset Turnstile token if available
+            // @ts-ignore
+            if (window.turnstile && typeof window.turnstile.reset === "function") {
+              // @ts-ignore
+              window.turnstile.reset();
+            }
+          }
+        } catch (err) {
+          // Graceful fallback to native form POST if fetch/JSON encounters network abort
+          form.submit();
+        }
+      });
+    }
+  });
+</script>

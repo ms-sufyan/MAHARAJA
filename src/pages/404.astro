@@ -1,0 +1,97 @@
+---
+export const prerender = true;
+
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/ui/Button.astro";
+import SectionEyebrow from "../components/ui/SectionEyebrow.astro";
+import { seoData } from "../data/seo";
+---
+
+<BaseLayout
+  title={seoData.notFound.title}
+  description={seoData.notFound.description}
+  canonicalPath={seoData.notFound.canonicalPath}
+  noindex={true}
+>
+  <section class="not-found-section section-py-lg">
+    <div class="container-default">
+      <div class="not-found-card">
+        <div class="code-badge font-mono">HTTP 404</div>
+        <SectionEyebrow>PAGE NOT FOUND</SectionEyebrow>
+        <h1 class="interior-title not-found-h1">That page isn’t here.</h1>
+        <p class="body-large not-found-lead">
+          The link may have changed, or the page may no longer exist.
+        </p>
+
+        <div class="not-found-actions">
+          <Button href="/" variant="primary">
+            Go home
+          </Button>
+          <Button href="/services" variant="secondary">
+            Explore services
+          </Button>
+          <Button href="/contact" variant="ghost">
+            Contact
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found-section {
+    background-color: var(--canvas);
+    min-height: 75vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .not-found-card {
+    background-color: var(--surface);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-panel);
+    padding: var(--space-12);
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  @media (max-width: 640px) {
+    .not-found-card {
+      padding: var(--space-8);
+    }
+  }
+
+  .code-badge {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--error);
+    background-color: var(--error-soft);
+    padding: 2px 10px;
+    border-radius: var(--radius-full);
+    margin-bottom: var(--space-4);
+  }
+
+  .not-found-h1 {
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .not-found-lead {
+    margin-bottom: var(--space-8);
+  }
+
+  .not-found-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+  }
+</style>
